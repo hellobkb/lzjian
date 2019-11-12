@@ -1,0 +1,142 @@
+body {
+	width: 100%;
+	height: 100%;
+	margin: 0px;
+	padding: 0px;
+	font-family: 'microsoft yahei', Helvetica, sans-serif;
+	background: #ffffff;
+	font-size: 14px;
+}
+
+input,
+select,
+button {
+	font-family: 'microsoft yahei', Helvetica, sans-serif;
+	font-size: 14px;
+}
+
+select {
+	-webkit-appearance: menulist;
+}
+
+border {
+	margin-right: 2px;
+	padding: 3px;
+	border: 1px solid #CCCCCC;
+}
+
+.mui-content {
+	background: white;
+}
+
+.mui-content-child {
+	margin: 10px;
+	margin-top: 15px;
+}
+
+.mui-scroll-wrapper {
+	top: 180px;
+	height: auto;
+	margin-bottom: 50px;
+}
+
+.mui-bar-nav~.mui-content .mui-pull-top-pocket {
+	top: 180px;
+}
+
+.reanod-scroll span {
+	font-size: 14px;
+	font-weight: bold;
+	line-height: 30px;
+}
+
+.reanod-scroll button {
+	font-size: 12px;
+	line-height: 16px;
+}
+
+.reanod-scroll select,
+.reanod-scroll input {
+	height: auto;
+	width: auto;
+	margin-bottom: 0px;
+	padding: 0;
+}
+
+.reanod-scroll input {
+	margin-left: 5px;
+	border: 0;
+	width: 70%;
+}
+
+.reanod-antistop {
+	margin-top: 10px;
+}
+
+.reanod-antistop select {
+	width: 20%;
+}
+
+.reanod-select {
+	font-size: 14px;
+	width: 100%;
+	height: 35px;
+	border: 0;
+	margin-top: 15px;
+	background: #6CCAC9;
+	color: white;
+}
+
+.reanod-content {
+	background: white;
+}
+
+.reanod-result {
+	background: white;
+	margin: 10px;
+}
+
+.result-title-left {
+	float: left;
+	padding: 10px;
+}
+
+.result-title-right {
+	float: right;
+	padding: 10px;
+	font-size: 14px;
+}
+
+.result-title-right a {
+	color: black;
+}
+
+.result-title-right span {
+	font-size: 15px;
+	color: #6CCAC9;
+}
+
+.result-content {
+	clear: both;
+	font-size: 13px;
+	padding: 5px;
+	background: #EEEEEE;
+}
+
+.result-content td {
+	padding: 5px;
+}
+
+.result-content-td {
+	width: 50%;
+}
+
+.result-content~div {
+	height: 20px;
+	border-bottom: 1px solid #CCCCCC;
+}
+
+.add-line {
+	border-left: 1px solid #C7C7CC;
+	padding-left: 0px;
+}

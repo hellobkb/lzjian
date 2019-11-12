@@ -1,0 +1,121 @@
+<php>$k1=getContactValue(1)['k'];$v1=getContactValue(1)['v'];
+$k2=getContactValue(2)['k'];$v2=getContactValue(2)['v'];
+$k3=getContactValue(3)['k'];$v3=getContactValue(3)['v'];
+$k4=getContactValue(4)['k'];$v4=getContactValue(4)['v'];
+$k5=getContactValue(5)['k'];$v5=getContactValue(5)['v'];
+$k6=getContactValue(6)['k'];$v6=getContactValue(6)['v'];
+$k7=getContactValue(7)['k'];$v7=getContactValue(7)['v'];
+$k8=getContactValue(8)['k'];$v8=getContactValue(8)['v'];
+$k9=getContactValue(9)['k'];$v9=getContactValue(9)['v'];
+$k10=getContactValue(10)['k'];$v10=getContactValue(10)['v'];
+$k11=getContactValue(11)['k'];$v11=getContactValue(11)['v'];
+$k12=getContactValue(12)['k'];$v12=getContactValue(12)['v'];
+$k13=getContactValue(13)['k'];$v13=getContactValue(13)['v'];
+$k14=getContactValue(14)['k'];$v14=getContactValue(14)['v'];
+$k15=getContactValue(15)['k'];$v15=getContactValue(15)['v'];
+$k16=getContactValue(16)['k'];$v16=getContactValue(16)['v'];
+$k17=getContactValue(17)['k'];$v17=getContactValue(17)['v'];
+$k18=getContactValue(18)['k'];$v18=getContactValue(18)['v'];
+$k19=getContactValue(19)['k'];$v19=getContactValue(19)['v'];
+$k20=getContactValue(20)['k'];$v20=getContactValue(20)['v'];
+$k21=getContactValue(21)['k'];$v21=getContactValue(21)['v'];
+$k22=getContactValue(22)['k'];$v22=getContactValue(22)['v'];
+$k23=getContactValue(23)['k'];$v23=getContactValue(23)['v'];
+$k24=getContactValue(24)['k'];$v24=getContactValue(24)['v'];
+$k25=getContactValue(25)['k'];$v25=getContactValue(25)['v'];
+$k26=getContactValue(26)['k'];$v26=getContactValue(26)['v'];
+$k27=getContactValue(27)['k'];$v27=getContactValue(27)['v'];
+$k28=getContactValue(28)['k'];$v28=getContactValue(28)['v'];
+$k29=getContactValue(29)['k'];$v29=getContactValue(29)['v'];
+$k30=getContactValue(30)['k'];$v30=getContactValue(30)['v'];
+$k31=getContactValue(31)['k'];$v31=getContactValue(31)['v'];
+$k32=getContactValue(32)['k'];$v32=getContactValue(32)['v'];
+$k33=getContactValue(33)['k'];$v33=getContactValue(33)['v'];
+$k34=getContactValue(34)['k'];$v34=getContactValue(34)['v'];
+$k35=getContactValue(35)['k'];$v35=getContactValue(35)['v'];
+$k36=getContactValue(36)['k'];$v36=getContactValue(36)['v'];
+$k37=getContactValue(37)['k'];$v37=getContactValue(37)['v'];
+$k38=getContactValue(38)['k'];$v38=getContactValue(38)['v'];
+$k39=getContactValue(39)['k'];$v39=getContactValue(39)['v'];
+$k40=getContactValue(40)['k'];$v40=getContactValue(40)['v'];</php>
+<ul class="">
+    <form action="{:U('Search/Index/index')}" method="get">
+        <input type="text" placeholder="Search..." class="iptc l" name="q">
+        <input type="submit" value=" " class="ipsc r">
+    </form>
+    <li class=""><a href="__ROOT__/"> Home </a></li>
+    <content action="category" catid="0"  order="listorder ASC" >
+      <volist name="data" id="r">
+        <li class="">
+           <a href="{:zcurl($r['url'],$r['moveurl'])}" title="{$r.catname}"> {$r.catname} </a>
+           <content action="category" catid="$r[catid]"  order="listorder ASC" >
+            <if condition="count($data) gt '0'">
+                <div class="addition"></div>
+                <div class="c-show c-show1">
+                 <volist name="data" id="r">
+                    <div class="c-s1">    
+                        <a href="{:zcurl($r['url'],$r['moveurl'])}" title="{$r.catname}" class="fa fa-dot-circle-o">
+                            <span>{$r.catname}</span>
+                        </a>
+                        <content action="category" catid="$r[catid]"  order="listorder ASC" >
+                            <if condition="count($data) gt '0'">
+                                <div class="addition"></div>
+                                <div class="c-show c-show2">
+                                     <volist name="data" id="r">
+                                          <div class="c-s2"> <a href="{:zcurl($r['url'],$r['moveurl'])}" title="{$r.catname}" class="fa fa-asterisk"> <span>{$r.catname}</span> </a>
+                                           <content action="category" catid="$r[catid]"  order="listorder ASC" >
+                                        <if condition="count($data) gt '0'">
+                                            <div class="addition"></div>
+                                            <div class="c-show c-show3">
+                                              <div class="c-s3">
+                                               <volist name="data" id="r">
+                                                <a href="{:zcurl($r['url'],$r['moveurl'])}" title="{$r.catname}" class="fa fa-stop-circle">
+                                                  <span>{$r.catname}</span>
+                                                </a>
+                                                </volist>
+                                              </div>
+                                            </div>
+                                            </if>
+                                            </content>
+                                          </div>
+                                     </volist>
+                                </div>
+                            </if>
+                        </content>
+                   
+                    </div>
+                     </volist>
+                </div>
+            </if>
+            </content>
+        </li>
+     </volist>
+   </content>          
+</ul>
+
+<if condition="in_array($catid,explode(',',$r['arrchildid']))">class="current"</if>
+
+    <ul class="wap-hd-nav">
+        <li class="wap-hd-nav-item">
+            <a <if condition="$home eq 1">class="active"</if> href="__ROOT__/" title="">
+                {:L('RNHOME')}
+            </a>
+        </li>
+        <li class="wap-hd-nav-item">
+            <a <if condition="$catid eq 2">class="active"</if> href="{:get_c_url(2)}" title="">
+                About Us
+            </a>
+        </li>
+        <php>$chanpfl=getCategory(1);</php>
+        <li class="wap-hd-nav-item">
+            <a <if condition="in_array($catid,explode(',',$chanpfl[arrchildid]))">class="active"</if> href="{:get_c_url(1)}" title="">
+                Products
+            </a>
+        </li>
+       
+        <li class="wap-hd-nav-item">
+            <a href="{:get_c_url(6)}"<if condition="$catid eq 6">class="active"</if> title="">
+                Contacts
+            </a>
+        </li>
+    </ul>

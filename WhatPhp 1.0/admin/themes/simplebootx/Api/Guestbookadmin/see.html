@@ -1,0 +1,239 @@
+<admintpl file="header"/>
+<style type="text/css">
+.col-auto { overflow: auto; _zoom: 1;_float: left;}
+.col-right { float: right; width: 210px; overflow: hidden; margin-left: 6px; }
+.table th, .table td {vertical-align: middle;}
+.picList li{margin-bottom: 5px;}
+.Validform_checktip{margin-left:0;}
+.info{
+    border:1px solid #ccc; 
+    padding:2px 20px 2px 5px; 
+    color:#666; 
+    position:absolute;
+    display:none;
+    line-height:20px;
+    background-color:#fff;
+   
+}
+.dec {
+    bottom: -8px;
+    display: block;
+    height: 8px;
+    overflow: hidden;
+    position: absolute;
+    left: 10px;
+    width: 17px;
+}
+.dec s {
+    font-family: simsun;
+    font-size: 16px;
+    height: 19px;
+    left: 0;
+    line-height: 21px;
+    position: absolute;
+    text-decoration: none;
+    top: -9px;
+    width: 17px;
+}
+.dec .dec1 {
+    color: #ccc;
+}
+.dec .dec2 {
+    color: #fff;
+    top: -10px;
+}
+
+
+
+.zcr{text-align: center;}
+table tr td{border: 1px solid #ccc;padding: 5px}
+  </style>
+</head>
+<body class="J_scroll_fixed">
+<div class="wrap J_check_wrap">
+	<ul class="nav nav-tabs">
+		<li>
+      <if condition="$guestmsgs['salesman']">
+      <a>所有留言</a>
+        <else />
+      <a href="{:U('Api/guestbookadmin/index')}">所有留言</a>
+      </if>
+    </li>
+	</ul>
+<span style="color:#2baab1;font-size:16px;display: block;height: 50px;line-height: 50px;">询盘信息</span>
+<table>
+    <tr>
+      <td width="100" class="zcr">姓名：</td>
+      <td width="900" colspan="3">
+        {$guestmsgs.full_name}
+      </td>
+    <!--  <td width="100" class="zcr">公司：</td>
+      <td width="400">
+        {$guestmsgs.company_name}
+      </td>-->
+    </tr>
+    <tr>
+      <td class="zcr">邮箱：</td>
+      <td>
+        {$guestmsgs.email}
+      </td>
+      <td class="zcr">电话：</td>
+      <td>
+        {$guestmsgs.tel}
+      </td>
+    </tr>
+    <!--<tr>
+      <td class="zcr">传真：</td>
+      <td>
+        {$guestmsgs.fax}
+      </td>
+      <td class="zcr">地址：</td>
+      <td>
+        {$guestmsgs.address}
+      </td>
+    </tr>-->
+    <tr>
+      <td class="zcr">国家（用户）：</td>
+      <td>
+        {$guestmsgs.from_country}
+      </td>
+      <td class="zcr">国家（IP）：</td>
+      <td>
+        {$guestmsgs.from_country_ip}
+      </td>
+    </tr>
+   <!-- <tr>
+      <td class="zcr">附件：</td>
+      <td colspan="3">
+        <if condition="$guestmsgs['file']">
+          <a href="__ROOT__/{$guestmsgs.file}" target="_blank">下载</a>
+        </if>
+      </td>
+    </tr>-->
+    <tr>
+      <td class="zcr">内容：</td>
+      <td colspan="3">
+       {$guestmsgs.msg}
+      </td>
+    </tr>
+    <tr>
+      <td class="zcr">询盘商品：</td>
+      <td colspan="3">
+       <php>$prof=str_replace("\'","",$guestmsgs['pid']); </php>
+         {$prof|htmlspecialchars_decode}
+      </td>
+    </tr>
+</table>
+<!--<span style="color:#2baab1;font-size:16px;display: block;height: 50px;line-height: 50px;">分配操作</span>
+<table>
+            <tr>
+              <td width="200">业务员经理/业务员</td>
+              <td width="500">
+                <foreach name="Users" item="t">
+                  <if condition="$t['id'] eq $guestmsgs['salesman']">
+                    {$t.user_login}（{$t.user_nicename}）
+                  </if>
+                </foreach>
+              </td>
+            </tr>
+            <tr>
+              <td>备注 </td>
+              <td>
+                {$guestmsgs.content}
+              </td>
+            </tr>
+</table>-->
+  <div class="form-actions">
+      <input type="hidden" name="post[id]" value="{$guestmsgs.id}">
+        <a class="btn" href="javascript:backtoTop();">关闭</a>
+  </div>
+</div>
+<script src="__PUBLIC__/js/Validform_v5.3.2_min.js"></script>
+<script type="text/javascript">
+function sel_val(value){
+		$("#suggest_input").val(value);
+}
+function backtoTop(){
+	parent.location.reload();
+	window.close();
+}
+
+function zcmit(){
+      var url = "{:U('guestbookadmin/delete',array('id'=>$id))}";
+      $.post(url,'',function(str){
+        if(str.status ==1){
+        Wind.use("artDialog", function () {
+            art.dialog({
+                id: "question",
+                icon: "question",
+                fixed: true,
+                lock: true,
+                background: "#CCCCCC",
+                opacity: 0,
+                content: "删除成功，是否要关闭当前页面？",
+                ok:function(){
+                  backtoTop();
+                  return true;
+                }
+            });
+        });
+        }else{
+          isalert(str.info);
+        }
+      },'json');
+
+}
+
+$(function () {
+	//setInterval(function(){public_lock_renewal();}, 10000);
+	$(".J_ajax_close_btn").on('click', function (e) {
+	    e.preventDefault();
+	    Wind.use("artDialog", function () {
+	        art.dialog({
+	            id: "question",
+	            icon: "question",
+	            fixed: true,
+	            lock: true,
+	            background: "#CCCCCC",
+	            opacity: 0,
+	            content: "您确定需要关闭当前页面嘛？",
+	            ok:function(){
+					setCookie("refersh_time",1);
+					window.close();
+					return true;
+				}
+	        });
+	    });
+	});
+
+
+
+
+    $("#myform").Validform({
+        tiptype:function(msg,o,cssctl){
+            if(!o.obj.is("#myform")){
+                var objtip=o.obj.parents("td").find(".Validform_checktip");
+                cssctl(objtip,o.type);
+                objtip.text(msg);
+
+                var infoObj=o.obj.parents("td").find(".info");
+                if(o.type==2){
+                    infoObj.fadeOut(200);
+                }else{
+                    if(infoObj.is(":visible")){return;}
+                    var left=o.obj.offset().left,
+                        top=o.obj.offset().top;
+                    infoObj.css({
+                        left:left+170,
+                        top:top-45
+                    }).show().animate({
+                        top:top-35
+                    },200);
+                }
+            }
+        }
+    });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="{:U('AdminTerm/index')}">栏目列表</a></li>
+			<li><a href="{:U('AdminTerm/add')}">添加栏目</a></li>
+			<li><a href="{:U('AdminTerm/singlepage')}">添加单页</a></li>
+			<li><a href="{:U('AdminTerm/wadd')}">添加外部链接</a></li>
+		</ul>
+		<form method="post" class="js-ajax-form" action="{:U('AdminTerm/index')}">
+			<div class="table-actions">
+				<button type="submit" class="btn btn-primary btn-small js-ajax-submit">{:L('SORT')}</button>
+			</div>
+			<table class="table table-hover table-bordered table-list">
+				<thead>
+					<tr>
+						<td width="50">{:L('SORT')}</td>
+						<td width="50">栏目ID</td>
+						<td>栏目名称</td>
+						<td>栏目类型</td>
+						<td>所属模型</td>
+						<td>访问</td>
+						<td>域名绑定须知</td>
+						<td>管理操作</td>
+						
+					</tr>
+				</thead>
+					{$categorys}
+				<tfoot>
+					<tr>
+						<th width="50">{:L('SORT')}</th>
+						<td width="50">栏目ID</td>
+						<td>栏目名称</td>
+						<td>栏目类型</td>
+						<td>所属模型</td>
+						<td>访问</td>
+						<td>域名绑定须知</td>
+						<td>管理操作</td>
+					</tr>
+				</tfoot>
+			</table>
+			<div class="table-actions">
+				<button type="submit" class="btn btn-primary btn-small js-ajax-submit">{:L('SORT')}</button>
+			</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

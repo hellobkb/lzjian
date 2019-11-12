@@ -1,0 +1,217 @@
+<admintpl file="header" />
+
+</head>
+
+<body>
+
+	<div class="wrap">
+
+  <div class="h_a">搜索</div>
+
+  <form name="searchform" action="{:U('Content/Contentshow/public_relationlist',array('modelid'=>$modelid,'rel_id'=>$rel_id))}" method="get">
+
+    <div class="search_type cc mb10">
+
+      <div class="mb10">
+
+        <span class="mr20">
+
+        <select class="select_2" name="searchtype" style="width:70px;">
+
+          <option value='title' <if condition=" $post['field']=='title' ">selected</if>>标题</option>
+
+          <option value='keywords' <if condition=" $post['field']=='keywords' ">selected</if> >关键字</option>
+
+          <option value='description' <if condition=" $post['field']=='description' ">selected</if>>描述</option>
+
+          <option value='id' <if condition=" $post['field']=='id' ">selected</if>>ID</option>
+
+        </select>
+
+
+
+        <select name='catid'>
+
+        <option value='0' > 请选择</option>
+
+        {$Formcategory}
+
+        </select>
+
+        关键字：
+
+        <input type="text" class="input length_2" name="keywords" style="width:200px;" value="{$post.keywords}" placeholder="请输入关键字...">
+
+        <input type="hidden" name="modelid" value="{$modelid}"></input>
+
+        <button class="btn">搜索</button>
+
+        </span>
+
+      </div>
+
+    </div>
+
+  </form>
+
+    <div class="table_list">
+
+      <table width="100%">
+
+        <colgroup>
+
+        <col width="40">
+
+        <col width="">
+
+        <col width="80">
+
+        <col width="70">
+
+        <col width="140">
+
+        </colgroup>
+
+        <thead>
+
+          <tr>
+
+            <td>ID</td>
+
+            <td>标题</td>
+
+            <td align="center">点击量</td>
+
+            <td>发布人</td>
+
+            <td><span>发帖时间</span></td>
+
+          </tr>
+
+        </thead>
+
+        <volist name="data" id="vo">
+
+          <tr onClick="select_list(this,'{$vo.title}',{:getCategory($vo['catid'],'modelid')},{$vo.id})"  class="cu" title="点击选择">
+
+            <td>{$vo.id}</td>
+
+            <td ><a href="javascript:;;"><span style="" >
+
+              <if condition=" $vo['status']==99 ">{$vo.title}
+
+                <else/>
+
+                <font color="#FF0000">[未审核]</font> - {$vo.title}</if>
+
+              </span></a>
+
+              <if condition=" $vo['thumb']!='' "> <img src="__ROOT__/public/images/small_img.gif" title="标题图片"> </if>
+
+              <if condition=" $vo['posids'] "> <img src="__ROOT__/public/images/small_img.gif" title="推荐位"> </if>
+
+              <if condition=" $vo['islink'] "> <img src="__ROOT__/public/images/small_img.gif" title="转向地址"> </if></td>
+
+            <td align="center">{$vo.views}</td>
+
+            <td><if condition=" $vo['sysadd'] ">{$vo.username}
+
+                <else />
+
+                <font color="#FF0000">{$vo.username}</font><img src="__ROOT__/public/images/contribute.png" title="会员投稿"></if></td>
+
+            <td>{$vo.updatetime|date="Y-m-d H:i:s",###}</td>
+
+          </tr>
+
+        </volist>
+
+      </table>
+
+      <div class="p10"><div class="pages"> {$Page} </div> </div>
+
+    </div>
+
+</div>
+
+	<script>
+
+  function select_list(obj, title,modelid, id) {
+
+    var rel_id = "{$rel_id}";
+
+    var relation_ids = window.parent.$('#'+rel_id).val();
+
+    var sid = rel_id+'_'+modelid+ '_' + id;
+
+    if (relation_ids.indexOf('|'+modelid+','+id) == -1) {
+
+        $(obj).attr('class', 'line_ff9966');
+
+        var str = "<li id='" + sid + "'>·<span>" + title + "</span><a href='javascript:;' class='close' onclick=\"remove_relation('"+rel_id+"','" + sid + "'," + id + ")\"></a></li>";
+
+        window.parent.$('#'+rel_id+'_text').append(str);
+
+        if (relation_ids == '') {
+
+            window.parent.$('#'+rel_id).val('|'+modelid+','+id);
+
+        } else {
+
+            relation_ids = relation_ids + '|' + modelid+','+id;
+
+            window.parent.$('#'+rel_id).val(relation_ids);
+
+        }
+
+    } else {
+
+
+
+      $(obj).attr('class', 'line_fbffe4');
+
+        window.parent.$('#' + sid).remove();
+
+        if (relation_ids != '') {
+
+            var r_arr = relation_ids.split('|');
+
+            var newrelation_ids = '';
+
+            $.each(r_arr, function (i, n) {
+
+
+
+               var n_data = n.split(",");
+
+
+
+                if(n_data[1] !=id){ //不删除
+
+                  if(i ==0 ) newrelation_ids += n ;
+
+                  else  newrelation_ids += "|" + n;
+
+                }
+
+
+
+            });
+
+            window.parent.$('#'+rel_id).val(newrelation_ids);
+
+        }
+
+
+
+        
+
+    }
+
+}
+
+</script>
+
+</body>
+
+</html>

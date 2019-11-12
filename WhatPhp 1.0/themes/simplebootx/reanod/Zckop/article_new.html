@@ -1,0 +1,69 @@
+
+<!-- 部分4证书最新文章开始 -->
+<div class="ipart4">
+	<div class="zong">
+    	
+        <div class="icer">
+        	<div class="icer_head">
+            	<div class="icer_title">
+                    <a href="" title=""><img src="__TMPL__xinyu/images/certificates.png" alt="" title="" /></a>
+                </div>
+                <div class="icer_fy">
+                	<span class="icerprev"></span>
+                    <span class="icernext"></span>
+                    <div class="clear"></div>
+                </div>
+                <div class="clear"></div>
+            </div>
+        	
+            <div class="icer_top">
+            	<div class="icer_hx"></div>
+            </div>
+            
+            <SCRIPT type=text/javascript src="__TMPL__xinyu/js/baguettebox.min.js"></SCRIPT> 
+            <div class="baguetteBoxOne">
+                <div class="img-scroll">
+                    <div class="img-list">
+                        <ul>
+                        	
+                        	<php>
+                        		$content = json_decode($zcmod['content'],true);
+								$catid = $content['zcmsg']['attr']['argu']['catid'];
+								$limit = $content['zcmsg']['attr']['argu']['limit'];
+								
+								$siteOption = sp_get_site_options();
+							</php>
+							<content action="lists" catid="$catid" where="1" order="listorder DESC,id DESC" num="$limit" >
+							
+                        		 <foreach name="data" item="certi">
+                        		 	 <li>
+                                		<div class="teamtu">
+                                    		<a title="" class="teamtupian"><img src="<php>echo $siteOption['site_host'] . $certi['thumb']</php>" title="{$certi.title}" alt="{$certi.title}" /></a>
+                                    		<a href="<php>echo $siteOption['site_host'] . $certi['thumb']</php>" class="teamfu" title=""><img src="__TMPL__xinyu/images/fangda.png" title="" alt="" /></a>
+                                		</div>
+                                		<div class="teamzi"><a href="" title="{$certi.title}">{$certi.title}</a></div>
+                            		</li>
+                        		 </foreach>
+                        		
+                        	</content>
+                        	
+                             
+                        </ul>
+                    </div>
+                </div>
+        
+        	</div>
+    		<script type="text/javascript" src="__TMPL__xinyu/js/qiehuan-report.js"></script>
+			<script>
+            baguetteBox.run('.baguetteBoxOne', {
+                animation: 'fadeIn',
+            });
+            </script> 
+        
+        
+        </div>
+
+    </div>
+</div>
+<!-- 部分4证书最新文章结束 -->
+ 

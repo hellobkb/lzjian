@@ -1,0 +1,181 @@
+<admintpl file="header" />
+<style>
+	html {
+		overflow: auto;
+	}
+	body {
+		overflow: auto;
+		height: 100%;
+		background: #f2f2f2;
+	}
+	.js-ajax-form {
+		padding-bottom: 0 !important;
+	}
+	.table {
+		width: 100%;
+	}
+	.table-hover {
+		margin-top: 0;
+	}
+	.table-hover td {
+		background: #f2f2f2;
+		padding: 12px 10px;
+		padding-left: 20px !important;
+		font-size: 13px;
+	}
+	.table-hover tbody tr:hover>td, .table-hover tbody tr:hover>th, .table-hover tbody tr td.active {
+		background: #dae9ea;
+	}
+</style>
+</head><body>
+<div class="js-check-wrap">
+	<form class="js-ajax-form" method="post">
+		<div class="dan_top" style=" padding:0px">
+			<div class="subNavBox2">
+				<table class="table table-hover table-bordered table-list" id="menus-table">
+					<tbody>
+					{$categorys}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</form>
+</div>
+
+
+
+
+
+
+
+
+
+<style>
+	.dan_top { padding: 0px 20px;   }
+	.dan_top .subNavBox2{width: 100%; margin-bottom: 142px;}
+	.dan_top .subNavBox2 .on{border-bottom: 1px solid #fff;}
+	.dan_top .subNav{border-bottom: 1px solid #cccccc; cursor: pointer; padding-bottom: 10px; margin-top: 15px;
+		background: url(http://www.hvwautoacparts.com/public/js/treeTable/images/toggle-expand-dark.png) no-repeat right 10px;  }
+	.dan_top .subNav a{  font-size:16px;  color:#6e6e6e; transition:0s;}
+	.dan_top .subNav:hover{ color :#2baab1; text-decoration: none;  background: url(http://www.hvwautoacparts.com/public/js/treeTable/images/toggle-collapse-dark.png) no-repeat right 10px; }
+	.dan_top .subNav:hover a{ color:#2baab1;  text-decoration: none;   }
+
+	.dan_top .currentDd2 a{  color:#6e6e6e;}
+	.dan_top .currentDt2{ color:#2baab1; background: url(http://www.hvwautoacparts.com/public/js/treeTable/images/toggle-collapse-dark.png) no-repeat right 10px!important;}
+	.dan_top .navContent2{display: none;  border-bottom: 1px solid #cccccc; margin-left: 0px; padding: 10px 10px; }
+	.dan_top .navContent2 li .ziti2{ font-size:14px;   line-height: 32px; color: #333; }
+	.dan_top dl {padding-bottom:0px; display: none; margin-bottom: 0px; }
+	.dan_top dl dd{  margin-left: 17px;  background: url(http://www.hvwautoacparts.com/public/js/treeTable/images/toggle-expand-dark.png) no-repeat right 10px; }
+	.dan_top dl a { font-size:14px;   line-height: 32px; color:#666; padding-left:12px;  }
+	.dan_top dl dd:hover a{ color:#2baab1;  text-decoration: none; }
+	.dan_top dl dd:hover {background: url(http://www.hvwautoacparts.com/public/js/treeTable/images/toggle-collapse-dark.png) no-repeat right 10px!important;   }
+
+
+	.dan_top .currentDd3 a{  color:#6e6e6e;}
+	.dan_top .currentDt3{ color:#2baab1; background: url(http://www.hvwautoacparts.com/public/js/treeTable/images/toggle-collapse-dark.png) no-repeat right 10px!important;}
+	.dan_top .navContent3{display: none; margin-left: 24px; padding: 10px 10px; }
+	.dan_top .navContent3 li .ziti2{ font-size:14px;   line-height: 32px; color: #333; }
+
+
+	.dan_top .navContent2-li{ background: url(http://www.hvwautoacparts.com/public/js/treeTable/images/toggle-expand-dark.png) no-repeat right 10px;  }
+</style>
+<script type="text/javascript">
+	$(function () {
+		$(".dan_top .subNav").click(function () {
+			$(this).toggleClass("currentDd2").siblings(".subNav").removeClass("currentDd2")
+			$(this).toggleClass("currentDt2").siblings(".subNav").removeClass("currentDt2")
+
+			$(this).next(".navContent2").slideToggle(500).siblings(".navContent2").slideUp(500);
+		})
+
+		$(".dan_top .navContent2-li").click(function () {
+			$(this).next(".navdl").slideToggle(500).siblings(".navdl").slideUp(500);
+			$(this).toggleClass("currentDd2").siblings(".subNav").removeClass("currentDd2")
+			$(this).toggleClass("currentDt2").siblings(".subNav").removeClass("currentDt2")
+
+		})
+
+		$(".dan_top dl dd").click(function () {
+			$(this).next(".navContent3").slideToggle(500).siblings(".navContent3").slideUp(500);
+			$(this).toggleClass("currentDd3").siblings(".subNav").removeClass("currentDd3")
+			$(this).toggleClass("currentDt3").siblings(".subNav").removeClass("currentDt3")
+
+		})
+
+	})
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+<script src="__PUBLIC__/js/common.js"></script>
+<script>
+
+	function changeismenu(id,obj){
+
+		$.get("{:U('Category/changeismenu')}", {id:id},function(str){
+
+			if(str.status ==1){
+
+				obj.innerHTML= str.msg;
+			}
+
+		},'json');
+
+
+	}
+</script>
+<script>
+	$(document).ready(function() {
+		Wind.css('treeTable');
+		Wind.use('treeTable', function() {
+			$("#menus-table").treeTable({
+				indent : 20
+			});
+		});
+	});
+
+	setInterval(function() {
+		var refersh_time = getCookie('refersh_time_admin_menu_index');
+		if (refersh_time == 1) {
+			reloadPage(window);
+		}
+	}, 2000);
+	setCookie('refersh_time_admin_menu_index', 0);
+</script>
+
+
+
+<script>
+	$('.zciframe').click(function (){
+		var href = $(this).attr('href');
+		$("#myiframe1",parent.document.body).attr('src',href);
+	})
+
+	/*2017年1月13日*/
+	var sign_selected = null;
+	$("#menus-table").on( "click",function(event) {
+		var closest_a = $(event.target).closest("a");
+		if (!closest_a || closest_a.length == 0) {
+			return
+		}
+		if (!closest_a.hasClass("active")) {
+			sign_selected && sign_selected.parent().removeClass("active");
+			//!sign_selected && $(this).find(".active").removeClass("active");
+			sign_selected=closest_a;
+			sign_selected.parent().addClass("active");
+		}
+	});
+
+</script>
+</body>
+</html>

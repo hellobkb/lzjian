@@ -1,0 +1,117 @@
+<!--
+{"zcmsg":{"edit":{"url":"index.php?g=Content&m=Contentshow&a=pagedit&catid=22","title":"\u5185\u5bb9\u7f16\u8f91","width":900,"height":700},"attr":{"url":"index.php?g=Portal&m=Zckop&a=aboutus","title":"\u5c5e\u6027","argu":{"catid":"1,2","limit":10,"title_link":"http:\/\/www.reanod.com\/123"}}},"strnum":10}
+-->
+<div class="bg">
+<div class="body c">
+    <div class="zong">
+    	
+        <div class="c_title">Hebei XINYU Welding Co., Ltd.</div>
+    	
+        <ul class="c_lx">
+            <li>Tel.: {:getContactValue(10)}</li>
+            <li>Fax: {:getContactValue(13)}</li>
+            <li>E-mail: <a href="mailto:{:getContactValue(11)}" title="E-mail">{:getContactValue(11)}</a></li>
+            <li>Skype: <a href="skype:{:getContactValue(21)}?call" title="Skype">{:getContactValue(21)}</a></li>
+            <li>Add.: {:getContactValue(12)}</li>
+        </ul>
+        
+        <div class="c_xp">
+        	<form name="" method='post' action="{:U('api/guestbook/addmsg',array('id'=>2))}" enctype='multipart/form-data' id='formxun'>
+            	<div class="c_div1">
+                	<div class="c_div1_nr">
+                    	<input type="text" name="full_name" id="" class="c_input1" nullmsg="Name is required.！" errormsg="Name is required.！" placeholder="Name" value="" datatype="*" />
+                        <div class="c_bt">*</div>
+                        <div class="info"><span class="Validform_checktip"></span><span class="dec"><s class="dec1">&#9670;</s><s class="dec2">&#9670;</s></span></div>
+                        <div class="clear"></div>
+                    </div>
+                    <div class="c_div1_nr">
+                    	<input type="text" name="email" id="" class="c_input1" placeholder="E-mail" value="" datatype="*" nullmsg="E-mail is required.！" errormsg="E-mail is required.！"/>
+                        <div class="c_bt">*</div>
+                        <div class="info"><span class="Validform_checktip"></span><span class="dec"><s class="dec1">&#9670;</s><s class="dec2">&#9670;</s></span></div>
+                        <div class="clear"></div>
+                    </div>
+                    <div class="c_div1_nr2">
+                    	<input type="text" name="tel" id="" class="c_input3" placeholder="Tel" value="" />
+                        <div class="clear"></div>
+                    </div>
+                	<div class="clear"></div>
+                </div>
+                
+                <div class="c_div3">
+                	<div class="c_div1_nr">
+                    	<input type="text" name="company_name" id="" class="c_input1" placeholder="Company Name" value="" />
+                        <div class="c_bt"></div>
+                        <div class="clear"></div>
+                    </div>
+                    <div class="c_div1_nr">
+                    	<input type="text" name="from_country" id="" class="c_input1" placeholder="Country" value="" />
+                        <div class="c_bt"></div>
+                        <div class="clear"></div>
+                    </div>
+                	<div class="clear"></div>
+                </div>
+                
+                <div class="c_div3">
+                	<textarea name="msg" id="" placeholder="Your Inquiry" datatype="*" nullmsg="Your Inquiry is required.！" errormsg="Your Inquiry is required.！"></textarea>
+                    <div class="c_bt">*</div>
+                    <div class="info"><span class="Validform_checktip"></span><span class="dec"><s class="dec1">&#9670;</s><s class="dec2">&#9670;</s></span></div>
+                	<div class="clear"></div>
+                </div>
+                
+                <div class="c_div2">
+                	<div class="c_div1_nr">
+                		<input type="text" name="verify" id="" class="c_input1 c_input2" placeholder="CAPTCHA" value="" datatype="*" nullmsg="CAPTCHA is required.！" errormsg="CAPTCHA is required.！" />
+                        <div class="c_bt">*</div>
+                        <div class="info"><span class="Validform_checktip"></span><span class="dec"><s class="dec1">&#9670;</s><s class="dec2">&#9670;</s></span></div>
+                    </div>
+                    <php>$ver = sp_verifycode_img('length=4&font_size=20&width=248&height=42&use_noise=1&use_curve=0&id=2','style="cursor: pointer;" title="'.L('DJ_TIP').'"');</php>
+                    {$ver}
+                    <if condition="$_GET['hcatid']">
+                        <input type="hidden" name="pid" value="{$_GET['hcatid']}">
+                        <else />
+                        <input type="hidden" name="pid" value='
+                        <volist name="pro" id="v">
+                            <a href="{:zcurl($v['url'],$v['moveurl'])}" title="{$v.title}" target="_blank">{$v.title}</a><br />
+                        </volist>
+                        '>
+                    </if>
+                    <input type="submit" name="" id="" class="c_send" value="SEND" />
+
+                	<div class="clear"></div>
+
+                </div>
+
+            </form>
+            <if condition="$pro_href">
+            	 <div style="margin-top: 25px;">
+					    <table style="border: 1px solid #cccccc;" width="100%" cellpadding="0" cellspacing="0">
+					        <tbody>
+					        <tr style="height: 40px;">
+					            <td style="background-color: #b40700; width: 60%; color: #fff; padding-left: 12px;">
+					                Product Name
+					            </td>
+					        </tr>
+					        <foreach name="pro_href" item="vo">
+						        <tr style="background-color: #fff; border-width: 1px; border-style: solid; height: 25px;">
+						            <td style="padding-left: 12px;">
+  											{$vo}
+						            </td>
+						        </tr>
+					        </foreach>
+					        </tbody>
+					    </table>
+				</div>
+            	 
+            </if>
+        </div>
+         
+        <div class="c_map">
+        	<img src="__TMPL__xinyu/images/map.jpg" alt="" title="" />
+        </div>
+        
+    
+    </div>
+</div>
+</div>
+
+

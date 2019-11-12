@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="zh_CN" style="overflow: hidden;">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<!-- Set render engine for 360 browser -->
+<meta name="renderer" content="webkit">
+<meta charset="utf-8">
+<title>{:L('ADMIN_CENTER')}</title>
+<meta name="description" content="This is page-header (.page-header &gt; h1)">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="__PUBLIC__/simpleboot/themes/{:C('SP_ADMIN_STYLE')}/theme.min.css" rel="stylesheet">
+<link href="__PUBLIC__/simpleboot/css/simplebootadmin.css" rel="stylesheet">
+<link href="__PUBLIC__/simpleboot/font-awesome/4.4.0/css/font-awesome.min.css"  rel="stylesheet" type="text/css">
+<!--[if IE 7]>
+	<link rel="stylesheet" href="__PUBLIC__/simpleboot/font-awesome/4.4.0/css/font-awesome-ie7.min.css">
+<![endif]-->
+<link rel="stylesheet" href="__PUBLIC__/simpleboot/themes/{:C('SP_ADMIN_STYLE')}/simplebootadminindex.min.css?">
+<!--[if lte IE 8]>
+	<link rel="stylesheet" href="__PUBLIC__/simpleboot/css/simplebootadminindex-ie.css?" />
+<![endif]-->
+<style>
+.navbar .nav_shortcuts .btn {
+	margin-top: 5px;
+}
+.macro-component-tabitem {
+	width: 101px;
+}
+/*-----------------导航hack--------------------*/
+.nav-list>li.open {
+	position: relative;
+}
+.nav-list>li.open .back {
+	display: none;
+}
+.nav-list>li.open .normal {
+	display: inline-block !important;
+}
+.nav-list>li.open a {
+}
+.nav-list>li .submenu>li>a {
+}
+.nav-list>li .submenu>li a>[class*="fa-"]:first-child {
+	left: 20px;
+}
+.nav-list>li ul.submenu ul.submenu>li a>[class*="fa-"]:first-child {
+	left: 34px;
+}
+/*----------------导航hack--------------------*/
+.kuangjia{width:100%;height: 100%; min-height:800px;}
+@media screen and (max-height:800px){.kuangjia{width:100%;height: 100%; min-height:600px;}}
+
+</style>
+<script>
+//全局变量
+var GV = {
+	HOST:"{$_SERVER['HTTP_HOST']}",
+    DIMAUB: "",
+    JS_ROOT: "__PUBLIC__/js/",
+    TOKEN: ""
+};
+</script>
+<php>
+$submenus=$SUBMENU_CONFIG;
+</php>
+<php>function getsubmenu($submenus){</php>
+<php>foreach($submenus as $menu){</php>
+<li>
+  <php>$menu_name=L($menu['lang']);
+    $menu_name=$menu['lang']==$menu_name?$menu['name']:$menu_name;</php>
+  <php>if(empty($menu['items'])){</php>
+  <a class="top-sel-toggle" href="javascript:openapp('{$menu.url}','{$menu.id}','{$menu_name}',true);"><i class="fa fa-{$menu.icon|default='desktop'}"></i><span class="menu-text">{$menu_name}</span></a>
+  <php>}else{</php>
+  <a href="#" class="dropdown-toggle"><i class="fa fa-{$menu.icon|default='desktop'} normal"></i><span class="menu-text normal">{$menu_name}</span><b class="arrow fa fa-angle-right normal"></b><i class="fa fa-reply back"></i><span class="menu-text back">返回</span></a>
+  <ul  class="submenu">
+    <php>getsubmenu1($menu['items'])</php>
+  </ul>
+  <php>}</php>
+</li>
+<php>}</php>
+<php>}</php>
+<php>function getsubmenu1($submenus){</php>
+<php>foreach($submenus as $menu){</php>
+<li>
+  <php>$menu_name=L($menu['lang']);
+    $menu_name=$menu['lang']==$menu_name?$menu['name']:$menu_name;</php>
+  <php>if(empty($menu['items'])){</php>
+  <a href="javascript:openapp('{$menu.url}','{$menu.id}','{$menu_name}',true);"><i class="fa fa-caret-right"></i><span class="menu-text">{$menu_name}</span></a>
+  <php>}else{</php>
+  <a href="#" class="dropdown-toggle"><i class="fa fa-caret-right"></i><span class="menu-text">{$menu_name}</span><b class="arrow fa fa-angle-right"></b></a>
+  <ul  class="submenu">
+    <php>getsubmenu2($menu['items'])</php>
+  </ul>
+  <php>}</php>
+</li>
+<php>}</php>
+<php>}</php>
+<php>function getsubmenu2($submenus){</php>
+<php>foreach($submenus as $menu){</php>
+<li>
+  <php>$menu_name=L($menu['lang']);
+    $menu_name=$menu['lang']==$menu_name?$menu['name']:$menu_name;</php>
+  <a href="javascript:openapp('{$menu.url}','{$menu.id}','{$menu_name}',true);">&nbsp;&nbsp; <i class="fa fa-angle-double-right"></i><span class="menu-text">{$menu_name}</span></a></li>
+<php>}</php>
+<php>}</php>
+<if condition="APP_DEBUG">
+  <style>
+#think_page_trace_open {
+	left: 0 !important;
+	right: initial !important;
+}
+</style>
+</if>
+</head><body screen_capture_injected="true">
+<div class="main-container container-fluid">
+
+  <div class="sidebar" id="sidebar">
+    <div class="logo">
+    	<a href="{:U('Admin/Index/index')}"> 
+    		<img src="__TMPL__Public/assets/images/img/logo.png" class="logob" />
+    	</a>
+    </div>
+    <div id="nav_wraper">
+      <ul class="nav nav-list">
+        {:getsubmenu($submenus)}
+      </ul>
+       <ul class="support-ul">
+        <li>技术支持：</li>
+        <li class="support-tel"><a href="javascript:;" title="">400-0058-590</a></li>
+        <li class="support-qq"><a href="http://wpa.qq.com/msgrd?v=3&uin=3576496048&site=qq&menu=yes" target="_blank">3576496048</a></li>
+      </ul>
+      <div></div>
+    </div>
+  </div>
+  
+  <div class="main-content">
+    <!--<div class="breadcrumbs" id="breadcrumbs">
+    <a id="task-pre" class="task-changebt">←</a>
+      <div id="task-content">
+        <ul class="macro-component-tab" id="task-content-inner">
+          <li class="macro-component-tabitem noclose" app-id="0" app-url="{:U('main/index')}" app-name="首页"> <span class="macro-tabs-item-text">{:L('HOME')}</span> </li>
+        </ul>
+        <div style="clear:both;"></div>
+      </div>
+      <a id="task-next" class="task-changebt">→</a> </div>-->
+    <div class="page-content" id="content">
+    <div id="loading"><i class="loadingicon"></i><span>{:L('LOADING')}</span></div>
+<div style="margin-bottom:35px;">
+  <div id="home_toptip"></div>
+  <div class="well font11"><!--{:L('SYSTEM_NOTIFICATIONS')}--><img src="__ROOT__/images/htlogo.png"></div>
+<div id="right_tools_wrapper">
+	<span class="sy_span" style="display: none;"><input type="checkbox" <if condition="$_SESSION['editModel'] eq 1 "> checked="checked" </if> onclick="openEditModel(this);" >开启编辑模式</span>
+
+    <ul class="sy_lj">
+    	<li class="sy_jl1"><a href="{$site_options.site_host}" title="" target="_blank"><img src="__ROOT__/images/syhead-home.png" alt="前台首页" title="前台首页" /></a>
+    	<li class="sy_jl1"><a href="" title=""><img src="__ROOT__/images/syhead-pic1.png" alt="" title="" /></a>
+			<php>if($szMenu){</php>
+			<ul class="sy_xiala">
+			<foreach name="szMenu" item="sz">
+				<if condition="$sz">
+					<if condition="$sz['items']">
+						<li><a href="javascript:;" title="{$sz.name}">{$sz.name}</a>
+							<ul class="sy_erji">
+							<foreach name="sz['items']" item="szchild">
+		                    		<li><a href="javascript:openapp('{$szchild.url}','{$szchild.id}','{$szchild.name}',true);" title="{$szchild.name}">{$szchild.name}</a></li>
+							</foreach>
+							</ul>
+						</li>
+					<else />
+						<li><a href="javascript:openapp('{$sz.url}','{$sz.id}','{$sz.name}',true);" title="{$sz.name}">{$sz.name}</a></li>
+					</if>
+				</if>
+			</foreach> 
+            </ul>
+            <php>}</php>
+		</li>
+		
+        <li class="sy_jl1"><a href="" title=""><img src="__ROOT__/images/syhead-pic2.png" alt="" title="" /></a>
+        	<php>if($yhMenu){</php>
+        	<ul class="sy_xiala">
+			<foreach name="yhMenu" item="yh">
+				<if condition="$yh">
+					<if condition="$yh['items']">
+						<li><a href="javascript:;" title="{$yh.name}">{$yh.name}</a>
+							<ul class="sy_erji">
+							<foreach name="yh['items']" item="yhchild">
+		                    		<li><a href="javascript:openapp('{$yhchild.url}','{$yhchild.id}','{$yhchild.name}',true);" title="{$yhchild.name}">{$yhchild.name}</a></li>
+							</foreach>
+							</ul>
+						</li>
+					<else />
+						<li><a href="javascript:openapp('{$yh.url}','{$yh.id}','{$yh.name}',true);" title="{$yh.name}">{$yh.name}</a></li>
+					</if>
+				</if>
+			</foreach> 
+            </ul>
+        	<php>}</php>
+        
+        </li>
+     <!--   <li class="sy_jl2"><a href="{:U('HelpDocument/AdminTerm/help_document')}" target="_blank" title="操作文档"><img src="__ROOT__/images/syhead-pic3.png" alt="操作文档" title="操作文档" /></a>
+        	<php>if($bzMenu){</php>
+        	<ul class="sy_xiala">
+			<foreach name="bzMenu" item="bz">
+				<if condition="$bz">
+					<if condition="$bz['items']">
+						<li><a href="javascript:;" title="{$bz.name}">{$bz.name}</a>
+							<ul class="sy_erji">
+							<foreach name="bz['items']" item="bzchild">
+		                    		<li><a href="javascript:openapp('{$bzchild.url}','{$bzchild.id}','{$bzchild.name}',true);" title="{$bzchild.name}">{$bzchild.name}</a></li>
+							</foreach>
+							</ul>
+						</li>
+					<else />
+						<li><a href="javascript:openapp('{$bz.url}','{$bz.id}','{$bz.name}',true);" title="{$bz.name}">{$bz.name}</a></li>
+					</if>
+				</if>
+			</foreach> 
+            </ul>
+        	<php>}</php>
+        
+        </li>-->
+      <!--   <li class="sy_jl2"><a href="" title=""><img src="__ROOT__/images/syhead-pic4.png" alt="" title="" /></a>
+        	
+        	<php>if($bfMenu){</php>
+        	<ul class="sy_xiala">
+			<foreach name="bfMenu" item="bf">
+				<if condition="$bf">
+					<if condition="$bf['items']">
+						<li><a href="javascript:;" title="{$bf.name}">{$bf.name}</a>
+							<ul class="sy_erji">
+							<foreach name="bf['items']" item="bfchild">
+		                    		<li><a href="javascript:openapp('{$bfchild.url}','{$bfchild.id}','{$bfchild.name}',true);" title="{$bfchild.name}">{$bfchild.name}</a></li>
+							</foreach>
+							</ul>
+						</li>
+					<else />
+						<li><a href="javascript:openapp('{$bf.url}','{$bf.id}','{$bf.name}',true);" title="{$bf.name}">{$bf.name}</a></li>
+					</if>
+				</if>
+			</foreach> 
+            </ul>
+        	<php>}</php>
+        </li> -->
+        <li class="sy_jl3"><a href="" title=""><img src="__ROOT__/images/syhead-pic5.png" alt="" title="" /></a>
+        	<php>if($hsMenu){</php>
+        	<ul class="sy_xiala">
+			<foreach name="hsMenu" item="hs">
+				<if condition="$hs">
+					<if condition="$hs['items']">
+						<li><a href="javascript:;" title="{$hs.name}">{$hs.name}</a>
+							<ul class="sy_erji">
+							<foreach name="hs['items']" item="hschild">
+		                    		<li><a href="javascript:openapp('{$hschild.url}','{$hschild.id}','{$hschild.name}',true);" title="{$hschild.name}">{$hschild.name}</a></li>
+							</foreach>
+							</ul>
+						</li>
+					<else />
+						<li><a href="javascript:openapp('{$hs.url}','{$hs.id}','{$hs.name}',true);" title="{$hs.name}">{$hs.name}</a></li>
+					</if>
+				</if>
+			</foreach> 
+            </ul>
+        	<php>}</php>
+        </li>
+        <li><a href="{:U('Admin/Public/logout')}" title=""><img src="__ROOT__/images/syhead-pic6.png" alt="退出" title="退出" /></a></li>
+		<div class="clear"></div>
+    </ul>
+    
+    <div class="clear"></div>
+    </div>
+ <div class="clear"></div>
+
+    <iframe src="{:U('Main/index')}" style="width:100%;height: 100%;" frameborder="0" id="appiframe-0" class="appiframe"></iframe>
+    
+    
+    
+  </div>
+</div>
+<script src="__PUBLIC__/js/jquery.js"></script>
+<script src="__PUBLIC__/simpleboot/bootstrap/js/bootstrap.min.js"></script>
+<script>
+	var ismenumin = $("#sidebar").hasClass("menu-min");
+	var a_sign_selected = null;
+	$(".nav-list").on( "click",function(event) {
+		var closest_a = $(event.target).closest("a");
+		if (!closest_a || closest_a.length == 0) {
+			return
+		}
+		if (!closest_a.hasClass("dropdown-toggle")) {
+			if (ismenumin && "click" == "tap" && closest_a.get(0).parentNode.parentNode == this) {
+				var closest_a_menu_text = closest_a.find(".menu-text").get(0);
+				if (event.target != closest_a_menu_text && !$.contains(closest_a_menu_text, event.target)) {
+					return false
+				}
+			}
+			/*********2017年1月12日***********/
+			if (!closest_a.hasClass("is-opened")) {
+				a_sign_selected&&a_sign_selected.removeClass("is-opened");
+				//!a_sign_selected&&$(this).find(".is-opened").removeClass("is-opened");
+				a_sign_selected=closest_a;
+				a_sign_selected.addClass("is-opened");	
+			}
+			/*********2017年1月12日***********/
+			
+			return
+		}
+		var closest_a_next = closest_a.next().get(0);
+		if (!$(closest_a_next).is(":visible")) {
+			var closest_ul = $(closest_a_next.parentNode).closest("ul");
+			if (ismenumin && closest_ul.hasClass("nav-list")) {
+				return
+			}
+			closest_ul.find("> .open > .submenu").each(function() {
+						if (this != closest_a_next && !$(this.parentNode).hasClass("active")) {
+							$(this).slideUp(150).parent().removeClass("open")
+						}
+			});
+		}
+		if (ismenumin && $(closest_a_next.parentNode.parentNode).hasClass("nav-list")) {
+			return false;
+		}
+		$(closest_a_next).slideToggle(150).parent().toggleClass("open");
+		return false;
+	});
+  $('#xzyy').change(function (){
+    var lsign = $(this).val();
+    window.location.href='{:U("Admin/Index/index",'',true,true)}&l='+lsign;
+  })
+  
+  function openEditModel(obj){
+	 var open = obj.checked ? 1 : 0;
+	  
+	 $.post("{:U('Index/openEditMode')}",{model:open},function(){});
+  }
+  
+	/*********2017年1月12日***********/
+	$(".sy_lj a").on( "click",function() {
+		if($(this).attr("href")!="javascript:;"){
+			$(".is-opened").removeClass("is-opened");
+		}
+	});
+	</script>
+<script src="__TMPL__Public/assets/js/index.js"></script>
+</body>
+</html>

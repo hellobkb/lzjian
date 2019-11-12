@@ -1,0 +1,76 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="#A" data-toggle="tab">{:L('GENERAL_SETTING')}</a></li>
+			 
+		</ul>
+		<form class="form-horizontal js-ajax-form" action="{:U('AdminTerm/edit_post')}" method="post">
+			 
+			<div class="tabbable">
+				<div class="tab-content">
+					<div class="tab-pane active" id="A">
+						<fieldset>
+							<div class="control-group">
+								<label class="control-label">上级栏目：</label>
+								<div class="controls">
+									<select name="info[parentid]" id="parentid">
+										<option value="0">≡ 作为一级栏目 ≡</option>
+											{$category}
+									</select>
+									<span class="form-required">*</span>
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label">栏目名称：</label>
+								<div class="controls">
+									 <input type="text" name="info[catname]" id="catname" class="input" value="{$data.catname}">
+								</div>
+							</div>
+							
+							<div class="control-group">
+								<label class="control-label">栏目缩略图：</label>
+								<div class="controls">
+									  <input type="text" name="info[image]" id="thumb" value="{$data['image']}">
+										<a href="javascript:void(0);" onclick="flashupload('thumb_images', '附件上传','thumb',thumb_images,'1,jpg|jpeg|gif|png|bmp,1,,,1','','','');return false;">
+											 <span>点击上传</span>
+										</a>
+										<input type="button" class="btn btn-small" onclick="$('#thumb_preview').attr('src','__TMPL__Public/assets/images/default-thumbnail.png');$('#thumb').val('');return false;" value="取消图片">
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label">{:L('CATEGORY_DESCRIPTION')}</label>
+								<div class="controls">
+									<textarea name="info[description]" rows="5" cols="57">{$data.description}</textarea>
+								</div>
+							</div>
+			
+							 <div class="control-group">
+								<label class="control-label">链接地址：</label>
+								<div class="controls">
+									 <input type="text" name="info[url]" value="{$data.url}" class="input" />
+								</div>
+							</div>
+						</fieldset>
+					</div>
+				 
+				</div>
+			</div>
+			<div class="form-actions">
+			 	<input name="catid" type="hidden" value="{$data.catid}">
+        		<input name="type" type="hidden" value="2">
+        		<input name="info[child]" type="hidden"  value="0">
+        		<input name="info[modelid]" type="hidden"  value="9999">
+        		<input name="info[catdir]" type="hidden"  value="0">
+				<button class="btn btn-primary js-ajax-submit" type="submit">{:L('SAVE')}</button>
+				<a class="btn" href="{:U('AdminTerm/index')}">{:L('BACK')}</a>
+			</div>
+		</form>
+	</div>
+	<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/js/content_addtop.js"></script>
+</body>
+ 
+
+</html>

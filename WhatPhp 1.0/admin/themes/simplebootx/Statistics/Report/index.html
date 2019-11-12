@@ -1,0 +1,160 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="javascript:;">生成报告</a></li>
+			<li ><a href="{:U('Report/commentList')}">总结说明</a></li>
+			<li ><a href="{:U('Report/addComment')}">添加总结说明</a></li>
+		</ul>
+		<form class="well form-search" method="post" action="">
+			选择需要生成的报告：
+		</form>
+			<table class="table table-hover table-bordered table-list">
+				<tr>
+					<th>请选择类别</th>
+					<td>
+						<table width="100%" cellsapcing ="0"  id="dnd-example" >
+							<TBODY>
+								{$string}
+							</TBODY>
+						</table>
+						<span id="Msg"></span>
+					</td>
+				</tr>
+				<tr>
+					<th>日期：</th>
+					<td>
+						<input type="text" name="start_time" class="js-date-now" value="" style="width: 80px;" autocomplete="off">-
+						<input type="text" class="js-date-now" name="end_time" value="" style="width: 80px;" autocomplete="off"><span id="timeMsg"></span>
+						(默认开始时间2010-01-01, 默认结束时间为今天)
+					</td>
+				</tr>
+				<tr>
+					<th>请选择评论</th>
+					<td>
+						<select name="comment">
+							<option value="0">请选择</option>
+							<if condition="$clist">
+								<foreach name="clist" item="vo">
+									<option value="{$vo.id}">{$vo.title}</option>
+								</foreach>
+							</if>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<th></th>
+					<td><button type="button" id="confirm" class="btn btn-primary">确认</button></td>
+				</tr>
+				 
+			</table>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+	 
+	
+	<script>
+		function refersh_window() {
+			var refersh_time = getCookie('refersh_time');
+			if (refersh_time == 1) {
+				window.location = "{:U('AdminPost/index',$formget)}";
+			}
+		}
+		setInterval(function() {
+			refersh_window();
+		}, 2000);
+
+		$(function(){
+			//点击确认
+			$("#confirm").click(function(){
+				$("#Msg").html("");  //将提示信息制空
+				var type="";         //选择的类型
+				var stime = $("input[name=start_time]").val();    //开始时间
+				var etime = $("input[name=end_time]").val();       //结束时间
+				//var dtype = $("input[name=dtype]").val();         //产品访问量日期
+				 
+				var radio=document.getElementsByName("dtype");
+				for(var i=0;i<radio.length;i++){
+					if(radio[i].checked==true){
+					value=radio[i].value;
+					break;
+					}
+				}
+				
+				var comment = $("select[name=comment]").val();     //评论
+				$("input[type=checkbox]").each(function(){
+					
+					if($(this).attr("checked") == "checked"){
+						type = type+ ","+$(this).val();
+					}
+				});
+				if(type == ''){
+					 $("#Msg").html("<font color='red'>请至少选择一项</font>");
+					 return false;
+				} 
+				 
+				type = type.substr(1);   //得到选择要生成的类型
+
+				//
+				var params = {};
+				params.type= type;
+				params.stime = stime;
+				params.etime = etime;
+				params.comment = comment;
+				$.post('{:U("Report/creport_pre")}', params ,function(str){
+
+					if(str.status ==1 ){
+						window.open("{:U('Report/creport')}");
+					}
+
+				},"json");
+				
+				//window.open("{:U('Report/creport')}?type="+type+"&stime="+stime+"&etime="+etime+"&comment="+comment);
+				
+			});
+		 
+		});
+		
+		$(document).ready(function () {
+			Wind.css('treeTable');
+		    Wind.use('treeTable', function () {
+		        $("#dnd-example").treeTable({
+		            indent: 20
+		        });
+		    });
+		});
+		
+		function checknode(obj) {
+		    var chk = $("input[type='checkbox']");
+		    var count = chk.length;
+		    var num = chk.index(obj);
+		    var level_top = level_bottom = chk.eq(num).attr('level');
+		    for (var i = num; i >= 0; i--) {
+		        var le = chk.eq(i).attr('level');
+		        if (eval(le) < eval(level_top)) {
+		            chk.eq(i).attr("checked", true);
+		            var level_top = level_top - 1;
+		        }
+		    }
+		    for (var j = num + 1; j < count; j++) {
+		        var le = chk.eq(j).attr('level');
+		        if (chk.eq(num).attr("checked") == "checked") {
+		            if (eval(le) > eval(level_bottom)){
+		            	chk.eq(j).attr("checked", true);
+		            }
+		            else if (eval(le) == eval(level_bottom)){
+		            	break;
+		            }
+		        } else {
+		            if (eval(le) > eval(level_bottom)){
+		            	chk.eq(j).attr("checked", false);
+		            }else if(eval(le) == eval(level_bottom)){
+		            	break;
+		            }
+		        }
+		    }
+		}
+		
+	</script>
+</body>
+</html>

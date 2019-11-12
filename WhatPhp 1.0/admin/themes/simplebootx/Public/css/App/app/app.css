@@ -1,0 +1,222 @@
+/*.mui-plus.mui-android header.mui-bar {
+	display: none;
+}*/
+
+
+/*.mui-plus.mui-android .mui-bar-nav~.mui-content {
+	padding: 0;
+}*/
+
+
+/*
+ =============================================
+ * 下面是顶部导航样式
+ * */
+
+.hm-description {
+	margin: .5em 0;
+}
+
+.hm-description>li {
+	font-size: 14px;
+	color: #8f8f94;
+}
+
+.area {
+	margin: 20px auto 0px auto;
+}
+
+.mui-input-group {
+	margin-top: 10px;
+}
+
+.mui-input-group:first-child {
+	margin-top: 20px;
+}
+
+.mui-input-group label {
+	width: 22%;
+}
+
+.mui-input-row label~input,
+.mui-input-row label~select,
+.mui-input-row label~textarea {
+	width: 78%;
+}
+
+.mui-checkbox input[type=checkbox],
+.mui-radio input[type=radio] {
+	top: 6px;
+}
+
+.mui-btn {
+	padding: 10px;
+}
+
+.spliter {
+	color: #bbb;
+	padding: 0px 8px;
+}
+
+.oauth-area {
+	position: absolute;
+	bottom: 20px;
+	left: 0px;
+	text-align: center;
+	width: 100%;
+	padding: 0px;
+	margin: 0px;
+}
+
+.oauth-area .oauth-btn {
+	display: inline-block;
+	width: 50px;
+	height: 50px;
+	background-size: 30px 30px;
+	background-position: center center;
+	background-repeat: no-repeat;
+	margin: 0px 20px;
+	/*-webkit-filter: grayscale(100%); */
+	border: solid 1px #ddd;
+	border-radius: 25px;
+}
+
+.oauth-area .oauth-btn:active {
+	border: solid 1px #aaa;
+}
+
+.oauth-area .oauth-btn.disabled {
+	background-color: #ddd;
+}
+
+
+/*=========================================
+ * 重写样式*/
+
+.ui-page-login,
+body {
+	width: 100%;
+	height: 100%;
+	margin: 0px;
+	padding: 0px;
+	font-family: 'microsoft yahei', Helvetica, sans-serif;
+	background: #ffffff;
+}
+
+input {
+	font-family: 'microsoft yahei', Helvetica, sans-serif;
+	font-size: 15px;
+}
+
+.mui-input-row label {
+	width: 45px;
+}
+
+.mui-input-group:before {
+	height: 0px;
+}
+
+.mui-input-group:after {
+	height: 0px;
+}
+
+.mui-input-group .mui-input-row:after {
+	right: 15px;
+	height: 2px;
+}
+
+.mui-content {
+	background-color: #ffffff;
+	height: 100%;
+}
+
+.mui-content-padded {
+	margin-top: 50px;
+}
+
+
+/*reanod header样式*/
+
+.mui-bar {
+	background-color: #6CCAC9;
+	box-shadow: 0 0 0px rgba(0, 0, 0, .85);
+	height: auto;
+}
+
+.mui-icon-back:before,
+.mui-icon-left-nav:before {
+	content: url(../../images/back.png);
+}
+
+.reanod-header {
+	margin-top: 8px;
+	margin-bottom: -8px;
+	float: left;
+	width: 40px;
+}
+
+.reanod-header~h1 {
+	color: white;
+}
+
+.reanod-header~div {
+	text-align: center;
+}
+
+.reanod-header~div img {
+	width: 150px;
+	margin-top: 15px;
+	margin-left: -40px;
+}
+
+
+/*
+ =============================================
+ * 日期选择button
+ * */
+
+.date_select {
+	padding-left: 1px;
+	padding-right: 1px;
+	width: 70px;
+	font-size: 11px;
+}
+
+
+/*
+ =============================================
+ * 下面是底部菜单样式
+ * */
+
+.reanod-menu-right {
+	border-left: 1px solid #CCCCCC;
+}
+
+.mui-bar-tab {
+	padding-top: 1px;
+	background-color: #CCCCCC;
+}
+
+.mui-bar-tab .mui-tab-item {
+	height: 60px;
+	background: #ddd;
+}
+
+.mui-bar-tab .mui-tab-item.mui-active {
+	color: #6CCAC9;
+}
+
+.mui-bar-popover {
+	width: auto;
+}
+
+.mui-table-view-cell:after {
+	right: 15px;
+}
+
+
+/*底部菜单，输入框获取焦点事件*/
+
+.focusin .mui-bar.mui-bar-tab {
+	display: none;
+}

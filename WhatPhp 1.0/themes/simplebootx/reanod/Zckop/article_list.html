@@ -1,0 +1,27 @@
+<php>
+  $content = json_decode($zcmod['content'],true);
+  $limit = $content['zcmsg']['attr']['argu']['limit'];
+  $pagestely = array('listlong' => 5, 'listsidelong' => 2, "first" => "home page", "last" => "Shadowe", "prev" => L('RNPREVIOUS'), "next" => L('RNNEXT'), "list" => "*","currentclass" => "dangqianfen", "disabledclass" => "",'ss'=>true);
+  if(!$catid){
+  $modelid = $content['modelid'];
+  $category = M("Category")->where("modelid = '".$modelid."' and parentid=0")->find();
+  $catid = $category['catid'];
+  }
+  $pagetpl = '<div class="zong page_fy juzhong ">{prev}{liststart}{list}{listend}{next}</div>';
+</php>
+<content action="lists" catid="$catid" order="listorder DESC,id DESC" num="6" page="$page" page_tplconfig="$pagestely" page_tpl="$pagetpl">
+  <volist name="data" id="vo">
+    <div class="nelie">
+    <div class="netu"><a href="{:zcurl($vo['url'],$vo['moveurl'])}" title="{$vo.title}"><img src="{$vo.thumb}" title="{$vo.title}" alt="{$vo.title}" /></a></div>
+    <div class="nezi">
+    <a href="{:zcurl($vo['url'],$vo['moveurl'])}" title="{$vo.title}">{$vo.title}</a>
+    <span><php>echo date('M d , Y',$vo['updatetime']);</php></span>
+    <p><a href="{:zcurl($vo['url'],$vo['moveurl'])}" title="{$vo.description}">{$vo.description}</a></p>
+    </div>
+    </div>
+  </volist>
+  <div class="fenyen jvzhong">
+  {$pages}
+  <div class="clear"></div>
+  </div>
+</content>

@@ -1,0 +1,48 @@
+<admintpl file="header" />
+</head>
+<body>
+  <div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+      <li><a href="{:U('Search/Search/index')}">{:L('SOUSUOSHEHZI')}</a></li>
+      <li class="active"><a href="{:U('Search/Search/create')}">{:L('CHONGJIANSUOYIN')}</a></li>
+      <li><a href="{:U('Search/Search/searchot')}">{:L('REMENSOUSUO')}</a></li>
+    </ul>
+    <form class="form-horizontal js-ajax-forms" action="{:U('Search/Search/create')}" method="post">
+      <fieldset>
+        <div class="tabbable">
+          <div class="tab-content">
+            <div class="tab-pane active">
+                <div class="control-group tishi">
+                                        温馨提示：最好是有选择性的重建，如果全部重建，当信息量比较大的时候会比较久！此操作不可逆！
+                </div>
+                <div class="control-group">
+                  <label class="control-label">索引重建</label>
+                  <div class="controls">
+                      <div><th align="center" width="200">按照模型更新</th></div>
+                      <?php
+                      foreach($models as $_k=>$_v) {
+                      if (in_array($_v['modelid'], $config['modelid'])) {
+                      $model_datas[$_v['modelid']] = $_v['name'];
+                      }
+                      }
+                      echo Common\Lib\Form::select($model_datas,$modelid,'name="modelid" size="2" style="height:200px; display:block;" onclick="change_model(this.value)"','不限制模型');
+                      ?>
+                  </div>
+                </div>
+                <div class="control-group">
+                  <label class="control-label">每轮更新</label>
+                  <div class="controls">
+                    <input type="text" name="pagesize" value="10" class="input" size="4">&nbsp;条信息
+                  </div>
+                </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary  js-ajax-submit">更新</button>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+</body>
+</html>

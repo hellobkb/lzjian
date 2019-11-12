@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html class="ui-page-login">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>登录</title>
+		<link rel="stylesheet" type="text/css" href="__TMPL__/App/css/mui.min.css" />
+		<link rel="stylesheet" type="text/css" href="__TMPL__/App/css/app.css" />
+		<link rel="stylesheet" type="text/css" href="__TMPL__/App/css/login.css" />
+
+		
+	</head>
+
+	<body>
+		<header id="header" class="mui-bar mui-bar-nav">
+			<button class="mui-action-back mui-btn mui-btn-blue mui-btn-link mui-btn-nav mui-pull-left">
+				<span class="mui-icon mui-icon-left-nav"></span>
+				返回
+			</button>
+			<div class="mui-title">
+				<img src="__TMPL__/App/image/logo.png" />
+			</div>
+		</header>
+		<div id="content" class="mui-content">
+			<div class="reanod-login">
+				<img src="__TMPL__/App/image/login_text.png" />
+			</div>
+			<form id='login-form' class="mui-input-group">
+				<div class="mui-input-row">
+					<label class="reanod-label-acc">账户</label>
+					<input id='account' type="text" class="mui-input-clear mui-input" placeholder="请输入用户名">
+				</div>
+				<br>
+				<div class="mui-input-row">
+					<label class="reanod-label-pas">密码</label>
+					<input id='password' type="password" class="mui-input-clear mui-input" placeholder="请输入密码">
+				</div>
+			</form>
+			<div class="mui-content-padded">
+				<button id='login' class="mui-btn mui-btn-block mui-btn-primary">登录</button>
+				<div class="reanod-link-area">
+					<a id='forgetPassword' href="{:leuu('App/Login/foreget_pwd')}">忘记密码？</a>
+				</div>
+			</div>
+			<div class="reanod-login-bottom">
+				<img src="__TMPL__/App/image/copyright.png" />
+			</div>
+		</div>
+		
+		<!--检查更新-->
+		<script type="text/javascript" src="__TMPL__/App/js/update.js"></script>
+		<!--mui.min.js-->
+		<script type="text/javascript" src="__TMPL__/App/js/mui.min.js"></script>
+		<!--enterfocus-->
+		<script type="text/javascript" src="__TMPL__/App/js/mui.enterfocus.js"></script>
+		<!--app-->
+		<script type="text/javascript" src="__TMPL__/App/js/app.js"></script>
+		<!--login-->
+		<script type="text/javascript" src="__TMPL__/App/js/login.js"></script>
+
+		<script type="text/javascript">
+			(function(mui, doc) {
+				mui.plusReady(function() {
+					var state = app.getState();
+					//检查 "登录状态" 开始
+					if(state.token) {
+						//alert(state.token)
+					} else {
+						app.setState(null);
+					}
+				});
+			}(mui, document));
+		</script>
+	</body>
+
+</html>

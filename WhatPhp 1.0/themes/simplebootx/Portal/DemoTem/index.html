@@ -1,0 +1,58 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>demoTem</title>
+</head>
+<style>
+
+a{
+	margin-left:10px;
+	
+}
+
+</style>
+<body>
+ 
+
+<table>
+<foreach name="template" item="vo">
+<tr>
+	<td><img src="{$vo.banner}" style="width:200px;" /></td>
+	<td>
+		模板编号：{$vo.id} 
+		<php>
+			if(in_array('simplebootx_'.$vo['id'], $filename)){
+			
+		</php>
+			已安装
+		<php>}else{</php>
+			<a href="javascript:;" onclick="addtemplate('{$vo.url}',{$vo.id});">安装</a>
+		<php>}</php>
+		 
+		</td>
+</tr>
+
+</foreach>
+</table>
+<tc_include file="Public:scripts"/>
+<script>
+
+function addtemplate(dir,id)
+{
+	$.post("{:U('DemoTem/addTemplate')}", {dir:dir,id:id} ,function(str){
+		
+		 if(str ==1){
+			 alert("成功安装模板");
+		 }else{
+			 alert("安装失败");
+		 }
+		
+	});
+	
+}
+
+
+</script>
+</body>
+</html>

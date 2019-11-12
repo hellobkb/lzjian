@@ -1,0 +1,67 @@
+h5 {
+	text-align: center;
+	font-size: 1.8rem;
+	line-height: 2.3rem;
+	font-weight: bold;
+	color: #000000;
+}
+
+.mui-content-padded{
+	margin-left:20px;
+	margin-right:20px;
+}
+
+.reanod-source {
+	float: left;
+	font-size: 1.15rem;
+	padding: .5rem 0 0 1rem;
+}
+
+.reanod-date {
+	float: right;
+	padding: .5rem 1rem 0 0;
+}
+
+.reanod-icon-date {
+	width: 1.1rem;
+	margin-right: .3rem;
+}
+
+.reanod-date span:last-child {
+	font-size: 1.15rem;
+}
+
+.reanod-img img {
+	width: 100%;
+	margin-top: 1rem;
+	margin-bottom: 1rem;
+}
+
+p {
+	width: 100%;
+	text-align: justify;
+	text-indent: 2rem;
+	font-size: 1.5rem;
+	line-height: 2.3rem;
+	letter-spacing: .05rem;
+	color: #000000;
+}
+
+.mui-pager li>a,
+.mui-pager li>span {
+	border: none;
+	background-color: #2D3E50;
+	color: #FFFFFF;
+	border-radius: 3px;
+}
+
+.mui-pager li.mui-active>a,
+.mui-pager li.mui-active>span,
+.mui-pager li:active>a,
+.mui-pager li:active>span {
+	cursor: default;
+	text-decoration: none;
+	color: #fff;
+	border-color: #CCCCCC;
+	background-color: #929292;
+}

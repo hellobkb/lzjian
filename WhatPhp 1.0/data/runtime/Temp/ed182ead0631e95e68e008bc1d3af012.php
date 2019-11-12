@@ -1,0 +1,3 @@
+<?php
+//000000000000a:18:{s:26:"SP_SITE_ADMIN_URL_PASSWORD";s:0:"";s:16:"SP_DEFAULT_THEME";s:11:"simplebootx";s:13:"DEFAULT_THEME";s:11:"simplebootx";s:14:"SP_ADMIN_STYLE";s:4:"flat";s:9:"URL_MODEL";s:1:"1";s:15:"URL_HTML_SUFFIX";s:5:".html";s:15:"UCENTER_ENABLED";i:0;s:18:"COMMENT_NEED_CHECK";i:0;s:21:"COMMENT_TIME_INTERVAL";i:60;s:18:"MOBILE_TPL_ENABLED";i:0;s:13:"HTML_CACHE_ON";b:0;s:15:"SP_MAIL_ADDRESS";s:17:"remind@reanod.com";s:14:"SP_MAIL_SENDER";s:6:"reanod";s:12:"SP_MAIL_SMTP";s:11:"smtp.qq.com";s:17:"SP_MAIL_SMTP_PORT";s:2:"25";s:17:"SP_MAIL_LOGINNAME";s:17:"remind@reanod.com";s:16:"SP_MAIL_PASSWORD";s:10:"reanod6688";s:5:"smeta";s:65:"{"thumb":"\/thinkcmf\/data\/upload\/20160606\/57550cff9b230.png"}";}
+?>

@@ -1,0 +1,58 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="{:U('Guestbookadmin/guestBookGroup')}">询盘显示类别</a></li>
+			<li><a href="{:U('Guestbookadmin/addGroup')}">添加询盘类别</a></li>
+		</ul>
+		<form class="well form-search" >
+			<a>温馨提示：非专业人员，请勿修改或删除模型信息哦！</a>
+		</form>
+		<form class="js-ajax-form" method="post">
+			
+			<table class="table table-hover table-bordered table-list">
+				<thead>
+					<tr>
+						<th width="55">ID</th>
+						<th width="100">类别名称</th>
+						<th width="80">添加时间</th>
+						<th width="120">操作</th>
+					</tr>
+				</thead>
+				<foreach name="list" item="vo">
+				<tr>
+					<td>{$vo.id}</td>
+					<td><a>{$vo.name}</a></td>
+					<td>{$vo.addtime|date="Y-m-d H:i:s",###}</td>
+					<td><a href="{:U('Guestbookadmin/editGroup',array('id'=>$vo['id']))}">修改</a> | <a href="{:U('api/Guestbookadmin/index',array('ltype'=>$vo['id']))}">查看询盘</a></td>
+				</tr>
+				</foreach>
+				<tfoot>
+					<tr>
+						<th width="55">ID</th>
+						<th width="100">类别名称</th>
+						<th width="80">添加时间</th>
+						<th width="120">操作</th>
+					</tr>
+				</tfoot>
+			</table>
+			
+			<div class="pagination">{$Page}</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+	<script>
+		setCookie('refersh_time', 0);
+		function refersh_window() {
+			var refersh_time = getCookie('refersh_time');
+			if (refersh_time == 1) {
+				window.location.reload();
+			}
+		}
+		setInterval(function() {
+			refersh_window()
+		}, 2000);
+	</script>
+</body>
+</html>

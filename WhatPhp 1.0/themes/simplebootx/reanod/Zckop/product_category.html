@@ -1,0 +1,46 @@
+<php> $modelid = 5;
+  if(!($result = S('modelid'.$modelid))){
+  $where['modelid'] = $modelid;
+  $resultarr = M("Category")->where($where)->select();
+  $result =array();
+  foreach($resultarr as $k=>$v){
+  $result[$v['catid']] =$v;
+  }
+  S('modelid'.$modelid,$result);
+  }
+ 
+  $result = zc_children_more($result); </php>
+<div class="subNavBox2"> <a href="__ROOT__/products/" class="prltbiao">{:L('RNPRODUCT_LIST')}</a>
+<content action="category" catid="72" order="listorder ASC" >
+<volist name="data" id="r">
+  <div <if condition="in_array($catid,explode(',',$r['arrchildid']))"> class="subNav2 currentDd2 currentDt2"<else />class="subNav2"</if>><a href="{:zcurl($r['url'],$r['moveurl'])}" title="{$r.catname}">{$r.catname}</a></div>
+   <content action="category" catid="$r['catid']"  order="listorder ASC" >
+   <if condition="count($data)">
+    <ul class="navContent2" <if condition="in_array($catid,explode(',',$r['arrchildid']))"> style="display:block" </if>>
+       <if condition="$data">
+        <volist name="data" id="r2">
+        <li><a  href="{:zcurl($r2['url'],$r2['moveurl'])}" title="{$r2.catname}" <if condition="$catid eq $r2['catid']">class="onss"</if>>{$r2.catname}</a></li>
+        </volist>
+       </if>
+    </ul>
+    </if>
+  </content>
+</volist>
+
+</content>
+</div>
+
+<content action="lists"  catid="96" where="isdelay=0 and is_del=0" order="listorder ASC,id DESC" num="2" >
+<if condition="$data">
+    <div class="prlb">
+      <a href="__ROOT__/news/" class="prlbbiao" title="{:L('RNLATEST_NEWS')}">{:L('RNLATEST_NEWS')}</a>
+      <volist name="data" id="r7">
+      <div class="prlblie">
+        <a href="{:zcurl($r7['url'],$r7['moveurl'])}" title="{$r7.title}" class="prlbtu"><img src="{$r7.thumb}" title="{$r7.title}" alt="{$r7.title}" /></a>
+        <p><a href="{:zcurl($r7['url'],$r7['moveurl'])}" title="{$r7.description}">{$r7.description}</a></p>
+      </div>
+      </volist>
+      
+    </div>
+</if>
+</content>

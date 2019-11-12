@@ -1,0 +1,123 @@
+ 
+<php>
+	$content = json_decode($zcmod['content'],true);
+	$catid = $content['zcmsg']['attr']['argu']['catid'];
+	$limit = $content['zcmsg']['attr']['argu']['limit'];
+	
+	 
+	
+	if(!$catid){
+		$modelid = $content['zcmsg']['modelid'];
+		 
+		$category = M("Category")->where("modelid = '".$modelid."' and parentid=0")->select();
+		$catid = "";
+		foreach($category as $cate){
+			$catid .= ",".$cate['catid'];
+		}
+	}
+	$catid = ltrim($catid, ",");
+	  
+	$siteOption = sp_get_site_options();
+	  
+</php>
+
+<!-- 文章和FAQ开始 -->
+
+<div class="icenter">
+   <div class="ipart5">
+        <div class="zong"> 
+        	<!-- NEWS 开始 -->
+        	<!-- 只要推荐的文章 -->
+        	<content action="lists" catid="$catid" where="1" order="listorder DESC,id DESC" limit="$limit" moreinfo="1">
+        	 
+        		<php>
+        			 
+        		 	$temp =array();
+        		 	foreach($data as $data_new){
+        		 		$temp[] = $data_new;
+        		 	}
+        		 	$data= $temp;
+        			 
+        			$new1 = $data[0];
+        			 
+        		</php>
+        	</content>
+        	
+            <div class="inews">
+                <div class="inews_title">
+                    <a href="" title=""><img src="__TMPL__xinyu/images/news.jpg" alt="" title="" /></a>
+                </div>
+                <div class="inews_top">
+                    <div class="inews_hx"></div>
+                </div>
+                
+                <div class="inews_left">
+                    <div class="inews_pic">
+                        <a href="{:zcurl($new1['url'] ,$new1['moveurl'])}" title="{$new1.title}"><img src="<php>echo $siteOption['site_host'] . $new1['thumb']</php>" alt="{$new1.title}" title="{$new1.title}" /></a>
+                    </div>
+                    <div class="inews_ntitle">
+                        <a href="{:zcurl($new1['url'] ,$new1['moveurl'])}" title="{$new1.title}">{$new1.title}</a>
+                    </div>
+                    <div class="inews_nwz">
+                        <a href="{:zcurl($new1['url'] ,$new1['moveurl'])}" ><php>echo (str_cut($new1['content'] , 78))</php></a>
+                    </div>
+                </div>
+                
+                <div class="inews_right">
+                	<ul>
+	                	<foreach name="data" item="news_vo" key="news_key">
+	                	 	
+	                		<if condition="$news_key gt 0 ">
+	                		 
+	                			<li><a href="{:zcurl($news_vo['url'] , $news_vo['moveurl'])}" title="<php>echo str_cut($news_vo['title'] , 38)</php>"><php>echo str_cut($news_vo['title'] , 38)</php></a></li>
+	                		</if>
+	                	</foreach>
+                	</ul>
+                </div>
+                 
+                <div class="clear"></div>
+            
+            </div>
+            <!-- NEWS 结束 --> 
+            <!-- faq开始 -->
+            <php>
+            	 
+            	$faq = M('Category')->where(" modelid= 31 ")->select();
+            	$catid = "";
+            	foreach($faq as $fa){
+            		$catid .= ",".$fa['catid'];
+            	}
+            	
+            	$catid = ltrim($catid, ",");
+            	
+            	$data = M("faq")->alias("f")->join(C("DB_PREFIX")."faq_data as fd on f.id=fd.id")->field("f.*, fd.* ")->where("f.catid in (".$catid.")")->limit(4)->select();
+            	 
+            	
+            </php>
+            <div class="ifaq">
+                <div class="ifaq_title">
+                    <a href="" title=""><img src="__TMPL__xinyu/images/faq.jpg" alt="" title="" /></a>
+                </div>
+                <div class="ifaq_top">
+                    <div class="ifaq_hx"></div>
+                </div>
+                 <script type="text/javascript" src="__TMPL__xinyu/js/shoufengq.js"></script>
+                      <div class="gongs_xwk">
+                       
+                        <foreach name="data" item="faq_vo" key="faq_key">
+                        	<div id="comment{$faq_key+1}" onclick="comment_change({$faq_key+1})" class="moren_zk" >{$faq_vo.title}</div>
+                        	<div id="commentpic{$faq_key+1}" class="yincxinx" >
+                          		<div class="yinc_baioti">{$faq_vo.title}</div>
+                          		<div class="yincxinx_wz"><a herf="{:zcurl($faq_vo['url'] , $faq_vo['moveurl'])}" title="{$faq_vo.content}">{$faq_vo.content}</a></div>
+                        	</div>
+                        </foreach>
+                         
+                    </div>
+    
+            </div>
+    		<!-- faq 结束 -->
+            <div class="clear"></div>
+        </div>
+    </div>
+</div>  
+<!-- 文章和FAQ结束 -->  

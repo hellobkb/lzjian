@@ -1,0 +1,33 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="{:U('guestbookadmin/email')}">邮箱管理</a></li>
+		</ul>
+			<table class="table table-hover table-bordered">
+				<thead>
+					<tr>
+						<th width="100">ID</th>
+						<th width="300">邮箱</th>
+						<th width="100">操作</th>
+					</tr>
+				</thead>
+				<tbody>
+					<foreach name="email" item="vo">
+					<tr>
+						<td>{$vo.id}</td>
+						<td>{$vo.email}</td>
+						<td>
+							<a href="{:U('guestbookadmin/delemail',array('id'=>$vo['id']))}" class="js-ajax-delete">{:L('DELETE')}</a>
+						</td>
+					</tr>
+					</foreach>
+				</tbody>
+			</table>
+			<div class="pagination">{$Page}</div>
+	</div>
+<script src="__PUBLIC__/js/common.js"></script>
+<script src="__PUBLIC__/js/content_addtop.js"></script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+<php>
+$content = json_decode($zcmod['content'],true);
+$catid = $content['zcmsg']['attr']['argu']['catid'];
+$limit = $content['zcmsg']['attr']['argu']['limit'];
+</php>
+<content action="lists" catid="$catid" where="istop=1" order="listorder DESC,id DESC" num="$limit">
+	<ul>
+	<volist name="data" id="vo">
+		<li><a href="{:zcurl($vo['url'],$vo['moveurl'])}" title="{$vo.title}">{$vo.title|str_cut=###,15}</a>{$vo.updatetime|date="m-d",###} </li>
+	</volist>
+	</ul>
+</content>

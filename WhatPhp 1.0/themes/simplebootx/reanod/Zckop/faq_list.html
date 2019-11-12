@@ -1,0 +1,28 @@
+<php>
+$content = json_decode($zcmod['content'],true);
+$limit = $content['zcmsg']['attr']['argu']['limit'];
+$pagestely = array('listlong' => 6, 'listsidelong' => 2, "first" => "Home Page", "last" => "Shadowe", "prev" => "Previous", "next" => "Next", "list" => "*","currentclass" => "xuanz", "disabledclass" => "",'ss'=>true);
+
+$pagetpl = '<div class="p1_fy">{prev}{liststart}{list}{listend}{next}</div>';
+</php>
+
+<content action="lists" catid="$catid" order="listorder DESC,id DESC" num="$limit" page="$p" page_tplconfig="$pagestely" page_tpl="$pagetpl" moreinfo="1">
+<if condition="$data">
+ <script type="text/javascript" src="__TMPL__xinyu/js/shoufengq.js"></script>
+        <div class="qgongs_xwk">
+         <volist name="data" id="vo">
+          <div id="qcomment{$key}" onclick="qcomment_change({$key})" class="qmoren_zk" >{$vo.title}</div>
+          <div id="qcommentpic{$key}" class="qyincxinx" >
+            <div class="qmoren_zk">{$vo.title}</div>
+            <div class="qyincxinx_wz"><php>$con = strip_tags($vo['content']);</php>
+               {$vo.content}
+            </div>
+          </div>
+          </volist>
+        </div>
+                      
+        <div class="n1_fy f_fyjl">{$pages}</div>
+<else />
+	None
+</if>
+</content>  

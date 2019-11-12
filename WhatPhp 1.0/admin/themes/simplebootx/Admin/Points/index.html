@@ -1,0 +1,122 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="{:U('Points/index')}">我的积分</a></li>
+			
+			<li><a href="{:U('Points/add')}">添加积分</a></li>
+			<li><a href="{:U('Points/listpoint1')}">积分审核</a></li>
+		</ul>
+		
+			<php>$now_points = $pointsall-$dh['points_dh'];</php>
+		<h4>总积分：<if condition="$pointsall">{$pointsall}<else />0</if> &nbsp;&nbsp;&nbsp;兑换积分：<if condition="$dh['points_dh']">{$dh.points_dh}<else />0</if>&nbsp;&nbsp;&nbsp;当前积分：{$now_points}</h4>
+			
+			<h4>积分明细表</h4>
+	
+		<table class="table table-hover table-bordered">
+			<thead>
+				<tr>
+					<th>日期</th>
+					<th>积分</th>
+					<th>操作</th>
+					
+				</tr>
+			</thead>
+			<tbody>
+			
+				<foreach name="points" item="vo">
+				<tr>
+					<td>{$vo.addtime}</td>
+					<td>{$vo.points}</td>
+					<td>{$qx_points[$vo['contentid']]}</td>
+					
+				</tr>
+				</foreach>
+			</tbody>
+		</table>
+		<div class="pagination">{$page}</div>
+
+		
+		<h4>积分规则说明表</h4>
+			
+	
+		<form class="js-ajax-form" method="post">
+		<table class="table table-hover table-bordered table-list">
+			<thead>
+				<tr>
+					<th>积分项</th>
+					<th>分值</th>
+					<th>计分方式</th>
+					<th>说明</th>
+				
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>登录</td>
+					<td>1</td>
+					<td rowspan="3">每项每天最多记录一次，上限30分/月</td>
+					<td rowspan="3">浏览帮助中心内容，让您更好的熟悉后台，掌握后台功能；<br />观看培训视频，学习更多外贸技巧；</td>
+				</tr>
+				<tr>
+					<td>浏览帮助中心</td>
+					<td>1</td>
+				</tr>
+				<tr>
+					<td>观看视频</td>
+					<td>1</td>
+				</tr>
+				<!-- <tr>
+					<td>发布文章</td>
+					<td>10</td>
+				</tr> -->
+				<tr>
+					<td>提供原创文章（英文）</td>
+					<td>10</td>
+					<td></td>
+					<td>发布原创新闻的作用：<br/>1. 对网站更新，搜索引擎的抓取和收录有帮助；<br/>2. 提升关键词排名的有效渠道；<br/>3. 发布公司动态和产品动态能够提升企业公信力，进而提升客户粘度；</td>
+				</tr>
+
+				<tr>
+					<td>提供视频</td>
+					<td>15</td>
+					<td>20s以上 最优视频时长45s-10min以内</td>
+					<td>视频营销是营销计划中重要的部分，是流行的内容营销方式：<br/>1. 提升搜索排名，google like it；<br/>2. 视频的展示方式很直观，在互联网中很受欢迎；<br/>3. 引入流量</td>
+				</tr>
+
+				<tr>
+					<td>提供图片</td>
+					<td>5</td>
+					<td>出货有效图片1图积5分；<br/>产品有效图片1图积5分；（同一产品不同拍摄角度计1图）<br/>客户来访有效图片1图积5分；</td>
+					<td>图片是最直观的展示方式；<br/>在Facebook、linkedin、pinterest以及网站更新的新闻中发布图片，均能</td>
+				</tr>
+
+				<tr>
+					<td>提供Facebook账号</td>
+					<td>30</td>
+					<td></td>
+					<td>重复注册会导致封号等问题</td>
+				</tr>
+				<tr>
+					<td>提供Linkedin账号</td>
+					<td>30</td>
+					<td></td>
+					<td>账号的公司页面只能创建1个，公司页面是增加企业公信力的有效途径。</td>
+				</tr>
+				<tr>
+					<td>提供Google+账号</td>
+					<td>30</td>
+					<td></td>
+					<td></td>
+				</tr>
+				
+				
+			</tbody>
+		</table>
+		</form>
+		<div class="pagination">&nbsp;</div>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

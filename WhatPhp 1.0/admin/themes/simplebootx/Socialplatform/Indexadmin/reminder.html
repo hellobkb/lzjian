@@ -1,0 +1,71 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="{:U('Indexadmin/reminder')}">域名和服务器列表</a></li>
+			<li><a href="{:U('Indexadmin/addReminder')}">添加域名或服务器</a></li>
+			 
+		</ul>
+		<form class="well form-search" >
+			<a>以下是添加的域名或服务器</a>
+		</form>
+		<form class="js-ajax-form" method="post">
+			
+			<table class="table table-hover table-bordered table-list">
+				<thead>
+					<tr>
+						<th width="55">ID</th>
+						<th width="100">类型</th>
+						<th width="100">过期时间</th>
+						<th width="100">开始提醒时间</th>
+						<th width="100">添加时间</th>
+						<th>描述</th>
+						<th width="120">状态</th>
+						<th >操作</th>
+					</tr>
+				</thead>
+				<foreach name="list" item="vo">
+				<tr>
+					<td>{$vo.id}</td>
+					<td><if condition="$vo['type'] eq 1">服务器<elseif condition="$vo['type'] eq 2" />域名</if></td>
+					<td>{$vo.endtime|date="Y-m-d",###}</td>
+					<td><php> echo date("Y-m-d",$vo['endtime'] - 86400*$vo['rday']) ;</php></td>
+					<td>{$vo.addtime|date="Y-m-d",###}</td>
+					<td>{$vo.content}</td>
+					<td><if condition="$vo['status'] eq '0' "><font color="blue">未过期</font><elseif condition="$vo['status'] eq 1" /><font color="red">已过期</font></if></td>
+					<td><a href="{:U('Indexadmin/editReminder',array('id'=>$vo['id']))}">编辑</a> | <a href="{:U('Indexadmin/delReminder',array('id'=>$vo['id']))}">删除</a></td>
+				</tr>
+				</foreach>
+				<tfoot>
+					<tr>
+						<th width="55">ID</th>
+						<th width="100">类型</th>
+						<th width="100">过期时间</th>
+						<th width="100">开始提醒时间</th>
+						<th width="100">添加时间</th>
+						<th>描述</th>
+						<th width="120">状态</th>
+						<th >操作</th>
+					</tr>
+				</tfoot>
+			</table>
+			
+			<div class="pagination">{$Page}</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+	<script>
+		setCookie('refersh_time', 0);
+		function refersh_window() {
+			var refersh_time = getCookie('refersh_time');
+			if (refersh_time == 1) {
+				window.location.reload();
+			}
+		}
+		setInterval(function() {
+			refersh_window()
+		}, 2000);
+	</script>
+</body>
+</html>

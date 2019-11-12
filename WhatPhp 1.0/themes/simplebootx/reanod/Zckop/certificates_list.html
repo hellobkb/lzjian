@@ -1,0 +1,41 @@
+<php>
+$content = json_decode($zcmod['content'],true);
+$limit = $content['zcmsg']['attr']['argu']['limit'];
+$pagestely = array('listlong' => 6, 'listsidelong' => 2, "first" => "Home Page", "last" => "Shadowe", "prev" => "Previous", "next" => "Next", "list" => "*","currentclass" => "xuanz", "disabledclass" => "",'ss'=>true);
+
+$pagetpl = '<div class="p1_fy">{prev}{liststart}{list}{listend}{next}</div>';
+
+ $siteOption = sp_get_site_options();
+</php>
+
+<content action="lists" catid="$catid" where="istop=1" order="listorder DESC,id DESC" num="$limit" page="$p" page_tplconfig="$pagestely" page_tpl="$pagetpl">
+
+<div class="cer_pro baguetteBoxOne">
+<if condition="$data">
+      <SCRIPT type=text/javascript src="__TMPL__xinyu/js/baguettebox.min.js"></SCRIPT> 
+
+
+          <volist name="data" id="vo">
+            <div <if condition="($key+1)%5 eq 0"> class="cer_nr cer_nrlast"<else />class="cer_nr"</if>>
+                <div class="cteamtu">
+                  <a title="{$vo.title}" class="cteamtupian"><img src="<php>echo $siteOption['site_host'] . $vo['thumb']</php>" title="{$vo.title}" alt="{$vo.title}" /></a>
+                  <a href="<php>echo $siteOption['site_host'] . $vo['thumb']</php>" class="cteamfu" title="{$vo.title}"><img src="__TMPL__xinyu/images/fangda.png" title="{$vo.title}" alt="{$vo.title}" /></a>
+              </div>
+              <div class="teamzi">{$vo.title}</div>
+            </div>
+          </volist>
+            
+            <script>
+                baguetteBox.run('.baguetteBoxOne', {
+                    animation: 'fadeIn',
+                });
+            </script> 
+            <div class="clear"></div>
+      </div>
+        
+        <div class="n1_fy cer_fyjl">{$pages}</div>
+
+<else />
+None
+</if>
+</content>  

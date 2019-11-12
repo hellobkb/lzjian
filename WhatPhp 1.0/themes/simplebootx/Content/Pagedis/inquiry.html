@@ -1,0 +1,22 @@
+<a href="{:U('Content/Pagedis/Inquiry',array('signdel'=>'del','pro'=>$product['id']))}" class=""> Delete </a>
+
+<div class="listcart"> 
+  <a href="{:get_c_url(2)}"  >{:L('RNCONTINUE_TO_INQUIRE')}</a> <a href="{:U('Content/Pagedis/lists',array('catid'=>5))}" >{:L('RNINQUIRE_NOW')}</a>
+
+    <div class="clear"></div>
+</div>
+ 
+
+
+<style type="text/css">
+.listcart{ width:100%; margin-top:40px;}
+.listcart a{ background:#fff;display:inline-block;height: 30px; width:200px; line-height: 30px;cursor: pointer;border: none;overflow: hidden;color: #881f2d;cursor: pointer;  border:1px solid #881f2d; padding-left:10px; padding-right:10px; text-align:center; font-size:14px; font-size:1.4rem; margin-left:10px;}
+.listcart a:hover{  border:#881f2d solid 1px; background:#881f2d; color:#fff!important;}
+@media screen and (max-width:999px){
+.listcart a{margin-left:2.5%; margin-right:2.5%; padding-left:0px; padding-right:0px }
+.listcart{ width:100%; margin-top:2rem }
+}
+@media screen and (max-width:420px){
+.listcart a{ width:95% !important ; float:none; overflow:hidden; margin-bottom:1rem; margin-top:1rem}
+}
+</style>

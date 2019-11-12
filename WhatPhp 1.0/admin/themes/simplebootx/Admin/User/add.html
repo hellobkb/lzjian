@@ -1,0 +1,129 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li><a href="{:U('user/index')}">{:L('ADMIN_USER_INDEX')}</a></li>
+			<li class="active"><a href="{:U('user/add')}">{:L('ADMIN_USER_ADD')}</a></li>
+		</ul>
+		<form method="post" class="form-horizontal js-ajax-form" action="{:U('User/add_post')}">
+			<fieldset>
+				<div class="control-group">
+					<label class="control-label">{:L('USERNAME')}</label>
+					<div class="controls">
+						<input type="text" name="user_login">
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">{:L('PASSWORD')}</label>
+					<div class="controls">
+						<input type="password" name="user_pass">
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">{:L('EMAIL')}</label>
+					<div class="controls">
+						<input type="text" name="user_email">
+					</div>
+				</div>
+				
+				<div class="control-group">
+					<label class="control-label">{:L('ROLE')}</label>
+					<div class="controls">
+						<foreach name="roles" item="vo">
+						<label class="checkbox inline"><input value="{$vo.id}" type="checkbox" name="role_id[]" onclick="checksale(this);">{$vo.name}</label>
+						</foreach>
+					</div>
+				</div>
+				<div class="control-group" id="salemanager" style="display:none">
+					<label class="control-label">{:L('SALAMANAGER')}</label>
+					<div class="controls">
+						<select name="salemanager">
+							<option value="0">=请选择业务经理=</option>
+							<foreach name="crole" item='v'>
+								<option value="{$v.id}">{$v.user_login}</option>
+							</foreach>
+						</select>
+					</div>
+				</div>
+				
+
+				<!-- 只有超级管理员才能分配账号身份 -->
+				<if condition="$admininfo['id'] eq 1 || $admininfo['identity'] eq 2">
+				<div class="control-group">
+					<label class="control-label">身份</label>
+					<div class="controls">
+						<select name="identity" onchange="get_point_auth(this.value)">
+							<option value="0">=请选择=</option>
+							<option value="1">客户</option>
+							<option value="2">推广</option>
+						</select>此身份跟积分有关
+					</div>
+
+				</div>
+				<div class="control-group" id="point_tg_show" style="display: none;">
+					<label class="control-label">客户账号</label>
+					<div class="controls">
+						
+						<select name="customer">
+							<option value="">请选择</option>
+							<volist name="customers" id="v">
+							<option value="{$v.id}">{$v.user_login}</option>
+							</volist>
+						</select>
+						
+					</div>
+				</div>
+
+				<div class="control-group" id="point_auth_show" style="display: none;">
+					<label class="control-label">获取积分权限</label>
+					<div class="controls">
+						<foreach name="qx_points" item="vo">
+						<label class="checkbox inline"><input value="{$key}" type="checkbox" name="points_auths[]">{$vo}</label>
+						</foreach>
+						
+					</div>
+				</div>
+				</if>
+
+			</fieldset>
+			<div class="form-actions">
+				<button type="submit" class="btn btn-primary js-ajax-submit mright">{:L('ADD')}</button>
+				<a class="btn" href="{:U('user/index')}">{:L('BACK')}</a>
+			</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+	<script>
+	
+		function checksale(obj){
+			
+			var id = obj.value;
+			
+			if(id ==5){  //选择上业务员
+				var check = obj.checked;
+				if(check){  //选择上业务员
+					$("#salemanager").show();
+				}else {   //取消业务员角色
+					$("#salemanager").hide();
+				}
+				 
+			}
+			
+		}
+		function get_point_auth(val){
+			if(val == 1){
+				$('#point_auth_show').show();
+				$('#point_tg_show').hide();
+			}else if(val == 2){
+				$('#point_auth_show').hide();
+				$('#point_tg_show').show();
+			}else{
+				$('#point_auth_show').hide();
+				$('#point_tg_show').hide();
+			}
+		}
+	
+	</script>
+</body>
+</html>

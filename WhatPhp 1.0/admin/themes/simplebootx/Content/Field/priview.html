@@ -1,0 +1,355 @@
+<admintpl file="header" />
+<style type="text/css">
+.pic-list li {
+	margin-bottom: 5px;
+}
+/*
+===================
+颜色筛选
+===================
+*/
+.color_pick{
+	border:1px solid #ccc;
+	padding:2px 13px 2px 3px;
+	background:#fff url(__PUBLIC__/images/down.png) 40px center no-repeat;
+	display:inline-block;
+	cursor:pointer;
+	height:20px;
+	overflow:hidden;
+	vertical-align:middle;
+	position:relative;
+	line-height:normal;
+}
+.color_pick:hover{
+	background-color:#fffbde;
+}
+.color_pick.color_current{
+	border-color:#aaa #aaa #555;
+	background-color:#fffbde;
+}
+.color_pick em{
+	height:20px;
+	width:34px;
+	display:inline-block;
+	background:url(__PUBLIC__/images/transparent.png);
+}
+.color_pick.color_big{
+	background-image:none;
+	width:80px;
+	padding:3px;
+	height:60px;
+	text-align:center;
+	color:#333;
+}
+.color_pick.color_big em{
+	width:80px;
+	height:38px;
+	*margin-bottom:3px;
+	text-align:center;
+}
+/*字体颜色选择组合*/
+.color_pick_dom{
+	width:70px;
+	width:300px;
+}
+.color_pick_dom ul{
+	height:29px;
+	width:170px;
+	padding:3px 0 0 0;
+}
+.color_pick_dom li{
+	float:left;
+	margin-right:10px;
+	_margin-right:8px;
+	white-space:nowrap;
+}
+.color_pick_dom li input{
+	_margin:0 0 -1px -3px;
+	_padding:0;
+}
+.color_pick_dom li.none{
+	margin-right:0;
+}
+.color_pick_dom .color_pick{
+	background-position:151px center;
+}
+.color_pick_dom .color_pick em{
+	width:145px;
+}
+.color_pick_dom .case{
+	float:right;
+	width:100px;
+	border:1px solid #ccc;
+	background:#fff;
+	padding:10px 10px;
+}
+</style>
+</head>
+
+<body>
+	<div class="wrap js-check-wrap">
+		
+		<form method="post" class="form-horizontal js-ajax-forms" id="J_ajaxForms" action="{:U('Contentshow/add')}">
+			<div class="row-fluid">
+				<div class="span9">
+					<table class="table table-bordered">
+						<php>
+					if(is_array($forminfos['base'])) {
+					 foreach($forminfos['base'] as $field=>$info) {
+						 if($info['isomnipotent']) continue;
+						 if($info['formtype']=='omnipotent') {
+							foreach($forminfos['base'] as $_fm=>$_fm_value) {
+								if($_fm_value['isomnipotent']) {
+									$info['form'] = str_replace('{'.$_fm.'}',$_fm_value['form'],$info['form']);
+								}
+							}
+							foreach($forminfos['senior'] as $_fm=>$_fm_value) {
+								if($_fm_value['isomnipotent']) {
+									$info['form'] = str_replace('{'.$_fm.'}',$_fm_value['form'],$info['form']);
+								}
+							}
+						}
+					 </php>
+		            <tr>
+		              <th width="80">
+		                <php> echo $info['name'];</php>
+		               </th>
+		              <td><php> if($info['star']){ </php><span class="must_red">*</span><php> } </php><php> echo $info['form'];</php> <php> echo $info['tips'];</php></td>
+		            </tr>
+		            <php>
+					} }
+					</php>
+		        </tbody>
+					</table>
+				</div>
+				<div class="span3">
+					<table class="table table-bordered">
+						<php>
+		if(is_array($forminfos['senior'])) {
+			 foreach($forminfos['senior'] as $field=>$info) {
+			 if(!in_array($field,array('allow_comment','template'))){
+				if($info['isomnipotent']) continue;
+				if($info['formtype']=='omnipotent') {
+					foreach($forminfos['base'] as $_fm=>$_fm_value) {
+						if($_fm_value['isomnipotent']) {
+							$info['form'] = str_replace('{'.$_fm.'}',$_fm_value['form'],$info['form']);
+						}
+					}
+					foreach($forminfos['senior'] as $_fm=>$_fm_value) {
+						if($_fm_value['isomnipotent']) {
+							$info['form'] = str_replace('{'.$_fm.'}',$_fm_value['form'],$info['form']);
+						}
+					}
+				}
+
+		 </php>
+		         <tr>
+		          <td><b><php> echo $info['name']</php></b><php> if($info['star']){ </php><font color="red">*</font><php> } </php></td>
+		        </tr>
+		        <tr>
+		          <td><php> echo $info['form'];</php><php> echo $info['tips'];</php></td>
+		        </tr>
+		        <h6>
+
+		<php>
+			 }  }
+		}
+		</php>
+						<tr>
+							<th><b>状态</b></th>
+						</tr>
+						<tr>
+							<td>
+								<label><input type="radio" name="info[status]" value="99" <if condition=" $data['status']==99 "> checked</if>><span>审核通过</span></label>
+								<label><input type="radio" name="info[status]" value="1"  <if condition=" $data['status']==1 "> checked</if> ><span>待审核</span></label>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label><input type="radio" name="info[isdelay]" value="0"  checked='checked' ><span>立即发布</span></label>
+								<label><input type="radio" name="info[isdelay]" value="1"><span>推迟</span></label>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label><input type="radio" name="info[istop]" value="0" <if condition=" $data['istop'] neq 1 "> checked</if>><span>未置顶</span></label>
+								<label><input type="radio" name="info[istop]" value="1"  <if condition=" $data['istop'] eq 1"> checked</if> ><span>置顶</span></label>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label><input type="radio" name="info[recommend]" value="0" <if condition=" $data['recommend'] neq 1 "> checked</if>><span>未推荐</span></label>
+								<label><input type="radio" name="info[recommend]" value="1"  <if condition=" $data['recommend'] eq 1 "> checked</if> ><span>推荐</span></label>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/commons.js"></script>
+	<script src="__PUBLIC__/js/content_addtop.js"></script>
+	<script src="__PUBLIC__/js/colorPicker/colorPicker.js"></script>
+
+<script type="text/javascript">
+
+$(function () {
+	$(".J_ajax_close_btn").on('click', function (e) {
+	    e.preventDefault();
+	    Wind.use("artDialog", function () {
+	        art.dialog({
+	            id: "question",
+	            icon: "question",
+	            fixed: true,
+	            lock: true,
+	            background: "#CCCCCC",
+	            opacity: 0,
+	            content: "您确定需要关闭当前页面嘛？",
+	            ok:function(){
+					setCookie("refersh_time",1);
+					window.close();
+					return true;
+				}
+	        });
+	    });
+	});
+    Wind.use('validate', 'ajaxForm', 'artDialog', function () {
+		//javascript
+        {$formJavascript}
+        var form = $('form#J_ajaxForms');
+        //ie处理placeholder提交问题
+        if ($.browser.msie) {
+            form.find('[placeholder]').each(function () {
+                var input = $(this);
+                if (input.val() == input.attr('placeholder')) {
+                    input.val('');
+                }
+            });
+        }
+        //表单验证开始
+        form.validate({
+			//是否在获取焦点时验证
+			onfocusout:false,
+			//是否在敲击键盘时验证
+			onkeyup:false,
+			//当鼠标掉级时验证
+			onclick: false,
+            //验证错误
+            showErrors: function (errorMap, errorArr) {
+				//errorMap {'name':'错误信息'}
+				//errorArr [{'message':'错误信息',element:({})}]
+				try{
+					$(errorArr[0].element).focus();
+					art.dialog({
+						id:'error',
+						icon: 'error',
+						lock: true,
+						fixed: true,
+						background:"#CCCCCC",
+						opacity:0,
+						content: errorArr[0].message,
+						cancelVal: '确定',
+						cancel: function(){
+							$(errorArr[0].element).focus();
+						}
+					});
+				}catch(err){
+				}
+            },
+            //验证规则
+            rules: {$formValidateRules},
+            //验证未通过提示消息
+            messages: {$formValidateMessages},
+            //给未通过验证的元素加效果,闪烁等
+            highlight: false,
+            //是否在获取焦点时验证
+            onfocusout: false,
+            //验证通过，提交表单
+            submitHandler: function (forms) {
+				var dialog = art.dialog({id: 'loading',fixed: true,lock: true,background: "#CCCCCC",opacity: 0,esc:false,title: false});
+                $(forms).ajaxSubmit({
+                    url: form.attr('action'), //按钮上是否自定义提交地址(多按钮情况)
+                    dataType: 'json',
+                    beforeSubmit: function (arr, $form, options) {
+                        
+                    },
+                    success: function (data, statusText, xhr, $form) {
+						dialog.close();
+                        if(data.status){
+							setCookie("refersh_time",1);
+							//添加成功
+							Wind.use("artDialog", function () {
+							    art.dialog({
+							        id: "succeed",
+							        icon: "succeed",
+							        fixed: true,
+							        lock: true,
+							        background: "#CCCCCC",
+							        opacity: 0,
+							        content: data.info,
+									button:[
+										{
+											name: '继续添加？',
+											callback:function(){
+												reloadPage(window);
+												return true;
+											},
+											focus: true
+										},{
+											name: '关闭当前页面',
+											callback:function(){
+												window.close();
+												return true;
+											}
+										}
+									]
+							    });
+							});
+						}else{
+							isalert(data.info);
+						}
+                    }
+                });
+            }
+        });
+    });
+});
+//显示相关文章
+function show_relation(modelid, id) {
+    $.getJSON("__ROOT__/index.php?g=Content&m=Contentshow&a=public_getjson_ids&modelid=" + modelid + "&id=" + id, function (json) {
+        var newrelation_ids = '';
+        if (json.data == null) {
+            isalert('没有添加相关文章！');
+            return false;
+        }
+        $.each(json.data, function (i, n) {
+            newrelation_ids += "<li id='" + n.sid + "'>·<span>" + n.title + "</span><a href='javascript:;' class='close' onclick=\"remove_relation('" + n.sid + "'," + n.id + ")\"></a></li>";
+        });
+
+        $('#relation_text').html(newrelation_ids);
+    });
+}
+//移除相关文章
+function remove_relation(sid, id) {
+    var relation_ids = $('#relation').val();
+    if (relation_ids != '') {
+        $('#' + sid).remove();
+        var r_arr = relation_ids.split('|');
+        var newrelation_ids = '';
+        $.each(r_arr, function (i, n) {
+            if (n != id) {
+                if (i == 0) {
+                    newrelation_ids = n;
+                } else {
+                    newrelation_ids = newrelation_ids + '|' + n;
+                }
+            }
+        });
+        $('#relation').val(newrelation_ids);
+    }
+}
+
+</script>
+
+</body>
+</html>

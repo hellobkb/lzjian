@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>报价审批详情</title>
+
+		<tc_include file="App:header" />
+		  
+		<link rel="stylesheet" type="text/css" href="__TMPL__App/css/approvalDetails.css">
+	</head>
+
+	<body>
+		<header id="header" class="mui-bar mui-bar-nav">
+			<button class="mui-action-back mui-btn mui-btn-blue mui-btn-link mui-btn-nav mui-pull-left">
+				<span class="mui-icon mui-icon-left-nav"></span>
+				返回
+			</button>
+			<h1 class="mui-title">报价审批详情</h1>
+			<!-- <button class="mui-btn mui-btn-blue mui-btn-link mui-pull-right" id="reanod_del">删除</button> -->
+		</header>
+		<div id="content" class="mui-content">
+			<!--数据-->
+			<div class="reanod-data">
+				<if condition="$info['isDispose'] eq 0 ">
+
+					<div class="reanod-result">
+						<div class="result-title-left"><span>报价审批</span></div>
+						<div class="result-title-right"> <span style="color:red;">未审批</span> </div>
+						<div class="result-content float">
+							<div>申请人：<span> {$info.proposer} </span></div>
+							<div>公司名称：<span> {$info.company} </span></div>
+							<div>申请时间：<span> {$info.applyDate} </span></div>
+							<div>
+								<span class="cont_span1">内容：</span>
+								<span class="cont_span2"> {$info.content} </span>
+							</div>
+						</div>
+						<div class="result-content attachment">
+						<div>
+							附件： 
+							<if condition="$info['attachmentLink'] neq '' ">
+								<a href="javascript:downFile({$info.attachmentLink})"> {$info.attachment} </a>
+							<else />
+								无
+							</if>
+						</div>
+						</div>
+					</div>
+					<div class="reanod-result">
+						<div class="result-title-left"><span>审批操作</span></div>
+						<div class="result-content">
+							<div class="result-state">
+								<div>状态：</div>
+								<div class="content-right">
+									<div style="width: 50%;"><input type="radio" name="reanod_radio" value="1" /><label>批准</label></div>
+									<div style="width: 50%;"><input type="radio" name="reanod_radio" value="2" /><label>拒绝</label></div>
+								</div>
+							</div>
+
+							<div class="result-remark">
+								<div>备注：</div>
+								<div class="content-right">
+									<textarea placeholder="请填写摘要" id="reanod_textarea"></textarea>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="reanod-submit">
+						<button class="mui-btn-yellow" id="reanod_submit">提交</button>
+						<button class="mui-btn-grey" id="reanod_back">返回</button>
+					</div>
+				<elseif condition="$info['isDispose'] eq 1 " />
+					<div class="reanod-result">
+						<div class="result-title-left"><span>报价审批</span></div>
+						<div class="result-title-right"> <span>已审批</span> </div>
+						<div class="result-content float">
+							<div>申请人：<span> {$info.proposer} </span></div>
+							<div>公司名称：<span> {$info.company} </span></div>
+							<div>申请时间：<span> {$info.applyDate} </span></div>
+							<div><span class="cont_span1">内容：</span><span class="cont_span2"> {$info.content} </span></div>
+						</div>
+						<div class="result-content float attachment">
+							<div>审批人：<span> {$info.approver} </span></div>
+							<div>审批时间：<span> {$info.appTime} </span></div>
+							<div><span class="cont_span1">审批内容：</span><span class="cont_span2"> {$info.appContent} </span></div>
+						</div>
+						<div class="result-content attachment">
+							<div>附件： 
+								<if condition="$info['attachment'] neq 0 && $info['attachment'] neq '0'">
+									<a href="javascript:downFile({$info.attachmentLink})"> {$info.attachment} </a>
+								<else />
+									无
+								</if>
+							 </div>
+						</div>
+					</div>
+				<elseif condition="$info['isDispose'] eq 2 " />
+					<div class="reanod-result">
+						<div class="result-title-left"><span>报价审批</span></div>
+						<div class="result-title-right"> <span>已拒绝</span> </div>
+						<div class="result-content float">
+							<div>申请人：<span> {$info.proposer} </span></div>
+							<div>公司名称：<span> {$info.company} </span></div>
+							<div>申请时间：<span> {$info.applyDate} </span></div>
+							<div><span class="cont_span1">内容：</span><span class="cont_span2"> {$info.content} </span></div>
+						</div>
+						<div class="result-content attachment">
+							<div>附件： 
+								 <if condition="$info['attachment'] neq 0 && $info['attachment'] neq '0'">
+									<a href="javascript:downFile({$info.attachmentLink})"> {$info.attachment} </a>
+								<else />
+									无
+								</if>
+							</div>
+						</div>
+					</div>
+
+				</if>
+
+
+			</div>
+		</div>
+		<div style="clear:both;height: 65px;"></div>
+		 
+		 <tc_include file="App:footer" />
+
+	</body>
+	 
+	<script>
+		mui.init({});
+
+		mui.ready(function(){
+ 
+
+			var id = "{$id}";
+			var token = "{$token}";
+
+			var website = localStorage.getItem('keyUrl');
+
+			var reanod_submit = document.getElementById("reanod_submit");
+
+			reanod_submit && reanod_submit.addEventListener("tap", function(event) {
+				//显示等待
+				showLoading();
+				 
+				//初始化
+				var reanod_radio = document.getElementsByName('reanod_radio');
+
+				var reanod_textarea = document.getElementById('reanod_textarea').value;
+				reanod_radio = getRadioValue(reanod_radio);
+
+				if(!reanod_radio) {
+					mui.os.plus && plus.nativeUI.closeWaiting();
+					mui.toast("请先选择状态");
+					return;
+				}
+
+				//TODO 完善请求
+				mui.ajax(website+'/index.php?g=App&m=Mobile&a=offer_post', {
+					data: {
+						id:id,
+						status:reanod_radio,
+						content:reanod_textarea,
+						token:token,
+					},
+					dataType: 'json', //服务器返回json格式数据
+					type: 'post', //HTTP请求类型
+					timeout: 10000, //超时时间设置为10秒；
+					success: function(data) {
+						//返回的状态
+						var state = data.status;
+						if(state == 1) {
+							mui.toast(data.info);
+							if(mui.os.plus) {
+								plus.nativeUI.closeWaiting();
+								plus.webview.currentWebview().reload(true); //重新加载页面
+							} else {
+								location.reload(true); //F5刷新
+							}
+						} else {
+							mui.os.plus && plus.nativeUI.closeWaiting();
+							mui.toast(data.info);
+						}
+					},
+					error: function(xhr, type, errorThrown) {
+						mui.os.plus && plus.nativeUI.closeWaiting();
+						//异常处理
+						mui.toast('网络异常,请稍后重试！');
+					}
+				});
+
+			});
+
+			//绑定radio事件
+			bandRadioLable();
+
+			//返回按钮事件
+			var reanod_back = document.getElementById("reanod_back");
+			reanod_back && reanod_back.addEventListener("tap", function(event) {
+				mui.back();
+			});
+
+			//获取单选框值value值
+			var getRadioValue = function(radios) {
+				//遍历当前radio
+				for(var i = 0; i < radios.length; i++) {
+					if(radios[i].checked == true) {
+						return radios[i].value; //取value值
+					}
+				}
+			}
+
+		});
+	
+	</script>
+
+</html>

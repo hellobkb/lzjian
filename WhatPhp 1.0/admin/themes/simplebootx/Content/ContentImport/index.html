@@ -1,0 +1,62 @@
+<admintpl file="header" />
+<style>
+    .must_red{color: red;}
+</style>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab">批量导入产品</a></li>
+    </ul>
+    <form class="form-horizontal js-ajax-form" action="{:U('ContentImport/import')}" method="post" class="form-horizontal js-ajax-forms" enctype="multipart/form-data">
+        <div class="tabbable">
+            <div class="tab-content">
+
+                <div class="tab-pane active">
+                    <fieldset>
+                        <div class="control-group">
+                            <label class="control-label" style="width: 193px;"><span class="must_red">*</span>图片压缩包（zip）:</label>
+                            <div class="controls">
+                                <input type="file" name="images_file" value="">
+                                zip格式，文件内压缩
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" style="width: 193px;"><span class="must_red">*</span>excel:</label>
+                            <div class="controls">
+                                <input type="file" name="content_file" value="">
+                                <a href="__ROOT__/data/upload.xlsx" target="_black">(点击下载导入模板Excel)</a>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" style="width: 193px;"></label>
+                            <div class="controls">
+                                <div style="color: #2c3e50;">
+                                <b>上传提示：</b>
+                                <p>1.图片上传规则：图片名称只能存在英文字母、数字，英文字母必须小写，不能出现特殊符号及空格。所有图片放在同一个文件夹下，在文件夹内压缩为zip格式之后再上传</p>
+                                <p>2.excel模板：第一行和第二行文字一一对应，请不要随意更改；</p>
+                                <p>3.栏目ID：产品分类ID，可到“网站管理-栏目管理”查看，例：135；</p>
+                                <p>4.产品名称：产品名称不能重复，重复之后只能保留1个产品</p>
+                                <p>5.缩略图：直接写图片名称，例如：filter_paper.jpg</p>
+                                <p>6.seourl: 选填，不能存在相同值;若不填写，系统会根据产品名称自动生成url</p>
+                                <p>7.轮播图：多图之间用英文逗号隔开，例如：filter_paper1.jpg,filter_paper2.jpg</p>
+                                <p>8.产品详情：若产品详情中包含图片，图片形式为[img]ff.jpg[/img]。例： This is my product [img]filter_paper1.jpg[/img] Please contact me [img]filter_paper2.jpg[/img]</p>
+                                <p>9.图片压缩包命名和excel文件命名规格同图片命名规则一致</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </fieldset>
+                </div>
+                <!--  -->
+            </div>
+        </div>
+        <div class="form-actions">
+            <button class="btn btn-primary js-ajax-submit" type="submit">导入</button>
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/content_addtop.js"></script>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!--  foot  -->
+<div class="foot">
+<div class="zong">
+<div class="ful1">
+<a class="fbiao">{:L('RNNAVIGATION')}</a>
+<div class="f1n">
+<a href="__ROOT__/">{:L('RNHOME')}</a>
+<content action="category" catid="0" order="listorder asc ">
+<foreach name="data" item="cat_value">
+	<a href="{$cat_value.url}" >{$cat_value.catname}</a>
+</foreach>
+</content>
+
+</div>
+</div>
+<div class="ful2">
+<a class="fbiao">{:L('RNPRODUCT')}</a>
+<div class="f1n">
+<content action="category" catid="72" order="listorder asc ">
+	<foreach name="data" item="r">
+		<a href="{:zcurl($r['url'],$r['moveurl'])}" title="{$r.catname}">{$r.catname}</a>
+	</foreach>
+</content>
+
+</div>
+</div>
+<div class="clear2"></div>
+<div class="ful3">
+<a class="fbiao">{:L('RNCONTACT_US')}</a>
+<ul class="f3n">
+<php>
+$w1 = getContactValue(25);
+	$w2 = getContactValue(26);
+	$weixin = getContactValue(24);
+	$skype = getContactValue(21);
+	$email = getContactValue(11);
+	$add = getContactValue(12);
+
+	$twitter = getContactValue(28);
+	$tel = getContactValue(10);
+	$banquan = getContactValue(39);
+
+</php>
+<li class="fapp">{$tel.k}:{$tel.v}</li>
+<li class="fs">{$skype.k}: <a href="skype:{$skype.v}?chat" target="_blank">{$skype.v}</a></li>
+<li class="fxinfeng">{$email.k}: <a href="mailto:{$email.v}">{$email.v}</a></li>
+<li class="fdingwei">{$add.k}: {$add.v}</li>
+</ul>
+</div>
+<div class="ful4">
+<a class="fbiao">{:L('RNFOLLOW_US')}</a>
+<div class="shejiao2">
+<a href="{$weixin.v}" target="_blank" rel="nofollow"><img src="__TMPL__zhbeifan/images/facebook2.jpg" onmouseover="this.src='__TMPL__zhbeifan/images/facebook2h.jpg';" onmouseout="this.src='__TMPL__zhbeifan/images/facebook2.jpg';" /></a>
+<a href="{$twitter.v}" target="_blank" rel="nofollow"><img src="__TMPL__zhbeifan/images/twitter2.jpg" onmouseover="this.src='__TMPL__zhbeifan/images/twitter2h.jpg';" onmouseout="this.src='__TMPL__zhbeifan/images/twitter2.jpg';" /></a>
+<a href="{$w2.v}" target="_blank" rel="nofollow"><img src="__TMPL__zhbeifan/images/google2.jpg" onmouseover="this.src='__TMPL__zhbeifan/images/google2h.jpg';" onmouseout="this.src='__TMPL__zhbeifan/images/google2.jpg';" /></a>
+<a href="{$w1.v}" target="_blank" rel="nofollow"><img src="__TMPL__zhbeifan/images/linkedin2.jpg" onmouseover="this.src='__TMPL__zhbeifan/images/linkedin2h.jpg';" onmouseout="this.src='__TMPL__zhbeifan/images/linkedin2.jpg';" /></a>
+<div class="clear"></div>
+</div>
+<p>{:L('RNCOPYRIGHT')} © {$banquan.v}<br />
+<a href="" target="_blank">{:L('RNSITEMAP')}</a><br />
+{:L('RNTECH')}: <a href="http://www.reanod.com" target="_blank" rel="nofollow"><img src="__TMPL__zhbeifan/images/reanod.jpg" /></a>&nbsp; <a href="" target="_blank" title="">{$siteOption.site_tongji}</a></p>
+</div>
+<div class="clear"></div>
+</div>
+</div>
+
+
+<!--  top   -->
+<div> <a id="returnTop" href="javascript:;"><img src="__TMPL__zhbeifan/images/top.png" /></a></div>
+<script type="text/javascript"  src="__TMPL__zhbeifan/js/top.js" ></script> 
+
+<script type="text/javascript" src="__TMPL__zhbeifan/js/smbanner.js"></script> 
+<script type="text/javascript" src="__TMPL__zhbeifan/js/lunbo2.js"></script> 
+<script type="text/javascript" src="__TMPL__zhbeifan/js/sm.js"></script> 
+<script src="__TMPL__zhbeifan/js/placeholder.js"></script>
+{$siteOption.site_copyright}

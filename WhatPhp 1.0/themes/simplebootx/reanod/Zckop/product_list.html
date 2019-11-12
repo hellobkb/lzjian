@@ -1,0 +1,33 @@
+<php> $content = json_decode($zcmod['content'],true);
+  $limit = $content['zcmsg']['attr']['argu']['limit'];
+  $pagestely = array('listlong' => 6, 'listsidelong' => 2, "first" => "Home Page", "last" => "Shadowe", "prev" => L('RNPREVIOUS'), "next" => L('RNNEXT'), "list" => "*","currentclass" => "dangqianfen", "disabledclass" => "",'ss'=>true);
+  $pagetpl = '{prev}{liststart}{list}{listend}{next}';</php>
+<content action="lists" catid="$catid" order="listorder DESC,id DESC" num="15" page="$p" page_tplconfig="$pagestely" page_tpl="$pagetpl">
+<if condition="$data">
+<form action="{:U('Content/Pagedis/inquiry')}"  method="post">
+<php>$ps = 0;</php>
+      <volist name="data" id="vo">
+        <div <if condition="$ps%3 eq 0"> class="chanlie maln"<else />class="chanlie"</if>>
+        <div class="chant">
+        <a href="{:zcurl($vo['url'],$vo['moveurl'])}" title="{$vo.title}" class="chantu"><img src="{$vo.thumb}" title="{$vo.title}" alt="{$vo.title}" /></a>
+        <a href="{:zcurl($vo['url'],$vo['moveurl'])}" class="chanzi" title="{$vo.title}"><php>echo str_replace(substr($vo['title'],20),"...",$vo['title']);</php></a>
+        </div>
+        <input type="checkbox" name="pro[]" value="{$vo.id}" />
+        <a href="{:U('Content/Pagedis/lists',array('id'=>$vo['id'],'catid'=>101,'hcatid'=>$vo['id']))}" class="chanmor">{:L('RNINQUIRE_NOW')}</a>
+        </div>
+        <php>$ps++;</php>
+      </volist>
+      <div class="clear"></div>
+      <div class="fenye">
+        <div class="fenyen">{$pages}
+        <div class="clear"></div>
+        </div>
+        <div class="fuxuan"><input type="submit" value="{:L('RNADD_TO_INQUIRE_LIST')}" /></div>
+        <div class="clear"></div>
+      </div>
+</form>
+<else />
+    {:L('RNNONE')} 
+</if>
+
+</content>

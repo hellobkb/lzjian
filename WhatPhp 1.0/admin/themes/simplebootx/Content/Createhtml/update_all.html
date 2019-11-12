@@ -1,0 +1,44 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="javascript:;">一键更新</a></li>
+		</ul>
+		<div>
+			<!--<font color="red">*</font>最好是有选择性的刷新，如果全部刷新，当信息量比较大的时候生成会比较久！-->
+		
+		</div>
+		 <form action="{:U('Createhtml/update_post')}" method="post">
+			<div class="row-fluid" id="show">
+				<div class="span9" style="border:none">
+					<table class="table table-bordered" style="border:none">
+					<tbody>
+						<tr>
+							<th rowspan="6" style="border:none">
+							  一键更新<input type="submit" name="dosubmit1" class="btn btn-primary  left20" value="开始更新"  />
+							</th>
+						</tr>
+					</tbody>	 
+					</table>
+				</div> 
+			</div>
+		</form> 
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+	<script>
+		setCookie('refersh_time', 0);
+		function refersh_window() {
+			var refersh_time = getCookie('refersh_time');
+			if (refersh_time == 1) {
+				window.location.reload();
+			}
+		}
+		setInterval(function() {
+			refersh_window()
+		}, 2000);
+		 
+	 
+	</script>
+</body>
+</html>

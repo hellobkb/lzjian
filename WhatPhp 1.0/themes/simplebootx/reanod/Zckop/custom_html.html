@@ -1,0 +1,90 @@
+<div class="footer top35">
+  <div class="zong f14 hg1415 baise">
+    <div class="dibu_lx">
+      <div class="f22 zitiabc"><a href="__ROOT__/html/contactus/" class="baise">CONTACT US</a></div>
+      <p class="dizhi top3">
+        <php>$k =getContactValue(12); echo $k['v']</php>
+      </p>
+      <p class="dianhua">
+        <php>$k =getContactValue(17); echo $k['v']</php>
+        <span>
+        <php>$k =getContactValue(20); echo $k['v']</php>
+        </span></p>
+      <p class="chuanzhen">
+        <php>$k =getContactValue(13); echo $k['v']</php>
+      </p>
+      <p class="darren top3"><a  target="_blank" href="skype:<php>$k =getContactValue(21); echo $k['v']</php>?chat" class="baise" target="_blank">
+        <php>$k =getContactValue(21); echo $k['v']</php>
+        </a></p>
+      <p class="youxiang"><a  target="_blank" href="mailto:<php>$k =getContactValue(11); echo $k['v']</php>" class="baise">
+        <php>$k =getContactValue(11); echo $k['v']</php>
+        </a></p>
+      <p class="wangzhi"><a target="_blank"  href="http://www.reanod.com/" class="baise">
+        <php>$k =getContactValue(14); echo $k['v']</php>
+        </a></p>
+    </div>
+    <div class="dibu_pro ">
+      <div class=" f22 zitiabc bottom5"><a href="__ROOT__/products/" class="baise zitiabc">PRODUCTS</a></div>
+      <content action="category" catid="72" order="listorder asc ">
+        <foreach name="data" item="cat_value">
+          <p><a href="{$cat_value.url}" class="baise">{$cat_value.catname}</a></p>
+        </foreach>
+      </content>
+    </div>
+    <div class="dibu_ab">
+      <div class=" f22 zitiabc bottom5"><a href="__ROOT__/html/about-us/" class="baise">ABOUT US</a></div>
+      <content action="category" catid="21" order="listorder asc ">
+        <foreach name="data" item="cat_value">
+          <p><a href="{$cat_value.url}" class="baise">{$cat_value.catname}</a></p>
+        </foreach>
+      </content>
+    </div>
+    <div class="dibu_shej ">
+      <div class=" f22 zitiabc baise bottom5 640duy">FOLLOW US</div>
+      <a href="" target="_blank" rel="nofollow"><img src="__TMPL__xinyu/img/facebook.jpg" class="fenxiang" /></a><a href="" target="_blank" rel="nofollow"><img src="__TMPL__xinyu/img/tract.jpg"  class="fenxiang juzuo30" /></a><a href="" target="_blank" rel="nofollow"><img src="__TMPL__xinyu/img/g+.jpg"  class="fenxiang juzuo30" /></a><a href="" target="_blank" rel="nofollow"><img src="__TMPL__xinyu/img/in.jpg"   class="fenxiang juzuo30"/></a><a href="" target="_blank" rel="nofollow"><img src="__TMPL__xinyu/img/fenx.jpg"   class="fenxiang juzuo30"/></a>
+      <div class="clear"></div>
+      <p class="top10 hg1417"><span class="baise">Copyright © reanod, Ltd.  All Rights Reserved. </span></p>
+      <div class="top5">
+        <div class="fl">Powered by <a href="http://www.reanod.com" target="_blank" rel="nofollow"><img src="__TMPL__xinyu/img/zhichi.jpg"  /></a><a href="__ROOT__/sitemap.xml" target="_blank" class="baise ">Sitemap</a></div>
+        <div class="fl cnzz"><img src="__TMPL__xinyu/img/cnzz.jpg"   /></div>
+        <div class="clear"></div>
+      </div>
+    </div>
+    <div class="clear"></div>
+  </div>
+  
+ <div class="clear"></div>
+ 	<if condition="$home eq '1' ">
+    <php>$links=sp_getlinks();</php>
+     <if condition="$links">
+        <div class="links  baise f14 hg1415 zong"><div class="zitiabc f16 fl">LINKS:</div>
+        <div class="fl">
+        <foreach name="links" item="vo">
+        <a href="http://{$vo.link_url}" title="{$vo.link_name}" target="{$vo.link_target}" target="_blank" class="baise">{$vo.link_name}</a>
+         </foreach>
+        </div><div class="clear"></div></div>
+       </div>  
+     </if>
+    <else />
+     </if>
+</div>
+<script>
+$(document).ready(function(){
+$("#floatShow").bind("click",function(){
+$("#onlineService").animate({width:"show", opacity:"show"}, "normal" ,function(){
+$("#onlineService").show();
+});
+$("#floatShow").attr("style","display:none");
+$("#floatHide").attr("style","display:block");
+return false;
+}); 
+$("#floatHide").bind("click",function(){
+$("#onlineService").animate({width:"hide", opacity:"hide"}, "normal" ,function(){
+$("#onlineService").hide();
+});
+$("#floatShow").attr("style","display:block");
+$("#floatHide").attr("style","display:none");
+return false;
+});
+});
+</script> 

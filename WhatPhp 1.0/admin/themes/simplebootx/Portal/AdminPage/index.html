@@ -1,0 +1,112 @@
+<admintpl file="header" />
+</head>
+<body>
+
+<div  style="background:#f1f2f7; height:100%">
+<div class="wrap js-check-wrap">
+  <!--<ul class="nav nav-tabs">
+    <li class="active"><a href="{:U('AdminPage/index')}">{:L('PORTAL_ADMINPAGE_INDEX')}</a></li>
+    <li><a href="{:U('AdminPage/add')}">{:L('PORTAL_ADMINPAGE_ADD')}</a></li>
+  </ul>-->
+  <div style="width:92%; margin-left:4%; padding-top:30px; margin-bottom:20px;"><a href="{:U('AdminPage/index')}">{:L('PORTAL_ADMINPAGE_INDEX')}</a> >> <a href="{:U('AdminPage/add')}">{:L('PORTAL_ADMINPAGE_ADD')}</a></div>
+  <form class="welln form-search" method="post" action="{:U('AdminPage/index')}" style="background:#f1f2f7">
+  <select style="width:80px; height:40px;">
+  <option value="0">标题</option>
+  </select>
+    {:L('POST_DATE')}
+    <input type="text" name="start_time" class="js-date" value="{$formget.start_time}" style="width: 80px;" autocomplete="off">
+    -
+    <input autocomplete="off" type="text" class="js-date" name="end_time" value="{$formget.end_time}" style="width: 80px;">
+    {:L('KEYWORD')}
+    <input type="text" name="keyword" style="width: 20px;" value="{$formget.keyword}" placeholder="{:L('PLEASE_ENTER_KEYWORD')}">
+    <button class="btn btn-primary">查询</button>
+  </form>
+  <form class="js-ajax-form" method="post">
+    <div class="table-actions" style="width:92%; margin-left:4%">
+    <button class="btn btn-primary btn-small js-ajax-submit fl" style="margin-right:5px;" type="submit" data-action="{:U('AdminPage/delete')}" data-subcheck="true" data-msg="你确定删除吗？">排序</button>
+      <button class="btn btn-primary btn-small js-ajax-submit fl" type="submit" data-action="{:U('AdminPage/delete')}" data-subcheck="true" data-msg="{:L('DELETE_CONFIRM_MESSAGE')}">{:L('DELETE')}</button>
+      
+      <div class="profenye1 fr f14">
+<!--<a href=" " class="pre">&lt;&lt;&nbsp;Previous</a><a href=" ">1</a><a href=" " class="fexz">2</a><a href=" ">3</a><a href=" ">4</a><a href=" ">5</a><a href=" ">6</a><a href=" " class="nex">Next&nbsp;&gt;&gt;</a>-->
+<a href="">发布信息</a><a>|</a><a href="">我发布的信息</a><a>|</a><a href="">回收站</a><a>|</a><a href="">搜索</a></div>
+<div style="clear:both"></div>
+    </div>
+    
+    <table class="table table-bordered table-list" style="border:none">
+    	<tr style="background:#2baab1 !important; height:50px; width:100%">
+        	<td style="width:100%;background:#2baab1 !important;  color:#fff; font-size:16px;">信息管理</td>
+        </tr>
+    </table>
+    <table class="table table-hover table-bordered table-list">
+      <thead>
+        <tr>
+          <th width="16"><label>
+              <input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x">
+            </label></th>
+          <th width="32" class="th1" style="color:#4d4d4d">ID</th>
+          <th width="32">排序</th>
+          <th>{:L('TITLE')}</th>
+          <!-- <th>点击量</th> -->
+          <th width="80">{:L('AUTHOR')}</th>
+          <th width="120"><span>{:L('POST_DATE')}</span></th>
+          <th width="120">{:L('ACTIONS')}</th>
+        </tr>
+      </thead>
+      <foreach name="posts" item="vo">
+        <tr>
+          <td><input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="ids[]" value="{$vo.id}"></td>
+           
+          <td><a>{$vo.id}</a></td>
+          <td> <input type="text" name="keyword" style="width: 50px; margin-top:12px;"></td>
+          <td><a href="{:U('portal/page/index',array('id'=>$vo['id']))}" target="_blank"><span>{$vo.post_title}</span></a></td>
+          <!--  <td>0</td> -->
+          <td>{$users[$vo['post_author']]['user_login']}</td>
+          <td>{$vo.post_date}</td>
+          <td>&nbsp;&nbsp;&nbsp;&nbsp;<a href=""><img src="images/fangda.jpg" /></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="{:U('AdminPage/edit',array('id'=>$vo['id']))}"><img src="images/edit.jpg" /></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="{:U('AdminPage/delete',array('id'=>$vo['id']))}" class="js-ajax-delete"><img src="images/delete.jpg" /></a></td>
+          <!--<td><a href="{:U('AdminPage/edit',array('id'=>$vo['id']))}">{:L('EDIT')}</a>| <a href="{:U('AdminPage/delete',array('id'=>$vo['id']))}" class="js-ajax-delete">{:L('DELETE')}</a></td>-->
+        </tr>
+      </foreach>
+      <tfoot>
+        <tr>
+          <th width="16"><label>
+              <input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x">
+            </label></th>
+          <th width="100">ID</th>
+          <th width="32">排序</th>
+          <th>{:L('TITLE')}</th>
+          <!-- <th>点击量</th> -->
+          <th width="80">{:L('AUTHOR')}</th>
+          <th width="120"><span>{:L('POST_DATE')}</span></th>
+          <th width="120">{:L('ACTIONS')}</th>
+        </tr>
+      </tfoot>
+    </table>
+    <div class="table-actions" style="width:92%; margin-left:4%">
+      <button class="btn btn-primary btn-small js-ajax-submit fl" style="margin-right:5px;" type="submit" data-action="{:U('AdminPage/delete')}" data-subcheck="true" data-msg="你确定删除吗？">排序</button>
+      <button class="btn btn-primary btn-small js-ajax-submit fl" type="submit" data-action="{:U('AdminPage/delete')}" data-subcheck="true" data-msg="你确定删除吗？">{:L('DELETE')}</button>
+      
+      <div class="profenye left20">
+<!--<a href=" " class="pre">&lt;&lt;&nbsp;Previous</a><a href=" ">1</a><a href=" " class="fexz">2</a><a href=" ">3</a><a href=" ">4</a><a href=" ">5</a><a href=" ">6</a><a href=" " class="nex">Next&nbsp;&gt;&gt;</a>-->
+<a class="pre meiyanse">&lt;&lt;</a><a class="fexz">1</a><a href="">2</a><a href="">3</a><a href="" class="nex">&gt;&gt;</a></div>
+<div style="clear:both"></div>
+
+    </div>
+    <div class="pagination">{$Page}</div>
+  </form>
+</div>
+</div>
+<script src="__PUBLIC__/js/common.js"></script> 
+<script>
+		setCookie('refersh_time', 0);
+		function refersh_window() {
+			var refersh_time = getCookie('refersh_time');
+			if (refersh_time == 1) {
+				window.location.reload();
+			}
+		}
+		setInterval(function() {
+			refersh_window()
+		}, 2000);
+	</script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li><a href="{:U('user/index')}">{:L('ADMIN_USER_INDEX')}</a></li>
+			<li class="active"><a href="{:U('user/journal')}">{:L('USER_JOURNAL')}</a></li>
+		</ul>
+		<table class="table table-hover table-bordered">
+			<thead>
+				<tr>
+					<th width="50">ID</th>
+					<th>{:L('USER_JTIME')}</th>
+					<th>{:L('USER_JCONTENT')}</th>
+					<th>{:L('USER_JIP')}</th>
+				</tr>
+			</thead>
+			<tbody>
+				<foreach name="info" item="vo">
+				<tr>
+					<td>{$vo.id}</td>
+					<td>{$vo.ltime|date='Y-m-d H:i:s',###}</td>
+					<td>{$vo.info}</td>
+					<td>{$vo.ip}</td>
+				</tr>
+				</foreach>
+			</tbody>
+		</table>
+		<div class="pagination">{$page}</div>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

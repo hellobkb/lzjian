@@ -1,0 +1,88 @@
+<admintpl file="header" />
+</head>
+<body>
+    <div class="wrap js-check-wrap">
+        <ul class="nav nav-tabs">
+            
+            <li><a href="{:U('Currency/index')}">人民币牌价</a></li>
+            <li  class="active"><a href="{:U('Currency/waihui')}">外汇汇率</a></li>
+        </ul>
+       
+        <form class="js-ajax-form" method="post">
+            <table class="table table-hover table-bordered table-list">
+                <thead>
+                    <tr>
+                        <th width="100">货币代码</th>
+                        <th width="100">货币名称</th>
+                        <th width="150">最新价</th>
+                        <th width="120">涨跌%</th>
+                        <th width="120">涨跌金额</th>
+                        <th width="100">开盘价</th>
+                        <th width="120">最高价</th>
+                        <th width="120">最低价</th>
+
+                        <th width="100">震幅%</th>
+                        <th width="100">买入价</th>
+                        <th width="150">卖出价</th>
+                        <!-- <th width="120">涨跌颜色</th> -->
+                        <th width="120">日期</th>
+                        <th width="100">数据时间</th>
+                    </tr>
+                </thead>
+                <foreach name="list" item="vo">
+                <tr>
+                    <td>{$vo.code}</td>
+                    <td>{$vo.currency}</td>
+                    <td>{$vo.closePri}</td>
+                    <td>{$vo.diffPer}</td>
+                    <td>{$vo.diffAmo}</td>
+                    <td>{$vo.openPri}</td>
+                    <td>{$vo.highPic}</td>
+                    <td>{$vo.lowPic}</td>
+
+                    <td>{$vo.range}</td>
+                    <td>{$vo.buyPic}</td>
+                    <td>{$vo.sellPic}</td>
+                    <!-- <td>{$vo.color}</td> -->
+                    <td>{$vo.date}</td>
+                    <td>{$vo.datatime}</td>
+                </tr>
+                </foreach>
+                <tfoot>
+                    <tr>
+                        <th width="100">货币代码</th>
+                        <th width="100">货币名称</th>
+                        <th width="150">最新价</th>
+                        <th width="120">涨跌%</th>
+                        <th width="120">涨跌金额</th>
+                        <th width="100">开盘价</th>
+                        <th width="120">最高价</th>
+                        <th width="120">最低价</th>
+
+                        <th width="100">震幅%</th>
+                        <th width="100">买入价</th>
+                        <th width="150">卖出价</th>
+                        <!-- <th width="120">涨跌颜色</th> -->
+                        <th width="120">日期</th>
+                        <th width="100">数据时间</th>
+                    </tr>
+                </tfoot>
+            </table>
+            <div class="pagination">{$Page}</div>
+        </form>
+    </div>
+    <script src="__PUBLIC__/js/common.js"></script>
+    <script>
+        setCookie('refersh_time', 0);
+        function refersh_window() {
+            var refersh_time = getCookie('refersh_time');
+            if (refersh_time == 1) {
+                window.location.reload();
+            }
+        }
+        setInterval(function() {
+            refersh_window()
+        }, 2000);
+    </script>
+</body>
+</html>

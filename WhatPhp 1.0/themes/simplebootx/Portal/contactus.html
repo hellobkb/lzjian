@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{$site_seo_title}{$site_name}</title>
+    <meta name="keywords" content="{$site_seo_keywords}" />
+    <meta name="description" content="{$site_seo_description}">
+     
+    <tc_include file="Public:head" />
+</head>
+<body>
+<!-- 横线开始 -->
+	<div class="hx"></div>
+<!-- 横线结束 -->
+<div class="header">
+    {:zcload('logo')}
+    {:zcload('nav')}
+</div> 
+
+<div class="main">
+    {:zcload('center')}
+</div>
+<div class="foot">
+    {:zcload('footer')}
+</div>
+{$site_copyright}
+{:zcload('script')}
+</body>
+</html>

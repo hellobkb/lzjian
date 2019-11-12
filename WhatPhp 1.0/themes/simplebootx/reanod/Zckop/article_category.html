@@ -1,0 +1,35 @@
+<php>
+$modelid = 1;
+if(!($result = S('modelid'.$modelid))){
+	$where['modelid'] = $modelid;
+	$resultarr = M("Category")->where($where)->select();
+	$result =array();
+	foreach($resultarr as $k=>$v){
+		$result[$v['catid']] =$v;
+	}
+	S('modelid'.$modelid,$result);
+}
+
+$result = zc_children_more($result);
+</php>
+<ul class="productcategory">
+<volist name="result" id="v">
+	<li <if condition="in_array($catid,explode(',',$v['arrchildid']))">class="categoryhovers1"</if>><a href="{:zcurl($v['url'],$v['moveurl'])}" title="{$v.catname}">{$v.catname}</a>
+	<if condition="count($v['child'])">
+		<ul>
+			<volist name="v['child']" id="t">
+				<li <if condition="in_array($catid,explode(',',$t['arrchildid']))">class="categoryhovers2"</if>><a href="{:zcurl($t['url'],$t['moveurl'])}" title="{$t.catname}">{$t.catname}</a>
+					<if condition="count($t['child'])">
+						<ul>
+						<volist name="t['child']" id="g">
+							<li <if condition="in_array($catid,explode(',',$g['arrchildid']))">class="categoryhovers3"</if>><a href="{:zcurl($g['url'],$g['moveurl'])}" title="{$g.catname}">{$g.catname}</a></li>
+						</volist>
+						</ul>
+					</if>
+				</li>
+			</volist>
+		</ul>
+	</if>
+	</li>
+</volist>
+</ul>

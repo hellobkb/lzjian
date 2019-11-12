@@ -1,0 +1,36 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		 
+		<div>
+			<font color="red">*</font>更新管理
+		</div>
+			<div class="row-fluid">
+				<div class="span9">
+				 	<div><a href="{:U('Createhtml/index')}">生成首页</a></div>
+				 	<div><a href="{:U('Createhtml/category')}">批量更新栏目</a></div>
+				 	<div><a href="{:U('Createhtml/update_urls')}">批量更新URL</a></div>
+				 	<div><a href="{:U('Createhtml/update_show')}">批量更新内容页</a></div>
+				</div>
+			</div>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+	<script src="__TMPL__Public/assets/js/index.js"></script>
+	<script>
+		setCookie('refersh_time', 0);
+		function refersh_window() {
+			var refersh_time = getCookie('refersh_time');
+			if (refersh_time == 1) {
+				window.location.reload();
+			}
+		}
+		setInterval(function() {
+			refersh_window()
+		}, 2000);
+		 
+		 
+		
+	</script>
+</body>
+</html>

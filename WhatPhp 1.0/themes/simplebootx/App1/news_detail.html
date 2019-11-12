@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>资讯详情</title>
+		 
+		<tc_include file="App:header" />
+
+		<link rel="stylesheet" type="text/css" href="__TMPL__App/css/newsDetails.css" />
+	</head>
+
+	<body>
+		<header id="header" class="mui-bar mui-bar-nav">
+			<button class="mui-action-back mui-btn mui-btn-blue mui-btn-link mui-btn-nav mui-pull-left">
+				<span class="mui-icon mui-icon-left-nav"></span>
+				返回
+			</button>
+			<h1 class="mui-title">资讯详情</h1>
+		</header>
+		<div id="content" class="mui-content">
+			<h5 id="title">{$info.post_title}</h5>
+			<div class="reanod-source">
+				<span id="source">{$info.source}</span>
+			</div>
+			<div class="reanod-date">
+				<span class="iconfont icon-shijian"></span><span id="createDate">{$info.post_modified}</span>
+			</div>
+			<div class="reanod-img">
+				<img src="{$info.imgurl}" data-preview-src="" data-preview-group="1" id="imgurl" />
+			</div>
+			<div id="post_content">{$info.post_content}</div>
+			
+			<div class="mui-content-padded">
+				<ul class="mui-pager">
+					
+					<if condition="$pre">
+						<li class="mui-previous">
+							<a href="{:leuu('App/Mobile/news_detail',array('id'=>$pre ,'token'=>$token))}" >上一篇</a>
+						</li>
+					</if>
+					<if condition="$next">
+						<li class="mui-next">
+							<a href="{:leuu('App/Mobile/news_detail',array('id'=>$next,'token'=>$token))}" >下一篇</a>
+						</li>
+					</if>
+				</ul>
+			</div>
+			 
+		</div>
+		<div style="clear:both;height: 65px;"></div>
+
+		<tc_include file="App:footer" />
+		
+		<script>bandList(mui('.mui-pager'));</script>
+	</body>
+
+</html>

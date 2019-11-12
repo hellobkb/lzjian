@@ -1,0 +1,115 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li><a href="{:U('Points/index')}">我的积分</a></li>
+			
+			<li><a href="{:U('Points/add')}">添加积分</a></li>
+			<li><a href="{:U('Points/listpoint1')}">积分审核</a></li>
+		</ul>
+		<form class="well form-search" >
+			提示：将资料发给相应推广人员，由推广人员审核后获取积分；若要兑换积分，填写要兑换的分数，提交审核通过之后，“当前积分”会自动减去已兑换积分。
+			
+		</form>
+		<form method="post" class="form-horizontal js-ajax-form" action="{:U('Points/edit_post')}">
+			<fieldset>
+				<div class="control-group">
+					<label class="control-label">资料类型</label>
+					<div class="controls">
+						<select name="contentid" disabled onchange="get_show(this.value)">
+							<option value="">请选择</option>
+							<volist name="qx_points" id="vo">
+							<if condition="$key egt 5">
+							<option value="{$key}" <if condition="$contentid eq $key"> selected </if>>{$vo}</option>
+							</if>
+							</volist>
+						</select>*
+					</div>
+				</div>
+				<div class="control-group" id="change_pointsdiv" style="display: none;">
+					<label class="control-label">兑换积分</label>
+					<div class="controls">
+						{$chang_points}
+						
+					</div>
+				</div>
+				<div class="control-group" id="sendnumdiv">
+					<label class="control-label">发送数量</label>
+					<div class="controls">
+						{$sendnum}
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">日期</label>
+					<div class="controls">
+						{$addtime}
+						
+					</div>
+				</div>
+				
+				<div class="control-group" id="authnumdiv">
+					<label class="control-label">审核通过数量</label>
+					<div class="controls">
+						<if condition="$admininfo['identity'] eq 2">
+							<if condition="$points gt 0">
+								{$authnum}
+							<else />
+								<input type="text" name="authnum">
+							</if>
+							
+						<else />
+							<if condition="$authnum gt 0">	{$authnum} <else />未通过审核 </if>
+						</if>
+					</div>
+				</div>
+				
+				<div class="control-group">
+					<label class="control-label">确认分值</label>
+					<div class="controls">
+						<if condition="$admininfo['identity'] eq 2">
+							<if condition="$points gt 0">
+								{$points}
+							<else />
+								<input type="text" name="points" ></input>
+							</if>
+							
+						<else/>
+							<if condition="$points gt 0">	{$points} <else />未通过审核 </if>
+						</if>
+						
+					</div>
+				</div>
+
+				
+
+			</fieldset>
+
+			<div class="form-actions">
+				<input type="hidden" name="id" value="{$id}"></input>
+				<button type="submit" class="btn btn-primary js-ajax-submit">提交</button>
+				<a class="btn" href="{:U('Points/listpoint1')}">{:L('BACK')}</a>
+			</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+	
+</body>
+<script type="text/javascript">
+	$(document).ready(function(){
+		get_show({$contentid});
+	})
+	function get_show(contentid){
+		if(contentid == 11){
+			$("#change_pointsdiv").show();
+			$("#sendnumdiv").hide();
+			$("#authnumdiv").hide();
+		}else{
+			$("#sendnumdiv").show();
+			$("#change_pointsdiv").hide();
+			$("#authnumdiv").show();
+		}
+	}
+
+</script>
+</html>

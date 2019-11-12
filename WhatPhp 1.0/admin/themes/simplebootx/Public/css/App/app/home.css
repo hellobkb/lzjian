@@ -1,0 +1,48 @@
+.reanod-index-header {
+	height: 45px;
+	text-align: center;
+}
+
+.reanod-index-header img {
+	width: 150px;
+	height: 20px;
+	margin-top: 15px;
+	margin-left: 0px;
+}
+
+.reanod-index {
+	height: 35px;
+	background: #6CCAC9;
+	text-align: center;
+}
+
+.reanod-index img {
+	margin-top: 10px;
+	width: 210px;
+	height: 14px;
+}
+
+.reanod-content {
+	width: 100%;
+	margin-top: 20%;
+	text-align: center;
+	margin-left: 5%;
+	margin-right: 5%;
+}
+
+.reanod-content div {
+	width: 30%;
+	float: left;
+	margin-left: 10%;
+	margin-bottom: 9%;
+}
+
+.reanod-content div img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+.clear-float {
+	clear: both;
+	height: 60px;
+}

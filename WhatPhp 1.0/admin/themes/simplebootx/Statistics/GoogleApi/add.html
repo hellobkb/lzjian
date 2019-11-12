@@ -1,0 +1,60 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li><a href="{:U('GoogleApi/index')}">谷歌API</a></li>
+			<li class="active"><a href="{:U('GoogleApi/add')}">添加API</a></li>
+		</ul>
+		<form class="well form-search" >
+			<a>温馨提示：
+			<br/>（1）注册谷歌API可增加每天搜索次数
+			<br/>
+			（2）可到谷歌官网注册
+			</a>
+		</form>
+		
+		<form action="{:U('GoogleApi/add')}" method="post" class="form-horizontal js-ajax-forms" enctype="multipart/form-data">
+			<div class="row-fluid">
+				<div class="span9">
+					<table class="table table-bordered">
+						
+						<tr>
+							<th>Key:</th>
+							<td>
+								<input type="text" required style="width:400px;" name="key" require  value=""/><span class="form-required">*</span>
+								
+							</td>
+						</tr>
+						<tr>
+							<th>Cx:</th>
+							<td><input type="text" required name="cx" value="" required style="width: 400px" > <span class="form-required">*</span></td>
+						</tr>
+						
+					</table>
+				</div>
+				<div class="span3">
+					
+				</div>
+			</div>
+			<div class="form-actions">
+				<button class="btn btn-primary js-ajax-submit mright" type="submit">提交</button>
+				<a class="btn" href="{:U('GoogleApi/index')}">返回</a>
+			</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+	<script>
+		setCookie('refersh_time', 0);
+		function refersh_window() {
+			var refersh_time = getCookie('refersh_time');
+			if (refersh_time == 1) {
+				window.location.reload();
+			}
+		}
+		setInterval(function() {
+			refersh_window()
+		}, 2000);
+	</script>
+</body>
+</html>

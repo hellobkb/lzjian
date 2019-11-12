@@ -1,0 +1,78 @@
+<admintpl file="header" />
+</head>
+<body>
+    <div class="wrap js-check-wrap">
+        <ul class="nav nav-tabs">
+            
+            <li class="active"><a href="{:U('Currency/index')}">人民币牌价</a></li>
+            <li><a href="{:U('Currency/waihui')}">外汇汇率</a></li>
+        </ul>
+        <form class="well form-search" action="{:U('Currency/index')}" method="post" >
+        <a>100外币兑人民币</a><br>
+        银行卡类型：
+        <php>$banks = banks();</php>
+        <select class="select_2" name="bank" style="width:116px;">
+            <volist name="banks" id="vo">
+              <option value='{$vo}' <if condition=" $bank == $vo "> selected</if>>{$key}</option>
+            </volist>
+        </select>
+        <input type="submit" class="btn btn-primary" value="搜索" />
+            
+        </form>
+        <form class="js-ajax-form" method="post">
+            <table class="table table-hover table-bordered table-list">
+                <thead>
+                    <tr>
+                        <th width="52">货币名称</th>
+                        <th width="55">现汇买入价</th>
+                        <th width="150">现钞买入价</th>
+                        <th width="120">现汇卖出价</th>
+                        <th width="120">现钞卖出价</th>
+                        <th width="100">银行折算价/中间价</th>
+                        <th width="120">发布日期</th>
+                        <th width="120">发布时间</th>
+                    </tr>
+                </thead>
+                <foreach name="list" item="vo">
+                <tr>
+                    <td>{$vo.name}</td>
+                    <td>{$vo.fBuyPri}</td>
+                    <td>{$vo.mBuyPri}</td>
+                    <td>{$vo.fSellPri}</td>
+                    <td>{$vo.mSellPri}</td>
+                    <td>{$vo.bankConversionPri}</td>
+                    <td>{$vo.date}</td>
+                    <td>{$vo.time}</td>
+                </tr>
+                </foreach>
+                <tfoot>
+                    <tr>
+                        <th width="52">货币名称</th>
+                        <th width="55">现汇买入价</th>
+                        <th width="150">现钞买入价</th>
+                        <th width="120">现汇卖出价</th>
+                        <th width="120">现钞卖出价</th>
+                        <th width="100">银行折算价/中间价</th>
+                        <th width="120">发布日期</th>
+                        <th width="120">发布时间</th>
+                    </tr>
+                </tfoot>
+            </table>
+            <div class="pagination">{$Page}</div>
+        </form>
+    </div>
+    <script src="__PUBLIC__/js/common.js"></script>
+    <script>
+        setCookie('refersh_time', 0);
+        function refersh_window() {
+            var refersh_time = getCookie('refersh_time');
+            if (refersh_time == 1) {
+                window.location.reload();
+            }
+        }
+        setInterval(function() {
+            refersh_window()
+        }, 2000);
+    </script>
+</body>
+</html>

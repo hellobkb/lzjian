@@ -1,0 +1,125 @@
+<admintpl file="header" />
+</head>
+<body>
+	<script src="__PUBLIC__/js/echarts.common.min.js"></script>
+    <script src="__PUBLIC__/js/jquery.js"></script>
+    <div id="datalist">
+	<div class="wrap js-check-wrap" >
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="{:U('KeywordInquiry/index')}">关键词排名明细表</a></li>
+			<li><a href="{:U('KeysDataSummary/index')}" >关键词数据汇总</a></li>
+		</ul>
+        <form class="well form-search" >
+            <a>温馨提示：
+            <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            1.系统显示的排名信息及统计数据均截止到昨天；
+            <br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            2.绿色+1表示排名较前一日上升1位，红色-1表示排名较前一日下降1位，灰色表示排名较前一日无变化；
+            <br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            0表示排名没有进入前十页；Clock表示排名掉出前十页。</a>
+        </form>
+		<form  class="js-ajax-form" method="post">
+            排序方式：
+			<select id="orderSelect">
+                <option value="0">默认</option>
+                <option value="1">位置</option>
+            </select>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <input id="savePro" type="button" class="btn btn-primary" value="添加关键词" onclick="addkeywords()"/>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="btn btn-primary btn-small js-ajax-submit" type="submit" data-action="{:U('KeywordInquiry/delkeywords')}" data-subcheck="true">批量删除</button>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="{:U('KeywordInquiry/excelKeywords')}" class="btn">导出excel</a>
+            <if condition="$listKeyWords">
+            <table class="table table-hover table-bordered table-list" >
+                    <thead>
+                    <php>$yesterday =date("Y-m-d",strtotime("-1 day"));</php>
+                    <php>$beforeYesterday = date("Y-m-d",strtotime("-2 day"));</php>
+                    <php>$bigbeforeday = date("Y-m-d",strtotime("-3 day"));</php>
+
+                    <php>$yesterdayClass =date("Y-m-d",strtotime("-1 day")).'class';</php>
+                    <php>$beforeYesterdayClass = date("Y-m-d",strtotime("-2 day")).'class';</php>
+                    <php>$bigbeforedayClass = date("Y-m-d",strtotime("-3 day")).'class';</php>
+
+                    <php>$yesterdayChange =date("Y-m-d",strtotime("-1 day")).'change';</php>
+                    <php>$beforeYesterdayChange = date("Y-m-d",strtotime("-2 day")).'change';</php>
+                    <php>$bigbeforedayChange = date("Y-m-d",strtotime("-3 day")).'change';</php>
+                        <tr>
+                            <th width="5">
+                                <label><input type="checkbox" class="js-check-all" data-direction="x" 
+                                    data-checklist="js-check-x">
+                                </label>
+                            </th>
+                            <th width="200">关键词</th>
+                            <th width="100">{$bigbeforeday}</th>
+                            <th width="100">{$beforeYesterday}</th>
+                            <th width="100">{$yesterday}</th>
+                        </tr>
+                    </thead>
+                    
+                    <foreach name="listKeyWords" item="vo">
+                    <tr>
+                        <td width="5">
+                            <input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="ids[]" value="{$vo.id}">
+                        </td>
+                        <td>{$vo.keyword}</td>
+                        <td align='center'>
+                            <span class="tag {$vo.$bigbeforedayClass}">{$vo.$bigbeforeday}</span>
+                            <if condition="$vo[$bigbeforedayChange] neq 'n/a'">
+                                <span class="change">{$vo.$bigbeforedayChange}</span>
+                            </if>
+                        </td>
+                        <td align='center'>
+                            <span class="tag {$vo.$beforeYesterdayClass}">{$vo.$beforeYesterday}</span>
+                            <if condition="$vo[$beforeYesterdayChange] neq 'n/a'">
+                                <span class="change">{$vo.$beforeYesterdayChange}</span>
+                            </if>
+                        </td>
+                        <td align='center'>
+                            <span class="tag {$vo.$yesterdayClass}">{$vo.$yesterday}</span>
+                            <if condition="$vo[$yesterdayChange] neq 'n/a'">
+                                <span class="change">{$vo.$yesterdayChange}</span>
+                            </if>
+                        </td>
+                    </tr>
+                    </foreach>
+                    <tfoot>
+                        <tr>
+                            <th width="5">
+                                <label><input type="checkbox" class="js-check-all" data-direction="x" 
+                                    data-checklist="js-check-x">
+                                </label>
+                            </th>
+                            <th width="200">关键词</th>
+                            <th width="100">{$bigbeforeday}</th>
+                            <th width="100">{$beforeYesterday}</th>
+                            <th width="100">{$yesterday}</th>
+                        </tr>
+                    </tfoot>
+            </table>
+            <div class="pagination">{$Page}</div>
+        </form>
+        <else />
+            <div>没有数据!</div>
+        </if>
+	</div>
+    </div>
+	<script src="__PUBLIC__/js/common.js?time=20170308"></script>
+    <script type="text/javascript">
+        function addkeywords() {
+            open_iframe_dialog_byWidth("{:U('KeywordInquiry/addkeywords')}","添加关键词", "30%");
+        }
+
+        $("#orderSelect").change(function(){
+           var selected=$(this).children('option:selected').val()
+           $.post("{:U('KeywordInquiry/index')}", {selected:selected},function(data){
+            $('#datalist').html(data);
+             $("#orderSelect option[value='"+selected+"']").attr("selected",true);
+           });
+        });
+
+    </script>
+</body>
+</html>

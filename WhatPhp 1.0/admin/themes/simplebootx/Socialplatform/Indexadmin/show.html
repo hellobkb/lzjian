@@ -1,0 +1,48 @@
+<admintpl file="header" />
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="javascript:;">社交列表</a></li>
+        <li><a href="{:U('Socialplatform/Indexadmin/addedit')}" target="_self">添加社交网站</a></li>
+    </ul>
+        <table class="table table-hover table-bordered table-list">
+            <thead>
+            <tr>
+                <th>序号</th>
+                <th>logo</th>
+                <th>网址</th>
+                <th>账号</th>
+                <th>密码</th>
+                <th>描述</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <foreach name="SocialPlatform" item="v">
+                <tr>
+                    <td>{$v.id}</td>
+                    <php>$imgurl = json_decode($v['imageurl'],true)</php>
+                    <td><img src="{:sp_get_asset_upload_path($imgurl['thumb'])}" id="thumb_preview" width="100"/></td>
+                    <td><a href="{$v.socurl}" target="_blank">{$v.socurl}</a></td>
+                    <td>{$v.user}</td>
+                    <td>{$v.pwd}</td>
+                    <td>{:htmlspecialchars_decode($v['content'])}</td>
+                    <td><a href="{:U('Socialplatform/Indexadmin/addedit',array('id'=>$v['id']))}">修改</a><a href="{:U('Socialplatform/Indexadmin/del',array('id'=>$v['id']))}">删除</a></td>
+                </tr>
+            </foreach>
+            <tfoot>
+            <tr>
+                <th>序号</th>
+                <th>logo</th>
+                <th>网址</th>
+                <th>账号</th>
+                <th>密码</th>
+                <th>描述</th>
+                <th>操作</th>
+            </tr>
+            </tfoot>
+        </table>
+</div>
+<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

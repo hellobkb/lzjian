@@ -1,0 +1,46 @@
+
+<php> $content2 = json_decode($zcmod['content'],true);
+$limit = $content2['zcmsg']['attr']['argu']['limit'];
+$relation = show_relation($catid,$id);
+$imgList = json_decode($mopic ,true);
+</php>  
+
+
+                    <volist name="imgList" id="big_img" offset="0" length='1'>
+                        <a class="big-img jqzoom"  rel="gal1" <if condition="$big_img[alt]"> title="{$big_img.alt}" <else />title="{$title}"</if>>
+                            <img class="img" src="{$big_img.url}" <if condition="$big_img[alt]"> title="{$big_img.alt}" alt="{$big_img.alt}" <else />title="{$title}" alt="{$title}"</if> >
+                        </a>
+                    </volist>
+                 
+                        <php>
+                          $where_c['id'] = array('neq',$id);
+                          $where_c['catid'] = $catid;
+                          $where_c['isdelay'] = 0;
+                          $where_c['is_del'] = 0;
+                          $pro = M('product')->where($where_c)->order('rand()')->limit(3)->select();
+                        </php>
+                             <if condition="$relation">
+                                  <volist name="relation" id="vo" offset="0" length="3">
+                                      <li class="list-item">
+                                          <a href="{:zcurl($vo['url'],$vo['moveurl'])}" title="{$vo.title}" class="item-pic"><img src="{$vo.thumb}" alt="{$vo.title}" title="{$vo.title}"></a>
+                                          <div class="item-text">
+                                              <p class="item-title">
+                                                  <a href="{:zcurl($vo['url'],$vo['moveurl'])}" title="{$vo.title}">{$vo.title}</a>
+                                              </p>
+                                          </div>
+                                      </li>
+                                  </volist>
+                              <else/> 
+                             
+                                  <volist name="pro" id="vo" offset="0" length="3">
+                                      <li class="list-item">
+                                          <a href="{:zcurl($vo['url'],$vo['moveurl'])}" title="{$vo.title}" class="item-pic"><img src="{$vo.thumb}" alt="{$vo.title}" title="{$vo.title}"></a>
+                                          <div class="item-text">
+                                              <p class="item-title">
+                                                  <a href="{:zcurl($vo['url'],$vo['moveurl'])}" title="{$vo.title}">{$vo.title}</a>
+                                              </p>
+                                          </div>
+                                      </li>
+                                  </volist>
+                              </if>
+                       

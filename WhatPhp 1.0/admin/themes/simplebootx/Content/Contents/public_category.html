@@ -1,0 +1,50 @@
+<admintpl file="header" />
+<style>
+	html{overflow: auto;}
+	body{overflow: auto;height: 100%;background: #f2f2f2;}
+	
+	.js-ajax-form{padding-bottom: 0 !important;}
+	
+	.table{width: 100%;}
+	.table-hover{margin-top: 0;}
+	.table-hover td{background: #f2f2f2;padding: 12px 10px;padding-left: 20px !important;font-size: 13px;}
+	.table-hover tbody tr:hover>td, .table-hover tbody tr:hover>th,.table-hover tbody tr td.active{background: #dae9ea;}
+</style>
+</head>
+<body>
+	<div class="js-check-wrap">
+		<form class="js-ajax-form" method="post">
+			<table class="table table-hover table-bordered table-list" id="menus-table">
+				<tbody>
+					{$categorys}
+				</tbody>
+				
+			</table>
+			
+		</form>
+	</div>
+	
+<script>
+	$('.zciframe').click(function (){
+		var href = $(this).attr('href');
+   		$("#myiframe1",parent.document.body).attr('src',href);
+   	})
+	
+	/*2017年1月13日*/
+	var sign_selected = null;
+	$("#menus-table").on( "click",function(event) {
+		var closest_a = $(event.target).closest("a");
+		if (!closest_a || closest_a.length == 0) {
+			return
+		}
+		if (!closest_a.hasClass("active")) {
+			sign_selected && sign_selected.parent().removeClass("active");
+			//!sign_selected && $(this).find(".active").removeClass("active");
+			sign_selected=closest_a;
+			sign_selected.parent().addClass("active");
+		}
+	});
+	
+</script>
+</body>
+</html>

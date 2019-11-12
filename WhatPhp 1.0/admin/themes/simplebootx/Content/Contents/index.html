@@ -1,0 +1,54 @@
+<admintpl file="header" />
+</head>
+<body>
+	<style>
+	.table-hover td{
+		padding:0 ;
+	}
+	.table-title{
+		width: 274px;
+		height: 45px;
+		line-height: 45px;
+		padding-left: 20px !important;
+		font-size: 18px;
+		color: #fff !important;
+		background: #2baab1 !important;
+	}
+	</style>
+<div class="js-check-wrap">
+	<form class="js-ajax-form" method="post" style="padding-bottom: 0;">
+	<table class="table-hover" id="menus-table">
+	<tr>
+		<td class="table-title">内容管理</td>
+		<td style="width: 85%;" rowspan="2">
+		<if condition="$data['type'] eq 1">
+		<iframe name="right" src="{:U('Content/Contentshow/pagedit',array('catid'=>$data['catid'][0]))}"  id="myiframe1" scrolling="auto" onload="changeFrameHeight1()" style="width: 100%;border:none;"></iframe>
+		<else />
+		<iframe name="right" src="{:U('Content/Contentshow/classlist',array('catid'=>implode(',', $data['catid'])))}"  id="myiframe1" scrolling="auto" onload="changeFrameHeight1()" style="width: 100%;border:none;"></iframe>
+		</if>	
+		</td>
+	</tr>
+	<tr>
+		<td style="vertical-align:text-top;">
+		<iframe name="left" src="{:U('Content/Contents/public_category',array('modelid'=>$modelid))}"  id="myiframe" scrolling="no" onload="changeFrameHeight()" style="width: 100%;border: none;"></iframe>
+		</td>
+	</tr>
+	</table>
+</div>
+</body>
+<script type="text/javascript">
+      function changeFrameHeight(){
+          var ifm= document.getElementById("myiframe"); 
+          ifm.height=document.documentElement.clientHeight-80;
+      }
+      function changeFrameHeight1(){
+          var ifm= document.getElementById("myiframe1"); 
+          ifm.height=document.documentElement.clientHeight-35;
+      }
+
+    window.onresize=function(){
+         changeFrameHeight();
+         changeFrameHeight1();
+    }
+</script>
+</html>

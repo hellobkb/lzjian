@@ -1,0 +1,44 @@
+<admintpl file="header" />
+</head>
+<body>
+    <div class="wrap js-check-wrap">
+        <ul class="nav nav-tabs">
+            <li><a href="{:U('Tkslibrary/index')}">词库列表</a></li>
+            <li class="active"><a href="{:U('Tkslibrary/add')}">添加</a></li>
+        </ul>
+        <form class="js-ajax-form" method="post" action="{:U('Tkslibrary/add')}">
+            <table class="table table-hover table-bordered table-list">
+                <thead>
+                    <tr>
+                        <th width="150">关键词</th>
+                    </tr>
+                </thead>
+                <tr>
+                    <td>
+                        <textarea name="keywords" rows="15" cols="88" required>{$info.keywords}</textarea>&nbsp;&nbsp;回车分隔,*号表示通配内容页，商品/文章
+                      
+                    </td>
+            </table>
+            <div class="form-actions">
+                <input name="id" type="hidden" value="{$info.id}">
+                <button class="btn btn-primary js-ajax-submit" type="submit">{:L('SAVE')}</button>
+                <a class="btn" href="{:U('Tkslibrary/index')}">{:L('BACK')}</a>
+            </div>
+            
+        </form>
+    </div>
+    <script src="__PUBLIC__/js/common.js"></script>
+    <script>
+        setCookie('refersh_time', 0);
+        function refersh_window() {
+            var refersh_time = getCookie('refersh_time');
+            if (refersh_time == 1) {
+                window.location.reload();
+            }
+        }
+        setInterval(function() {
+            refersh_window()
+        }, 2000);
+    </script>
+</body>
+</html>

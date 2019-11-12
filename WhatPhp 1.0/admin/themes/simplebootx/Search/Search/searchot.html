@@ -1,0 +1,41 @@
+<admintpl file="header" />
+</head>
+<body>
+  <div class="wrap">
+    <ul class="nav nav-tabs">
+      <li><a href="{:U('Search/Search/index')}">{:L('SOUSUOSHEHZI')}</a></li>
+      <li><a href="{:U('Search/Search/create')}">{:L('CHONGJIANSUOYIN')}</a></li>
+      <li class="active"><a href="{:U('Search/Search/searchot')}">{:L('REMENSOUSUO')}</a></li>
+    </ul>
+    <form action="{:U('Search/searchot')}" method="post" class="js-ajax-form">
+      <table class="table table-hover table-bordered">
+        <thead>
+          <tr>
+            <th width="50"><input type="checkbox" class="J_check_all" data-direction="x" data-checklist="J_check_x"></th>
+            <th width="100">关键字</th>
+            <th width="150">拼音</th>
+            <th style="min-width: 60px;">搜索次数</th>
+            <th>分词结果</th>
+          </tr>
+        </thead>
+        <tbody>
+          <volist name="data" id="r">
+            <tr>
+              <td><input type="checkbox" class="J_check" data-yid="J_check_y" data-xid="J_check_x" name="keyword[]" value="{$r.keyword}"></td>
+              <td>{$r.keyword}</td>
+              <td>{$r.pinyin}</td>
+              <td>{$r.searchnums}</td>
+              <td>{$r.data}</td>
+            </tr>
+          </volist>
+        </tbody>
+      </table>
+      <div class="pagination">{$Page}</div>
+      <div class="table-actions">
+        <input class="btn" type="submit" value="删除">
+      </div>
+    </form>
+  </div>
+  <script src="__PUBLIC__/js/common.js?"></script>
+</body>
+</html>

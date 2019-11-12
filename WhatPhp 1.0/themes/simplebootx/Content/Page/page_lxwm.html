@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <title>{$SEO.title}</title>
+    <meta name="keywords" content="{$SEO.keyword}" />
+    <meta name="description" content="{$SEO.description}">
+    <tc_include file="Public:head" />
+    <script src="__PUBLIC__/js/jquery.js"></script>
+    <style>
+#left, #right {
+	float: left;
+	width: 140px;
+}
+.foot {
+	clear: both
+}
+</style>
+<body>
+<tc_include file="reanod:Zckop/nav" />
+<!--  lun bo   --> 
+<tc_include file="reanod:Zckop/lunbo2" />
+<!--  mian bao xie  -->
+<div class="mianbao zong">
+  <a href="__ROOT__/" title="{:L('RNHOME')}">{:L('RNHOME')}</a>
+  <php>$str = " / "</php> /  <navigate catid="$catid" space="$str" mmc="co0e" />
+  <div class="clear"></div>
+</div>
+
+<!--  main1  -->
+<div class="comain zong">
+<a class="cobiao">{:L("RNWE\'D_LOVE_TO_HEAR_FORM_YOU")}</a>
+<ul class="lianxi">
+<php>
+  $w1 = getContactValue(25);
+  $w2 = getContactValue(26);
+  $weixin = getContactValue(24);
+  $skype = getContactValue(21);
+  $email = getContactValue(11);
+  $add = getContactValue(12);
+  $phone = getContactValue(27);
+
+  $tel = getContactValue(10);
+  $t43 = getContactValue(43);
+
+</php>
+
+<li class="cos2">{$skype.k}: <a href="skype:{$skype.v}?chat" target="_blank">{$skype.v}</a></li>
+<div class="clear"></div>
+</ul>
+<div class="clear"></div>
+
+<div class="comain2">
+<div class="colie codizhi">
+<a>{$add.k}</a>
+<p>{$add.v}</p>
+</div>
+<div class="colie codianhua">
+<a>{$tel.k}</a>
+<p>{$tel.v}</p>
+</div>
+<div class="clear2"></div>
+<div class="colie coyouxiang">
+<a>{$email.k}</a>
+<p><a href="mailto:{$email.v}">{$email.v}</a></p>
+</div>
+<div class="clear"></div>
+</div>
+
+<div class="ditu"><img src="__ROOT__/img/cotu.jpg" title="" alt="" /></div>
+<form class="coxin" name="" method='post' action="{:U('api/guestbook/addmsg')}" enctype='multipart/form-data' id="contact_form">
+  <a title=""><img src="__ROOT__/img/cobiao2.jpg" title="" alt="" /></a>
+  <p>{$t43.v}</p>
+
+  <div class="int1 fl"><input type="text" placeholder="{:L('RNNAME')}" name="full_name" id="full_name" /></div>
+  <div class="int1 fr"><input type="text" placeholder="{:L('RNEMAIL')}"   name="email" id="email"  /></div>
+  <div class="clear"></div>
+  <div class="int2"><input type="text" placeholder="{:L('RNTEL')}" name="tel" id="tel" /></div>
+  <div class="int3"><textarea placeholder="{:L('RNYOUR_INQUIRY')}" name="msg" id="msg" ></textarea></div>
+  <div class="int4"><input type="text" placeholder="{:L('RNCAPTCHA')}" name="verify" id="verify"  /></div>
+  <php>$ver = sp_verifycode_img('length=4&font_size=18&width=140&height=40&use_noise=1&use_curve=0','style="cursor: pointer;" title="'.L('DJ_TIP').'"');</php>
+          {$ver}
+  <input type="submit" class="int5" value="{:L('RNSUBMIT')}" />
+  <div class="clear"></div>
+  <if condition="$pro">
+      <div style="margin-top: 25px;" class="xunpanc">
+            <table style="border: 1px solid #047ee1;" width="100%" cellpadding="0" cellspacing="0">
+                <tbody>
+                <tr style="height: 40px;background-color: #047ee1; width: 60%; color: #fff; padding-left: 12px;">
+                    <td>{:L('RNPRODUCT_NAME')}</td>
+                    <td>Image</td>
+                    <td>Number</td>
+                    <td>Operation</td>
+                </tr>
+                <foreach name="pro" item="vo">
+                  <tr style="background-color: #fff; border-width: 1px; border-style: solid; height: 25px;" id="tpro{$vo.id}">
+                      <input type="hidden" name="pids[{$vo['id']}]" value="{$vo.id}">
+                      <td style="padding-left: 12px;">
+                      <a href="{:zcurl($vo['url'],$vo['moveurl'])}" title="{$vo.title}" target="_blank">{$vo.title|str_cut=###,'15'}</a>
+                      </td>
+                      <td><a href="{:zcurl($vo['url'],$vo['moveurl'])}" title="{$vo.title}" target="_blank"><img src="{$vo.thumb}" title="{$vo.title}" style="width: 100px;height: 100px;"></a></td>
+                      <td><input type="text" name="num[{$vo['id']}]"></input></td>
+                      <td><a href="javascript:;" onclick="delpro(this,{$vo.id})">Delete</a></td>
+                  </tr>
+                </foreach>
+                </tbody>
+            </table>
+      </div>
+  </if>
+</form>
+
+<div class="clear"></div>
+</div>
+		<script src="__PUBLIC__/js/jquery.validate.min.js"></script>
+    <script type="text/javascript">
+    	/*修改邮箱*/
+		  $('#contact_form').validate({
+		  	errorPlacement:function(error,element) {
+			    element.closest('div').append(error);
+			  },
+		    rules: {
+		      full_name: {
+		        required: true
+		      },
+	        email: {
+	          required: true,
+	          email:true
+	        },
+		      msg: {
+		        required: true
+		      },
+		      verify: {
+		        required: true
+		      }
+		    },
+		    messages: {
+		      full_name: {
+		        required: "{:L('RNXP_N')}"
+		      },
+		      email: {
+		        required: "{:L('RNXP_EMAIL_N')}",
+		        email: "{:L('RNXP_EMAIL_E')}"
+		      },
+		      msg: {
+		        required: "{:L('RNXP_CONTENT_N_TIP')}"
+		      },
+		      verify: {
+		        required: "{:L('RNXP_VERIFY_CODE_ERROR')}"
+		      }
+		    }
+		  })
+      function delpro(obj,id){
+        var params = {};
+        params.pro = id;
+        params.sign = 'del';
+        params.isajax = 1;
+        $.ajax({
+            url:"{:U('Pagedis/Inquiry')}",
+            type:'POST', //GET
+            data:params,
+            dataType:'json',
+            success:function(data,textStatus,jqXHR){
+              if(data.status == 1){
+                $("#tpro"+id).remove();
+              }
+            }
+        })
+      }
+    </script>
+
+<!--  foot  -->
+<tc_include file="reanod:Zckop/footer" />
+<tc_include file="reanod:Zckop:script" />
+</body>
+</html>

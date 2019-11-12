@@ -1,0 +1,86 @@
+<admintpl file="header" />
+</head>
+<body>
+    <div class="wrap js-check-wrap">
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="javascript:;">世界时间</a></li>
+        </ul>
+      
+            <div class="row-fluid">
+				<div class="span9">
+					<table class="table table-bordered">
+						<tr>
+							<th>国家:</th>
+							<td>
+								<select id="country" name="country"></select> 
+							</td>
+						</tr>
+						<tr>
+							<th>城市:</th>
+							<td>
+								<select  name="state" id="state">
+								<option>Select State</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<th>Time:</th>
+							<td><span id="backfun"></span></td>
+						</tr>
+					</table>
+				</div>
+			</div>
+            <div class="form-actions">
+                <span class="btn btn-primary"  onclick="submit();" id="search">查询</span>
+                <span id="errorMsg"></span>
+            </div>
+       
+    </div>
+    <script src="__PUBLIC__/js/common.js"></script>
+    <script src="__PUBLIC__/js/city_state.js"></script>
+    <script>
+        setCookie('refersh_time', 0);
+        function refersh_window() {
+            var refersh_time = getCookie('refersh_time');
+            if (refersh_time == 1) {
+                window.location.reload();
+            }
+        }
+        setInterval(function() {
+            refersh_window()
+        }, 2000);
+         
+        populateCountries("country", "state");
+        populateCountries("country2");
+        
+         
+        function submit(){
+  			 
+        		var country = $("#country").val();
+            	var city = $("#state").val();
+            	
+            	$("#search").html("正在查询中..");
+            	 
+            	if(!country || country =='-1'){
+            		$("#errorMsg").html("请选择国家！");
+            		$("#search").html("查询");
+            		 
+            	}
+            	
+            	$.post("{:U('Worldtime/getTime')}",{country:country,city:city},function(str){
+            		 var str = str.info;
+            		if(str.status ==1){
+            			$("#backfun").html(str.msg);
+            			$("#search").html("查询");
+            		}else if(str.status ==0){
+            			$("#backfun").html("<font color='red'>"+str.msg+"</font>");
+            			$("#search").html("查询");
+            		}
+     
+            	});
+        	 
+        }
+        
+    </script>
+</body>
+</html>

@@ -1,0 +1,166 @@
+<admintpl file="header" />
+</head>
+<body>
+
+	<div class="wrap">
+    <div class="table_list">
+      <table width="100%">
+        <colgroup>
+        <col width="40">
+        <col width="">
+        <col width="80">
+        <col width="70">
+        <col width="140">
+        </colgroup>
+        <thead>
+          <tr>
+            <td>序号</td>
+            <td>关键词</td>
+          </tr>
+        </thead>
+        
+        <volist name="info" id="vo">
+          <tr onClick="select_list(this,'{$vo.keywords}',{$vo.id})"  class="cu" title="点击选择">
+            <td>{$vo.id}</td>
+            <td ><a href="javascript:;;">{$vo.keywords}</td>
+          </tr>
+        </volist>
+        <input type="hidden" id="type" value="{$type}"></input>
+      </table>
+      <div class="p10"><div class="pages"> {$Page} </div> </div>
+      
+    </div>
+</div>
+<script>
+  function select_list(obj, title, id) {
+    var type = $('#type').val();
+    if(type == 1){
+        var lib_add_key = window.parent.$('#lib_add_key').val();
+        var keywords = window.parent.$('#lib_text').val();
+        if ($(obj).attr('class') == 'line_ff9966' || $(obj).attr('class') == null) {
+            $(obj).attr('class', 'line_fbffe4');
+            if (lib_add_key != '') {
+                var r_arr = lib_add_key.split(',');
+                var newrelation_ids = '';
+                $.each(r_arr, function (i, n) {
+                    if (n != id) {
+                        if (i == 0) {
+                            newrelation_ids = n;
+                        } else {
+                            newrelation_ids = newrelation_ids + ',' + n;
+                        }
+                    }
+                });
+                window.parent.$('#lib_add_key').val(newrelation_ids);
+            }
+            if (keywords != '') {
+                var r_arr_keywords = keywords.split(',');
+                var newrelation_keywords = '';
+                $.each(r_arr_keywords, function (i, n) {
+                    if (n != title) {
+                        if (i == 0) {
+                            newrelation_keywords = n;
+                        } else {
+                            newrelation_keywords = newrelation_keywords + ',' + n;
+                        }
+                    }
+                });
+                window.parent.$('#lib_text').val(newrelation_keywords);
+            }
+        } else {
+            $(obj).attr('class', 'line_ff9966');
+            var str = title ;
+            if (lib_add_key == '') {
+                window.parent.$('#lib_add_key').val(id);
+            } else {
+                lib_add_key = lib_add_key +','+id;
+                window.parent.$('#lib_add_key').val(lib_add_key);
+            }
+            if (keywords == '') {
+                window.parent.$('#lib_text').val(str);
+            } else {
+                keywords = keywords +','+str;
+                window.parent.$('#lib_text').val(keywords);
+            }
+        }
+
+    }else{
+        var lib_add_key = window.parent.$('#lib_add_key2').val();
+        var keywords = window.parent.$('#lib_text2').val();
+        if ($(obj).attr('class') == 'line_ff9966' || $(obj).attr('class') == null) {
+            $(obj).attr('class', 'line_fbffe4');
+            if (lib_add_key != '') {
+                var r_arr = lib_add_key.split(',');
+                var newrelation_ids = '';
+                $.each(r_arr, function (i, n) {
+                    if (n != id) {
+                        if (i == 0) {
+                            newrelation_ids = n;
+                        } else {
+                            newrelation_ids = newrelation_ids + ',' + n;
+                        }
+                    }
+                });
+                window.parent.$('#lib_add_key2').val(newrelation_ids);
+            }
+            if (keywords != '') {
+                var r_arr_keywords = keywords.split(',');
+                var newrelation_keywords = '';
+                $.each(r_arr_keywords, function (i, n) {
+                    if (n != title) {
+                        if (i == 0) {
+                            newrelation_keywords = n;
+                        } else {
+                            newrelation_keywords = newrelation_keywords + ',' + n;
+                        }
+                    }
+                });
+                window.parent.$('#lib_text2').val(newrelation_keywords);
+            }
+        } else {
+            $(obj).attr('class', 'line_ff9966');
+            var str = title ;
+            if (lib_add_key == '') {
+                window.parent.$('#lib_add_key2').val(id);
+            } else {
+                lib_add_key = lib_add_key +','+id;
+                window.parent.$('#lib_add_key2').val(lib_add_key);
+            }
+            if (keywords == '') {
+                window.parent.$('#lib_text2').val(str);
+            } else {
+                keywords = keywords +','+str;
+                window.parent.$('#lib_text2').val(keywords);
+            }
+        }
+
+    }
+    
+      
+
+    /*$.getJSON("__ROOT__/index.php?g=Content&m=Contentshow&a=add_keywords&id=" + id+"keywords="+title, function (json) {
+        if (json.status == null) {
+            isalert('没有可匹配的关键词！');
+            return false;
+        }else{
+            if (keywords == '') {
+                window.parent.$('#lib_add_key').val(data.);
+                window.parent.$('#lib_text').val(data.);
+            }else{
+                lib_add_key = lib_add_key +','+id;
+                keywords = keywords +','+str;
+                window.parent.$('#lib_add_key').val(lib_add_key);
+                window.parent.$('#lib_text').val(keywords);
+
+            }
+        }
+    });*/
+
+    
+    
+      
+      
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<php>$ads = getPsitionAds(1);</php>
+		    <div class="container"> 
+        <div class="wrapper"> 
+            <ul id="sb-slider" class="sb-slider">
+                <volist name="ads" id="vo">
+				<li>
+					<a href="{$vo.url1}"  title="{$vo.alt}">
+						<img src="{$vo.image}" alt="{$vo.alt}" title="{$vo.alt}">
+					</a>
+				</li>
+				</volist>
+            </ul>
+            <div id="nav-arrows" class="nav-arrows" style="display: block;">
+                <a></a>
+                <a></a>
+            </div>
+            <div id="nav-dots" class="nav-dots"><?php $a=1; ?>
+            <volist name="ads" id="vo">
+                <span <if condition="$a eq 1">class="nav-dot-current"</if>></span><?php $a++; ?>
+              </volist>
+            </div> 
+        </div> 
+    </div>
+<script type="text/javascript" src="__TMPL__yangdong/js/modernizr.custom.js"></script>
+<script type="text/javascript" src="__TMPL__yangdong/js/jquery.slicebox.js"></script> 
+<script src="__TMPL__yangdong/js/dan.js"></script>

@@ -1,0 +1,13 @@
+<php>$ads = getPsitionAds(1);</php>
+				 <volist name="ads" id="vo">
+				<li>
+					<a href="{$vo.url1}"  title="{$vo.alt}" class="pic">
+						<img class="pic" src="{$vo.image}" alt="{$vo.alt}" title="{$vo.alt}">
+					</a>
+				</li>
+				</volist>
+	<?php $a=1; ?>
+		<volist name="ads" id="vo">
+			<li <if condition="$a eq 1">class="cur"</if>></li>
+			<?php $a++; ?>
+		</volist>

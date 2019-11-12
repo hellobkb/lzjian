@@ -1,0 +1,672 @@
+<admintpl file="header" />
+<style>
+label, input, button, select{
+	font-size: 18px;
+    font-weight: bold;
+    line-height: 20px;
+}
+</style>
+</head>
+<body>
+	<php>$i=1;</php>
+	<script type="text/javascript">
+		var zcdata = {};
+	</script>
+	<div class="wrap js-check-wrap">
+			<h1 style="text-align: center;">{$site_options.site_name} 数据报告</h1>
+			<h2 style="text-align: center;">{$stime}--{$etime}</h2>
+			<div class="tabbable">
+		        <div class="tab-content">
+		          <div class="tab-pane active" id="A">
+		          <!-- 文章统计开始 -->
+		          <div id="printinfo">
+		        	<if condition="$articleTime">
+					<div class="control-group" id="chart_1" style="display:none">
+						<label class="control-label">{$i++}、文章统计</label>
+						<div class="controls">
+							<div id="main1" style="width:900px;height:400px;"></div>
+							 <div>推广建议：<textarea id="article_content">{$articleContent}</textarea></div>
+						</div>
+					</div>
+					<script type="text/javascript">
+						$(function(){
+							var type = '{$type}';
+							var typearr = type.split(",");
+							//var zcdata = {};
+							$.each(typearr,function(i,item){
+								if(item==1){     //文章统计
+									<if condition="$articleNumber">
+									$("#chart_1").show();
+									
+									 var articleChart = echarts.init(document.getElementById('main1'));
+								     
+								     var option = {
+								       title: {
+								        	subtext: '文章统计',
+								        	x:'center'
+								        },
+								        tooltip: {},
+								        legend: {
+								        	data:['文章更新数量']
+								        },
+								        toolbox: {
+										       show: true,
+										       feature: {
+										           saveAsImage: {}
+										       }
+										},
+								        xAxis: {
+								        	data: {$articleTime}
+								        },
+								        yAxis: {},
+								        series: [{
+								        	name: '文章更新数量',
+								        	type: 'line',
+								        	barWidth:'30',
+								        	data: {$articleNumber}
+								        }]
+								       };
+
+								       
+								     articleChart.setOption(option);
+								     zcdata[1] = {'title':'文章统计图','imgurl':articleChart.getDataURL('png')};
+								    </if>
+								}
+							})
+						})
+					</script>
+					<else />
+						<p>文章统计：暂无信息</p>
+					</if>
+					<!-- 文章统计结束 -->
+
+					<!-- 产品访问量统计开始 -->
+					<if condition="$productSurfList">
+					<div class="control-group" id="chart_3">
+						<label class="control-label">{$i++}、产品访问量统计</label>
+						<div class="controls">
+							<!-- <div id="main3" style="width:900px;height:400px;"></div> -->
+							<table class="table table-hover table-bordered table-list">
+								<thead>
+									<tr>
+										<th width="15"><label><input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x"></label></th>
+										<th width="50" style="display:none">ID</th>
+										<th width="100">产品名称</th>
+										<th>网址</th>
+										<th width="150">访问次数</th>
+										<th width="100">访问时间</th>
+									</tr>
+								</thead>
+									<foreach name="productSurfList" item="vo">
+										<tr>
+											<td><input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="ids[]" value="{$vo.id}"></td>
+											<td style="display:none">{$vo.id}</td>
+											<td>{$vo.title}</td>
+											<td><a href="{$vo.url}" target="_blank">{$vo.url}</a></td>
+											<td>{$vo.clicks}</td>
+											<td>{$vo.time}</td>
+										</tr>
+									</foreach>
+								<tfoot>
+									<tr>
+										<th width="15"><label><input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x"></label></th>
+										<th width="50" style="display:none">ID</th>
+										<th width="100">产品名称</th>
+										<th>网址</th>
+										<th width="150">访问次数</th>
+										<th width="100">访问时间</th>
+									</tr>
+								</tfoot>
+							</table>
+							<div>推广建议：<textarea id="product_surf_msg" style="margin-top: 5px;">{$productSurfMsg}</textarea></div>
+						</div>
+					</div>
+					<script type="text/javascript">
+						$(function(){
+							var type = '{$type}';
+							var typearr = type.split(",");
+							//var zcdata = {};
+							$.each(typearr,function(i,item){
+								if(item==3) {			//产品访问量统计
+										$("#chart_3").show();
+								}
+							});
+						});
+					</script>
+					<else />
+						<p>产品访问量统计：暂无信息</p>
+					</if>
+					<!-- 产品访问量统计结束 -->
+
+					<!-- 产品添加时间统计开始 -->
+					<if condition="$productAddList">
+					<div class="control-group" id="chart_4" style="display:none">
+						<label class="control-label">{$i++}、产品添加时间统计</label>
+						<div class="controls">
+							<table class="table table-hover table-bordered table-list">
+								<thead>
+									<tr>
+										<th width="50" style="text-align:center;display:none">ID</th>
+										<th width="100" style="text-align:center;">分类名称</th>
+										<th width="150" style="text-align:center;">产品数量</th>
+										<th width="100" style="text-align:center;">添加时间</th>
+									</tr>
+								</thead>
+									<tr>
+										<td style="text-align:center;font-weight:bold">总计</td>
+										<td style="text-align:center;">{$total}</td>
+										<td></td>
+									</tr>
+									<foreach name="productAddList" item="vo1">
+									<tr>
+										<td style="text-align:center;">{$vo1.name}</td>
+										<td style="text-align:center;">{$vo1.value}</td>
+										<td style="text-align:center;">{$vo1.time}</td>
+									</tr>
+									</foreach>
+								<tfoot>
+									<tr>
+										<th width="50" style="text-align:center;display:none">ID</th>
+										<th width="100" style="text-align:center;">分类名称</th>
+										<th width="150" style="text-align:center;">产品数量</th>
+										<th width="100" style="text-align:center;">添加时间</th>
+									</tr>
+								</tfoot>
+							</table>
+							<div>推广建议：<textarea id="product_add_time" style="margin-top: 5px;"></textarea></div>
+						</div>
+					</div>
+					<script type="text/javascript">
+						$(function(){
+							var type = '{$type}';
+							var typearr = type.split(",");
+							var zcdata = {};
+							$.each(typearr,function(i,item){
+								if (item ==4){        //产品添加时间统计
+										$("#chart_4").show();
+								}
+							});
+						});	
+					</script>
+					<else />
+						<p>产品添加时间统计：暂无信息</p>
+					</if>
+					<!-- 产品添加时间统计结束 -->
+					<if condition="$productPubList">
+					<div class="control-group" id="chart_5" style="display:none">
+						<label class="control-label">{$i++}、产品发布人统计</label>
+						<div class="controls">
+							<div id="main5" style="width:900px;height:400px;"></div>
+						</div>
+						<div>推广建议：<textarea id="product_add_user"></textarea></div>
+					</div>
+					<script type="text/javascript">
+						$(function(){
+							var type = '{$type}';
+							var typearr = type.split(",");
+							//var zcdata = {};
+							$.each(typearr,function(i,item){
+								if (item ==5){		//产品发布人统计
+									$("#chart_5").show();
+									var productPubChart = echarts.init(document.getElementById('main5'));
+								 	var productPuboption = {
+								            title : {
+								                subtext: '产品发布人统计',
+								                x:'center'
+								            },
+								            tooltip : {
+								                trigger: 'item',
+								                formatter: "{a} <br/>{b} : {c} ({d}%)"
+								            },
+								            legend: {
+								                orient: 'vertical',
+								                left: 'left',
+								                
+								            },
+								            toolbox: {
+										        show: true,
+										        feature: {
+										            saveAsImage: {}
+										        }
+										    },
+								            series : [
+								                {
+								                	name:'产品发布人统计',
+								                    type: 'pie',
+								                    radius : '55%',
+								                    center: ['50%', '60%'],
+								                    data:{$productPubList},
+								                    itemStyle: {
+								                        emphasis: {
+								                            shadowBlur: 10,
+								                            shadowOffsetX: 0,
+								                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+								                        }
+								                    }
+								                }
+								            ]
+								 	}
+								 	productPubChart.setOption(productPuboption);
+								 	zcdata[5] = {'title':'产品发布人统计','imgurl':productPubChart.getDataURL('png')};
+								}
+							});
+						});	
+					</script>
+					<else />
+					<p>产品发布人统计：暂无信息</p>
+					</if>
+					<if condition="$guestList">
+						<div class="control-group" id="chart_7" style="display:none">
+							<label class="control-label">{$i++}、询盘地域统计</label>
+							<div class="controls">
+								<div id="main7" style="width:900px;height:400px;"></div>
+							</div>
+							<div>推广建议：<textarea id="guestbook_position"></textarea></div>
+						</div>
+						<script type="text/javascript">
+							$(function(){
+								var type = '{$type}';
+								var typearr = type.split(",");
+								//var zcdata = {};
+								$.each(typearr,function(i,item){
+									if (item==7){			//询盘地域统计
+										$("#chart_7").show();
+										var guestChart = echarts.init(document.getElementById('main7'));
+									 	var guestoption = {
+									 			 title : {
+									 				subtext:'询盘地域统计',
+									                 x:'center',
+									             },
+									             tooltip : {
+									                 trigger: 'item',
+									                 formatter: "{a} <br/>{b} : {c} ({d}%)"
+									             },
+									             legend: {
+									                 orient: 'vertical',
+									                 left: 'left',
+									                 data: {$guestCountry},
+									             },
+									             toolbox: {
+												       show: true,
+												       feature: {
+												           saveAsImage: {}
+												       }
+												},
+									             series : [
+									                 {
+									                	 name:'询盘地域统计',
+									                     type: 'pie',
+									                     radius : '55%',
+									                     center: ['50%', '60%'],
+									                     data:{$guestList},
+									                     itemStyle: {
+									                         emphasis: {
+									                             shadowBlur: 10,
+									                             shadowOffsetX: 0,
+									                             shadowColor: 'rgba(0, 0, 0, 0.5)'
+									                         }
+									                     }
+									                 }
+									             ]
+									 	}
+									 	
+									 	guestChart.setOption(guestoption);
+									 	zcdata[7] = {'title':'询盘地域统计','imgurl':guestChart.getDataURL('png')};
+									   
+									}
+								});
+							});	
+						</script>
+					<else />
+						<p>询盘地域统计：暂无信息</p>
+					</if>
+					<if condition="$guestBuyerNum">
+					<div class="control-group" id="chart_8">
+						<label class="control-label">{$i++}、询盘买家统计</label>
+						<div class="controls" >
+							<div id="main8" style="width:900px;height:400px;"></div>
+						</div>
+						<div>推广建议：<textarea id="guestbook_buyer"></textarea></div>
+					</div>
+					<script type="text/javascript">
+						$(function(){
+							var type = '{$type}';
+							var typearr = type.split(",");
+							//var zcdata = {};
+							$.each(typearr,function(i,item){
+								if (item ==8){		//询盘买家统计
+									$("#chart_8").show();
+									 var guestBuyerChart = echarts.init(document.getElementById('main8'));
+								 	var guestBuyeroption = {
+								 			 title: {
+								                 subtext: '询盘买家统计',
+								                 x:'center',
+								             },
+								             tooltip: {
+								                 trigger: 'axis'
+								             },
+								             legend: {
+								             },
+								             grid: {
+								                 left: '3%',
+								                 right: '4%',
+								                 bottom: '3%',
+								                 containLabel: true
+								             },
+								             toolbox: {
+								                 feature: {
+								                     saveAsImage: {},
+								                 }
+								             },
+								             xAxis: {
+								                 type: 'category',
+								                 boundaryGap: false,
+								                 data: {$guestBuyerTime},
+								             },
+								             yAxis: {
+								                 type: 'value'
+								             },
+								             series: [
+								                 {
+								                     name:'询盘买家统计',
+								                     type:'line',
+								                     stack: '总量',
+								                     data:{$guestBuyerNum}
+								                 }
+								             ]
+								 	}
+								 	guestBuyerChart.setOption(guestBuyeroption);
+								 	zcdata[8] = {'title':'询盘买家统计','imgurl':guestBuyerChart.getDataURL('png')};
+								  
+								}
+							});
+						});
+					</script>
+					</if>
+					<if condition="$listcoun">
+					<div class="control-group">
+						<label class="control-label">{$i++}、外商浏览量统计</label>
+						<div class="controls" >
+							<table class="table table-hover table-bordered table-list" >
+								<thead>
+			                        <tr>
+			                            <th style="width: 100px;" align='center'>时间</th>
+			                            <th style="width: 100px;" align='center'>会话次数</th>
+			                            <th style="width: 100px;" align='center'>网页浏览次数</th>
+			                        </tr>
+			                    </thead>
+			                    <tr>
+			                        <td>总计</td>
+			                        <td align='center'>{$total_con}</td>
+			                        <td align='center'>{$total_bro}</td>
+			                    </tr>
+			                    <foreach name="listcoun" item="vo">
+			                    <php>$time = date('Y-m-d',$vo['time']);</php>
+			                    <tr>
+			                        <td>{$vo.time}</td>
+			                        <td align='center'>{$vo.ip}</td>
+			                        <td align='center'>{$vo.numclick}</td>
+			                    </tr>
+			                    </foreach>
+			                    <tfoot>
+			                        <tr>
+			                            <th style="width: 100px;" align='center'>时间</th>
+			                            <th style="width: 100px;" align='center'>会话次数</th>
+			                            <th style="width: 100px;" align='center'>网页浏览次数</th>
+			                        </tr>
+			                    </tfoot>
+							</table>
+							<div>推广建议：<textarea id="foreign_surf" style="margin-top: 5px;" ></textarea></div>
+						</div>
+                        <script type="text/javascript">
+                            $(function(){
+                                zcdata[10] = {'title':'外商浏览量统计'};
+                            });
+                        </script>
+					</div>
+					</if>
+					<!-- 未使用结束 -->
+					<if condition="$forCountryList">
+					<div class="control-group" id="chart_11">
+						<label class="control-label">{$i++}、浏览国家统计</label>
+						<div class="controls" >
+							<if condition="$zcdata">
+							<div id="liulanguojia" style="width:900px;height:400px;"></div>
+							<script type="text/javascript">
+								$(function(){
+									var type = '{$type}';
+									var typearr = type.split(",");
+									//var zcdata = {};
+									var liulanguojia = echarts.init(document.getElementById('liulanguojia'));
+								    var option = {
+								            title : {
+								                text: '浏览国家统计',
+								                subtext: '',
+								                x:'center'
+								            },
+								            tooltip : {
+								                trigger: 'item',
+								                formatter: "{a} <br/>{b} : {c} ({d}%)"
+								            },
+								            legend: {
+								                orient: 'vertical',
+								                left: 'left',
+								                data: {$zcguojia|json_encode},
+								            },
+								            series : [
+								                {
+								                    name: '浏览国家统计',
+								                    type: 'pie',
+								                    radius : '55%',
+								                    center: ['50%', '60%'],
+								                    data:{$zcdata|json_encode},
+								                    itemStyle: {
+								                        emphasis: {
+								                            shadowBlur: 10,
+								                            shadowOffsetX: 0,
+								                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+								                        }
+								                    }
+								                }
+								            ]
+								        };
+								    liulanguojia.setOption(option);
+								    zcdata[11] = {'title':'浏览国家统计','imgurl':liulanguojia.getDataURL('png')};
+							})
+							</script>
+							</if>
+							<table class="table table-hover table-bordered table-list" >
+				                    <thead>
+				                        <tr>
+				                            <th style="width: 100px;" align='center'>国家</th>
+				                            <th style="width: 100px;" align='center'>会话次数</th>
+				                            <th style="width: 100px;" align='center'>会话次数占比</th>
+				                            <th style="width: 100px;" align='center'>网页浏览次数</th>
+				                            <th style="width: 100px;" align='center'>网页浏览次数占比</th>
+				                        </tr>
+				                    </thead>
+				                    <tr>
+				                        <td>总计</td>
+				                        <td align='center'>{$country_total_con}</td>
+				                        <td align='center'>100%</td>
+				                        <td align='center'>{$country_total_bro}</td>
+				                        <td align='center'>100%</td>
+				                    </tr>
+				                    <foreach name="forCountryList" item="vo">
+				                    <tr>
+				                        <td>{$vo.country}</td>
+				                        <td align='center'>{$vo.value}</td>
+				                        <td align='center'>{$vo['value']*100/$country_total_con|round=###,2}%</td>
+				                        <td align='center'>{$vo.clicks}</td>
+				                        <td align='center'>{$vo['clicks']*100/$country_total_bro|round=###,2}%</td>
+				                    </tr>
+				                    </foreach>
+				                    <tfoot>
+				                        <tr>
+				                            <th style="width: 100px;" align='center'>国家</th>
+				                            <th style="width: 100px;" align='center'>会话次数</th>
+				                            <th style="width: 100px;" align='center'>会话次数占比</th>
+				                            <th style="width: 100px;" align='center'>网页浏览次数</th>
+				                            <th style="width: 100px;" align='center'>网页浏览次数占比</th>
+				                        </tr>
+				                    </tfoot>
+				            </table>
+				            <div>推广建议：<textarea id="surf_country" style="margin-top: 5px;"></textarea></div>
+						</div>
+					</div>
+					<script type="text/javascript">
+						$(function(){
+							var type = '{$type}';
+							var typearr = type.split(",");
+							var zcdata = {};
+							$.each(typearr,function(i,item){
+								if (item ==11){		//浏览国家统计
+									$("#chart_11").show();
+								}
+							});
+						})
+					</script>
+					</if>
+					<if condition="$forePageList">
+					<div class="control-group">
+						<label class="control-label">{$i++}、浏览页面统计</label>
+						<div class="controls" >
+
+							<if condition="$zcforev">
+							<div id="liuanyemian" style="width:900px;height:400px;"></div>
+							<script type="text/javascript">
+								$(function(){
+								var type = '{$type}';
+								var typearr = type.split(",");
+								//var zcdata = {};
+								// $zcforev
+								var myChart = echarts.init(document.getElementById('liuanyemian'));
+							    var option = {
+							            title : {
+							                text: '浏览页面统计',
+							                subtext: '',
+							                x:'center'
+							            },
+							            tooltip : {
+							                trigger: 'item',
+							                formatter: "{a} <br/>{b} : {c} ({d}%)"
+							            },
+							            legend: {
+							                orient: 'vertical',
+							                left: 'left',
+							                data: {$zcforev|json_encode},
+							            },
+							            series : [
+							                {
+							                    name: '浏览页面统计',
+							                    type: 'pie',
+							                    radius : '55%',
+							                    center: ['50%', '60%'],
+							                    data:{$zcfore|json_encode},
+							                    itemStyle: {
+							                        emphasis: {
+							                            shadowBlur: 10,
+							                            shadowOffsetX: 0,
+							                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+							                        }
+							                    }
+							                }
+							            ]
+							        };
+
+							    myChart.setOption(option);
+							    zcdata[12] = {'title':'浏览页面统计','imgurl':myChart.getDataURL('png')};
+							  })
+							</script>
+							</if>
+
+							<table class="table table-hover table-bordered table-list" >
+							<thead>
+							<tr>
+								<th style="width: 223px;" align='center'>页面</th>
+								<th style="width: 223px;" align='center'>网址</th>
+								<th style="width: 50px;" align='center'>访问数量</th>
+							</tr>
+							</thead>
+							<foreach name="forePageList" item="vo">
+								<tr>
+									<td>
+										{$vo.title}
+									</td>
+									<td><a href="{$vo.url}" target="_blank">{$vo.url}</a></td>
+									<td align='center'><a>{$vo.num}</a></td>
+								</tr>
+							</foreach>
+							<tfoot>
+								<tr>
+									<th style="width: 223px;" align='center'>页面</th>
+									<th style="width: 223px;" align='center'>网址</th>
+									<th style="width: 50px;" align='center'>访问数量</th>
+								</tr>
+							</tfoot>
+							</table>
+							<div>推广建议：<textarea id="surf_webpage" style="margin-top: 5px;"></textarea></div>
+						</div>
+					</div>
+					</if>
+					
+
+					<if condition="$comment">
+				 	<div class="control-group">
+						<label class="control-label">评论</label>
+						<div>
+							{$comment}
+						</div>
+					</div>
+					</if>
+		          </div>
+		        </div>
+		    </div>
+		</div>
+</div>
+		    <div class="form-actions" id="hideform">
+		     	<a class="btn btn-primary js-ajax-submit"type="submit" id="doprint">生成</a>
+		      	<a class="btn" onClick="window.close();">关闭</a>
+			</div>
+	<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/js/content_addtop.js"></script>
+	<script src="__PUBLIC__/js/echarts.common.min.js"></script>
+	<script>
+	$(function(){
+		$("#doprint").click(function(){
+
+        form = $("<form></form>");
+        form.attr('action',"{:U('Statistics/Report/zcpppdf','',true,true)}");
+        form.attr('method','post');
+
+
+
+        $.each(zcdata,function (k,v){
+        	form.append($('<input type="hidden" name="zcdata['+k+'][title]" value="'+v['title']+'"/>'));
+        	form.append($('<input type="hidden" name="zcdata['+k+'][imgurl]" value="'+v['imgurl']+'"/>'));
+        })
+
+        form.append($('<input type="hidden" name="articleContent" value="'+$("#article_content").val()+'"/>'));
+        form.append($('<input type="hidden" name="productContent" value="'+$("#product_surf_msg").val()+'"/>'));
+        form.append($('<input type="hidden" name="ipContent" value="'+$("#ip_msg").val()+'"/>'));
+        form.append($('<input type="hidden" name="cContent" value="'+$("#c_msg").val()+'"/>'));
+        form.append($('<input type="hidden" name="linkContent" value="'+$("#f_link_msg").val()+'"/>'));
+        form.append($('<input type="hidden" name="product_add_content" value="'+$("#product_add_time").val()+'"/>'));   //产品添加时间建议
+        form.append($('<input type="hidden" name="product_add_user" value="'+$("#product_add_user").val()+'"/>'));   //产品发布人建议
+        form.append($('<input type="hidden" name="guestbook_position" value="'+$("#guestbook_position").val()+'"/>')); //询盘地域建议
+        form.append($('<input type="hidden" name="guestbook_buyer" value="'+$("#guestbook_buyer").val()+'"/>'));    //询盘买家建议
+        form.append($('<input type="hidden" name="foreign_surf" value="'+$("#foreign_surf").val()+'"/>'));    //外商浏览量建议
+		form.append($('<input type="hidden" name="surf_country" value="'+$("#surf_country").val()+'"/>'));    //访问国家建议
+		form.append($('<input type="hidden" name="surf_webpage" value="'+$("#surf_webpage").val()+'"/>'));    //浏览页面建议
+
+        form.append($('<input type="hidden" name="stime" value="{$stime}"/>'));
+        form.append($('<input type="hidden" name="etime" value="{$etime}"/>'));
+        form.append($('<input type="hidden" name="type" value="{$type}" />'));
+        form.append($('<input type="hidden" name="comment" value="{$comment}"/>'));
+        form.appendTo('body');
+        form.submit();
+		});
+	})
+	</script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+<admintpl file="header" />
+</head>
+<body>
+	<iframe src="{$url}" frameborder="0" id="ifr"></iframe>
+	<script>
+		var width = document.body.clientWidth-100;
+		var height = document.documentElement.scrollHeight-100;
+		 
+		$('#ifr').css({'width':width+'px','height':height+'px'});
+	</script>
+</body>
+</html>

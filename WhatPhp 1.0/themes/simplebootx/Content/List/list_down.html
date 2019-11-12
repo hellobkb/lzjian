@@ -1,0 +1,24 @@
+<content action="lists" catid="249" order="listorder DESC,id DESC" num="6" page="$page" page_tplconfig="$pagestely" page_tpl="$pagetpl" moreinfo="1">
+
+
+<div class="domain zong">
+<if condition="$data">
+	<volist name="data" id="vo">
+		<div class="dolie">
+		<a href="{$vo.downfile}" class="dobiao" target="_blank" title="{$vo.title}">{$vo.title}</a>
+		<div class="dozi">
+		<a href="{$vo.downfile}" class="domor" target="_blank">{:L('RNDOWNLOAD')}</a>
+		<a href="{$vo.downfile}" class="pdf" title="{$vo.title}" target="_blank"><img src="__TMPL__zhbeifan/images/pdf.jpg" title="{$vo.title}" alt="{$vo.title}" /></a>
+		<p><a href="{$vo.downfile}" target="_blank" title="{$vo.description}">{$vo.description}</a></p>
+		</div>
+		</div>
+	</volist>
+	<div class="fenyen jvzhong mat2">
+	{$pages}
+	<div class="clear"></div>
+	</div>
+<else />
+{:L('RNNONE')}.
+</if>
+</div>
+</content>

@@ -1,0 +1,64 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li ><a href="{:U('Productsstatistics/statisticsproducts')}">产品访问量统计</a></li>
+			<li class="active" ><a href="{:U('Productsstatistics/staProTime')}">产品添加统计</a></li>
+			<li><a href="{:U('Productsstatistics/staProAdd')}">产品发布人统计</a></li>
+		</ul>
+		<form class="well form-search" method="post" action="{:U('Productsstatistics/staProTime')}">
+			日期：
+			<input type="text" name="stime" class="js-date-now" value="{$stime}" style="width: 80px;" autocomplete="off">-
+			<input type="text" class="js-date-now" name="etime" value="{$etime}" style="width: 80px;" autocomplete="off">
+			<input type="submit" value="查询" class="btn btn-primary" />
+        </form>
+		
+		
+			<!-- <table class="table table-hover table-bordered table-list">
+				 <tr>
+				 	<th width="10%">日期：</th>
+				 	<td>
+				 		<form method="post" class="js-ajax-form" action="{:U('Productsstatistics/staProTime')}">
+					 		<input type="text" name="stime" class="js-date-now" value="{$stime}" style="width: 80px;" autocomplete="off">-
+							<input type="text" class="js-date-now" name="etime" value="{$etime}" style="width: 80px;" autocomplete="off">
+							<input type="submit" value="查询" class="btn btn-primary" />
+				 		</form>
+				 	</td>
+				 </tr>
+			</table> -->
+			<table class="table table-hover table-bordered table-list">
+				<thead>
+					<tr>
+						<th width="50" style="text-align:center;display:none">ID</th>
+						<th width="100" style="text-align:center;">分类名称</th>
+						<th width="150" style="text-align:center;">产品数量</th>
+						<th width="100" style="text-align:center;">添加时间</th>
+					</tr>
+				</thead>
+					<tr>
+						<td style="text-align:center;font-weight:bold">总计</td>
+						<td style="text-align:center;">{$total}</td>
+						<td></td>
+					</tr>
+					<foreach name="list" item="vo">
+					<tr>
+						<td style="text-align:center;">{$vo.name}</td>
+						<td style="text-align:center;">{$vo.value}</td>
+						<td style="text-align:center;">{$vo.time}</td>
+					</tr>
+					</foreach>
+				<tfoot>
+					<tr>
+						<th width="50" style="text-align:center;display:none">ID</th>
+						<th width="100" style="text-align:center;">分类名称</th>
+						<th width="150" style="text-align:center;">产品数量</th>
+						<th width="100" style="text-align:center;">添加时间</th>
+					</tr>
+				</tfoot>
+			</table>
+	</div>
+	<div class="pagination">{$Page}</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

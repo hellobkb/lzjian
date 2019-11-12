@@ -1,0 +1,73 @@
+<php>
+$image = sp_get_cmf_settings_ads();
+$yangshi = $content['yangshi'];
+
+</php>
+
+
+<if condition="$yangshi eq 1">
+	 
+<style>
+img{ border:none; margin:0px; padding:0px;}
+.main_visual{width:100%; margin:0 auto; overflow:hidden;}
+.main_image {width:100%; height:484px;  overflow:hidden; margin:0px auto; position:relative;}
+.main_image ul {width:9999px; height:484px; overflow:hidden; position:absolute; top:0; left:0}
+.main_image li {float:left; width:100%; height:484px;}
+.main_image li span {display:block; width:100%; height:484px}
+.main_image li a {display:block; width:100%; height:484px}
+<foreach name="image" item="v" >
+.main_image li .img_{$key} {background: url("{$v['url']}") center top no-repeat; }
+</foreach>
+#btn_prev,#btn_next{z-index:11111;position:absolute;display:block;width:69px!important;height:60px!important;top:51%;margin-top:-40px;display:block;}
+#btn_prev{background:url("__TMPL__Public/images/lunbozuo.png") no-repeat left top;left:15%;}
+#btn_next{background:url("__TMPL__Public/images/lunboyou.png") no-repeat right top;right:15%;}
+</style>
+<script type="text/javascript" src="__TMPL__Public/js/jquery.touchSlider.js"></script>
+<script type="text/javascript" src="__TMPL__Public/js/lunbtonglan.js"></script>
+<div class="main_visual">
+  <div class="main_image">
+    <ul>
+<foreach name="image" item="v" >
+      <li><span class="img_{$key}"><a href="{$v['href']}" title="{$v.alt}"></a></span></li>
+</foreach>
+    </ul>
+    <a href="javascript:;" id="btn_prev"></a>
+    <a href="javascript:;" id="btn_next"></a>
+     </div>
+</div>
+
+<else />
+
+<script type="text/javascript" src="__TMPL__xinyu/js/jquery.SuperSlide.js"></script>
+<div class="index_focus "> <a href="javascript:;" class="index_focus_pre" ></a> <a href="javascript:;" class="index_focus_next" ></a>
+  <div class="index_focusn">
+    <div class="bd">
+      <ul>
+        <foreach name="image" item="banner_img">
+      		<li> <a href="{$banner_img.href}" class="pic" title="{$banner_img.alt}"> <img class="pic" src="__ROOT__/{$banner_img.url}" alt="{$banner_img.alt}" title="{$banner_img.alt}"></a> </li>
+      	</foreach>
+      </ul>
+    </div>
+    <div class="slide_nav"><foreach name="image" item="bannernum">
+    		<a href="javascript:"></a> 
+    	</foreach></div>
+  </div>
+  <script type="text/javascript" src="__TMPL__xinyu/js/lunbo2.js"></script> 
+</div>
+<script type="text/javascript" src="__TMPL__xinyu/js/jquery.bxslider.js"></script>
+<div class="slider1">
+<foreach name="image" item="banner_img">
+    <div class="slidexp"><a href="{$banner_img.href}" title="{$banner_img.alt}"><img src="__ROOT__/{$banner_img.url}" alt="{$banner_img.alt}" title="{$banner_img.alt}"></a></div>
+</foreach>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){
+  $('.slider1').bxSlider({
+mode: 'fade',
+auto: true,
+
+slideMargin: 10
+  });
+});
+</script>
+</if>

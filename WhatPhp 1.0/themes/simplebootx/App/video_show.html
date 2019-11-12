@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>资讯详情</title>
+		<tc_include file="App:header" />
+	</head>
+	<body>
+		<header id="header" class="mui-bar mui-bar-nav">
+			<button class="mui-action-back mui-btn mui-btn-blue mui-btn-link mui-btn-nav mui-pull-left">
+				<span class="mui-icon mui-icon-left-nav"></span>
+				返回
+			</button>
+			<h1 class="mui-title">培训课程</h1>
+		</header>
+		<div id="content" class="mui-content">
+	 
+		</div>
+		<tc_include file="App:footer" />
+	</body>
+	
+	<script>
+	//获取url中get参数
+		String.prototype.GetValue = function(para) {
+			var reg = new RegExp("(^|&)" + para + "=([^&]*)(&|$)");
+			var r = this.substr(this.indexOf("\?") + 1).match(reg);
+			if(r != null) return unescape(r[2]);
+			return null;
+		}
+ 		
+ 		var id = location.href.GetValue("vid");
+ 		
+ 
+		mui.init({
+			subpages : [{
+				url : "http://www.xinguwen.com/index.php?g=Video&m=Crm&a=showvideo&vid="+id,
+				styles:{
+			        top:'45px',
+			        bottom:'0'
+			      }
+			}],
+
+		});
+		 
+		//解锁屏幕方向
+		/*mui.plusReady(function() {
+			plus.screen.lockOrientation("landscape-primary");
+		})*/
+		
+	</script>
+</html>

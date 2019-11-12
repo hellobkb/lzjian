@@ -1,0 +1,172 @@
+input,
+select,
+button {
+	font-family: 'microsoft yahei', Helvetica, sans-serif;
+	font-size: 1.4rem;
+}
+
+select {
+	position: absolute;
+	padding-left: .5rem !important;
+}
+
+option {
+	color: #2D3E50;
+	background: white;
+}
+
+.mui-content {
+	margin: 0;
+}
+
+.mui-bar-nav~.mui-content .mui-pull-top-pocket {
+	top: 0;
+}
+
+
+/*筛选样式*/
+
+.mui-table-view-cell {
+	padding: 0;
+}
+
+.mui-scroll-wrapper .mui-table-view-cell>a:not(.mui-btn) {
+	padding: .5rem 1rem;
+	text-align: center;
+	border-bottom: 1px solid #EEEEEE;
+}
+
+.mui-table-view-cell.mui-collapse.mui-active {
+	margin-top: 0;
+}
+
+.mui-table-view-cell.mui-collapse .mui-collapse-content {
+	margin: 0;
+	padding: 1rem;
+	border-bottom: 0.1rem solid #EEEEEE;
+}
+
+.reanod-head button,
+.reanod-head input,
+.reanod-head select {
+	height: 3.0rem;
+	border: 1px solid #CCCCCC !important;
+	margin-top: 0.1rem;
+	font-size: 1.2rem;
+	padding: 0;
+}
+
+.reanod-head input {
+	padding-left: .5rem;
+}
+
+.date_select {
+	float: left;
+	width: 45%;
+	margin-bottom: 1rem;
+	padding-right: .5rem !important;
+	background: url(../image/select-date.png) no-repeat;
+	background-position: 95% 45%;
+	background-size: 1.2rem;
+}
+
+.date_select~span {
+	float: left;
+	display: block;
+	text-decoration: line-through;
+	line-height: 3rem;
+	margin: 0 2%;
+	width: 6%;
+	text-align: center;
+}
+
+.reanod-submit button {
+	padding: .5rem 3rem;
+}
+
+.reanod-submit button:first-child {
+	float: right;
+}
+
+/*上拉样式*/
+
+.mui-fullscreen .mui-segmented-control~.mui-slider-group {
+	position: absolute;
+	top: 43px;
+	bottom: 0;
+	width: 100%;
+	height: auto;
+}
+
+.mui-slider-item {
+	width: 100%;
+	height: 100%;
+}
+
+.mui-pull-bottom-tips {
+	text-align: center;
+	font-size: 1.4rem;
+	font-weight: bold;
+	line-height: 40px;
+	color: #777;
+}
+
+.mui-pull-loading {
+	margin-right: 0;
+}
+
+.mui-pull-bottom-pocket{
+	visibility: visible;
+}
+
+/*表格======================================*/
+
+.reanod-result {
+	background: white;
+	padding: 1rem;
+	padding-bottom: 0;
+	box-shadow: 0 .1rem rgba(0, 0, 0, .1);
+}
+
+.reanod-result a {
+	color: #000000;
+}
+
+.result-title-left {
+	float: left;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	font-size: 1.2rem;
+	padding: .1rem 0 .1rem 1rem;
+}
+
+.result-title-right {
+	float: right;
+	font-size: 1.2rem;
+	padding: .1rem;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.result-title-right span {
+	font-size: 1.4rem;
+	padding-right: 0.25rem;
+	color: #2D3E50;
+}
+
+.result-content {
+	clear: both;
+	overflow: auto;
+	font-size: 1.2rem;
+	padding: 0.5rem;
+	border: 0.1rem solid #CCCCCC;
+	background: #F9F9F9;
+}
+
+.result-content div {
+	float: left;
+	min-width: 50%;
+	padding: 0.2rem;
+}

@@ -1,0 +1,60 @@
+/*reanod login样式*/
+
+html {
+	font-size: 62.5%;
+}
+
+html,
+body,
+.mui-content {
+	margin: 0;
+}
+
+.mui-bar {
+	background-color: #2D3E50;
+	/*阴影*/
+	-webkit-box-shadow: 0 0 0;
+	-moz-box-shadow: 0 0 0;
+	box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+}
+
+.reanod-login {
+	height: 20rem;
+	background: #2D3E50;
+	text-align: center;
+	margin-bottom: 4.5rem;
+}
+
+.reanod-login img {
+	margin-top: 4.5rem;
+	width: 13rem;
+}
+
+.reanod-label-acc {
+	content: url(../image/account.png);
+}
+
+.reanod-label-pas {
+	content: url(../image/password.png);
+}
+
+.reanod-link-area {
+	visibility: hidden;
+	display: block;
+	text-align: right;
+	font-size: 1.5rem;
+}
+
+.reanod-link-area a {
+	color: #2D3E50;
+}
+
+.reanod-login-bottom {
+	text-align: center;
+	margin-top: 2.5rem;
+	margin-bottom: 0.5rem;
+}
+
+.reanod-login-bottom img {
+	width: 12rem;
+}

@@ -1,0 +1,12 @@
+<php>
+$content2 = json_decode($zcmod['content'],true);
+$limit = $content2['zcmsg']['attr']['argu']['limit'];
+$time = date("M.d,Y",$updatetime);
+</php>
+<h1 class="n2_title">{$title}</h1>
+        <div class="n2_time">{$time}</div>
+      <div> {$content}</div>
+        <div class="n2_bottom">
+          <div class="n2_fy">Previous: <pre target="1" msg="None" /></div>
+          <div class="n2_fy">Next: <next target="1" msg="None" /></div>
+        </div>

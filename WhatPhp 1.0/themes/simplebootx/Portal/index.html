@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{$SEO.title}</title>
+    <meta name="keywords" content="{$SEO.keyword}" />
+    <meta name="description" content="{$SEO.description}">
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <tc_include file="Public:head" />
+</head>
+<body>
+<tc_include file="reanod:Zckop/nav" />
+<!--  lun bo   --> 
+<tc_include file="reanod:Zckop/lunbo_index" />
+<!--  main1  -->
+<div class="main1">
+<php>$ads4 = getPsitionAds(4);</php>
+<div class="m1tu">
+	<volist name="ads4" id="v">
+	<if condition="$key eq 0">
+	<a href="{$v.url1}" title="{$v.alt}" class="m1tun"><img src="{$v.image}" title="{$v.alt}" alt="{$v.alt}" /></a>
+	<a href="{$v.url1}" class="m1fu">{$v.alt}</a>
+	</if>
+	</volist>
+</div>
+<div class="m1zi">
+<div class="m1zin">
+<php>
+$jj1 = getContactValue(29);
+$jj2 = getContactValue(30);
+$jj3 = getContactValue(31);
+</php>
+<a href="__ROOT__/about-us/" class="m1biao">{$jj1.v}</a>
+<div class="m1n">
+<p><a href="__ROOT__/about-us/">{$jj2.v}</a></p>
+<p><a href="__ROOT__/about-us/">{$jj3.v}</a></p>
+</div>
+<a href="__ROOT__/about-us/" class="m1mor">{:L('RNVIEW_MORE')}</a>
+</div>
+</div>
+<div class="clear"></div>
+</div>
+
+<!--  main2  -->
+<content action="lists"  catid="72" where="istop=1 and isdelay=0 and is_del=0" order="listorder DESC,id DESC" num="12" >
+
+<div class="main2 zong">
+<a href="__ROOT__/products/" class="m2biao" title="{:L('RNHOT_PRODUCTS')}">{:L('RNHOT_PRODUCTS')}</a>
+<div class="img-scroll"> <span class="prev"></span> <span class="next"></span>
+  <div class="img-list">
+    <ul>
+    <php>$m=0;</php>
+	<foreach name="data" item="product" >
+      <li>
+      <a href="{:zcurl($product['url'] , $product['moveurl'])}" title="{$product.title}" class="m2tu"><img src="{$product.thumb}" title="{$product.title}" alt="{$product.title}" /></a>
+      <a href="{:zcurl($product['url'] , $product['moveurl'])}" class="m2zi" title="{$product.title}">{$product.title}</a>
+      </li>
+     <php>$m++;</php>
+    </foreach>
+     
+    </ul>
+  </div>
+</div>
+</div>
+</content>
+
+
+<!--  main3  -->
+<php>
+$index1 = getContactValue(33);
+$index2 = getContactValue(34);
+</php>
+<content action="lists"  catid="119" where="isdelay=0 and is_del=0" order="listorder ASC,id DESC" num="3" >
+<div class="main3">
+<div class="zong">
+<span>{$index1.v}</span>
+<a href="__ROOT__/projects/" class="m3biao" title="{$index2.v}">{$index2.v}</a>
+<php>$m1=0;</php>
+<foreach name="data" item="vo" >
+<div <if condition="$m1 eq 0"> class="m3lie maln"<else />class="m3lie"</if>>
+	<a href="{:zcurl($vo['url'] , $vo['moveurl'])}" title="{$vo.title}" class="m3tu"><img src="{$vo.thumb}" title="{$vo.title}" alt="{$vo.title}" /></a>
+	<div class="m3zi">
+	<a href="{:zcurl($vo['url'] , $vo['moveurl'])}" title="{$vo.title}" class="m3a">{$vo.title}</a>
+	<p><a href="{:zcurl($vo['url'] , $vo['moveurl'])}" title="{$vo.description}">{$vo.description}</a></p>
+	</div>
+</div>
+<php>$m1++;</php>
+</foreach>
+
+<div class="clear"></div>
+</div>
+</div>
+</content>
+
+
+<!--  main4  -->
+<php>
+$index3 = getContactValue(35);
+$index4 = getContactValue(36);
+$index37 = getContactValue(37);
+$index38 = getContactValue(38);
+</php>
+<div class="main4 zong">
+<span>{$index3.v}</span>
+<a href="__ROOT__/news/" class="m4biao" title="{$index4.v}">{$index4.v}</a>
+<div class="m4l">
+<a title="" href="__ROOT__/news/" class="m4tu"><img src="__ROOT__/img/m4tu.jpg" title="" alt="" /></a>
+<div class="m4zi">
+<a href="__ROOT__/news/" class="m4a">{$index37.v}</a>
+<p><a href="__ROOT__/news/">{$index38.v}</a></p>
+<a href="__ROOT__/news/" class="m4mor">{:L('RNVIEW_MORE')}</a>
+</div>
+</div>
+
+<div class="m4r">
+<content action="lists"  catid="96" where="isdelay=0 and is_del=0" order="listorder ASC,id DESC" num="3" >
+	<foreach name="data" item="vo" >
+		<div class="m4lie">
+		<a href="{:zcurl($vo['url'] , $vo['moveurl'])}" title="{$vo.title}" class="m4tu2"><img src="{$vo.thumb}" title="{$vo.title}" alt="{$vo.title}" /></a>
+		<div class="m4zi2">
+		<p><a href="{:zcurl($vo['url'] , $vo['moveurl'])}" title="{$vo.title}">{$vo.title}</a></p>
+		<span><php>echo date('M d , Y',$vo['updatetime']);</php></span>
+		</div>
+		</div>
+	</foreach>
+</content>
+
+
+
+</div>
+<div class="clear"></div>
+</div>
+<script type="text/javascript" src="__TMPL__zhbeifan/js/qiehuan.js"></script>
+<!--  foot  -->
+<tc_include file="reanod:Zckop/footer_index" />
+<tc_include file="reanod:Zckop:script" />
+</body>
+</html>

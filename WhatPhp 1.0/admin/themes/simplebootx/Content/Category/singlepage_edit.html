@@ -1,0 +1,261 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="#A" data-toggle="tab">基本设置</a></li>
+			<li><a href="#B" data-toggle="tab">选项设置</a></li>
+			<li><a href="#C" data-toggle="tab">模板设置</a></li>
+			<li><a href="#D" data-toggle="tab">生成设置</a></li>
+			<li><a href="#E" data-toggle="tab">权限设置</a></li>
+		</ul>
+		<form class="form-horizontal js-ajax-form" action="{:U('Category/edit_post')}" method="post">
+			 
+			<div class="tabbable">
+				<div class="tab-content">
+					<div class="tab-pane active" id="A">
+						<fieldset>
+							 
+							<div class="control-group">
+								<label class="control-label">上级栏目</label>
+								<div class="controls">
+									<select name="info[parentid]" id="parentid">
+										<option value="0">≡ 作为一级栏目 ≡</option>
+											{$category}
+									</select>
+									
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label">栏目名称</label>
+								<div class="controls">
+									 <input type="text" name="info[catname]" id="catname" class="input" value="{$data.catname}">
+									 <span class="form-required">*</span>
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label">英文栏目</label>
+								<div class="controls">
+									 <input type="hidden" name="old_catdir" id="old_catdir" class="input-text" value="{$data.catdir}">
+             						 <input type="hidden" name="old_parentdir" id="old_parentdir" class="input-text" value="{$data.parentdir}">
+              						 <input type="text" name="info[catdir]" id="catdir" class="input" value="{$data.catdir}">
+              						 <span class="form-required">*</span>
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label">栏目缩略图</label>
+								<php>
+								$site_options = get_site_options();
+								$uploadfilesize = $site_options['uploadimgsize']?$site_options['uploadimgsize']:2048;//默认2m,单位kb
+								</php>
+								<div class="controls">
+									  <input type="text" name="info[image]" id="thumb" value="{$data['image']}">
+										<a href="javascript:void(0);" onclick="flashupload('thumb_images', '附件上传','thumb',thumb_images,'1,jpg|jpeg|gif|png|bmp,{$uploadfilesize},,,1','','','');return false;">
+											 <span>&nbsp;点击上传</span>
+										</a>
+										<input type="button" class="btn btn-small" onclick="$('#thumb_preview').attr('src','__TMPL__Public/assets/images/default-thumbnail.png');$('#thumb').val('');return false;" value="取消图片">
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label">栏目简介</label>
+								<div class="controls">
+									<script type="text/plain" id="container" name="info[description]" >{$data.description}</script>
+									<!-- <textarea name="info[description]" rows="5" cols="57">{$data.description}</textarea> -->
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label">关闭列表动态访问</label>
+								<div class="controls">
+									 <input type="checkbox" name="setting[listoffmoving]" value="1" class="input" <if condition="$data['setting']['listoffmoving']"> checked</if> />关闭前台动态地址访问栏目列表
+								</div>
+							</div>
+							 
+							 <div class="control-group">
+								<label class="control-label">指定栏目地址</label>
+								<div class="controls">
+									 <input type="text" name="setting[seturl]" value="{$data['setting']['seturl']}" class="input" />&nbsp;指定地址后，栏目url将变成这个！
+								</div>
+							</div>
+						</fieldset>
+					</div>
+					<div class="tab-pane" id="B">
+						<fieldset>
+							<div class="control-group">
+								<label class="control-label">是否在导航栏显示</label>
+								<div class="controls">
+									 <input type="radio" name="info[ismenu]" value="1" class="input" <if condition="$data['ismenu'] eq '1'"> checked </if> />在导航显示
+									 <input type="radio" name="info[ismenu]" value="0" class="input" <if condition="$data['ismenu'] eq '0'"> checked </if> />不在导航显示
+								</div>
+							</div>
+							 
+							<div class="control-group">
+								<label class="control-label">显示排序</label>
+								<div class="controls">
+									 <input type="text" name="info[listorder]" id="listorder" value="{$data.listorder}" class="input"  />
+								</div>
+							</div>
+							 
+							<div class="control-group">
+								<label class="control-label">SEO标题</label>
+								<div class="controls">
+									<textarea name="setting[meta_title]" maxlength="110" id='meta_title' onkeyup="strlen_verify(this, 'meta_title_len', '110')">{$data['setting']['meta_title']}</textarea>
+									可以输入<B><span id="meta_title_len">110</span></B>个字符！
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label">SEO关键词</label>
+								<div class="controls">
+									<textarea type="text" name="setting[meta_keywords]" maxlength="200" id='meta_keywords' onkeyup="strlen_verify(this, 'meta_keywords_len', '200')" >{$data['setting']['meta_keywords']}</textarea>
+									可以输入<B><span id="meta_keywords_len">200</span></B>个字符！ 
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label">SEO描述</label>
+								<div class="controls">
+									<textarea name="setting[meta_description]" rows="5" cols="57" maxlength="400" id='meta_description' onkeyup="strlen_verify(this, 'meta_description_len', '400')" >{$data['setting']['meta_description']}</textarea>
+									可以输入<B><span id="meta_description_len">400</span></B>个字符！ 
+								</div>
+							</div>
+						</fieldset>
+					</div>
+					<div class="tab-pane" id="C">
+						<fieldset>
+						 
+							<div class="control-group">
+								<label class="control-label">单页模板</label>
+								<div class="controls">
+									<select name="setting[page_template]">
+										<option value="page{:C('TMPL_TEMPLATE_SUFFIX')}" selected>默认栏目首页：page{:C('TMPL_TEMPLATE_SUFFIX')}</option>
+										 <foreach name="tp_page" item="vo">
+										 	<option value="{$vo}" <if condition="$data['setting']['page_template'] eq $vo"> selected</if> >{$vo}</option>
+										 </foreach>
+							 			 新增模板以page_x{:C("TMPL_TEMPLATE_SUFFIX")}形式
+									</select>
+								</div>
+							</div>
+						  
+						</fieldset>
+					</div>
+						<div class="tab-pane" id="D">
+						<fieldset>
+		 
+							<div class="control-group">
+								<label class="control-label">生成Html</label>
+								<div class="controls">
+									<input type="radio" onClick="$('#category_php_ruleid').css('display','none');$('#category_html_ruleid').css('display','');$('#tr_domain').css('display','');$('#repagenum').css('display','');" value="1" name="setting[ishtml]" <if condition="$setting['ishtml'] eq '1' ">checked</if>>栏目生成静态
+									<input type="radio" onClick="$('#category_php_ruleid').css('display','');$('#category_html_ruleid').css('display','none');$('#tr_domain').css('display','none');$('#repagenum').css('display','none');" value="0" name="setting[ishtml]" <if condition="$setting['ishtml'] eq '0' ">checked</if>>栏目不生成静态      
+								</div>
+							</div>
+							 
+						<div class="control-group">
+								<label class="control-label">单页URL规则</label>
+								<div class="controls" id="category_php_ruleid" <if condition="$setting['ishtml'] eq '1'"> style="display:none" </if> >
+									{$category_php_ruleid} 
+								</div>
+								<div class="controls" id="category_html_ruleid" <if condition="$setting['ishtml'] eq '0' "  >style="display:none"</if>>
+									{$category_html_ruleid} 
+								</div>
+
+						</div>
+						 
+						 <div class="control-group" <if condition="$setting['ishtml'] eq '0' " > style="display:none"</if> id="tr_domain" >
+								<label class="control-label">绑定域名</label>
+								<div class="controls">
+									<input type="text" value="{$data.domain}"  class="input" id="url" name="info[url]" />&nbsp;域名可为空，格式应该为http://www.reanod.com/
+								</div>
+						</div>
+						</fieldset>
+					</div>
+					 <div class="tab-pane" id="E">
+						<fieldset>
+							<div class="control-group">
+								<label class="control-label">角色权限</label>
+								<div class="controls">
+				              		 <table>
+					              		 <foreach name="Role_group" item="vo">
+					              		 <tr>
+					              		 	<td width="30%">
+					              		 		<label class="checkbox inline" for="check_all"><input type="checkbox" onclick="checknode(this);" level="0"  id="check_all" <if condition=" $vo['id'] eq 1 "> disabled</if> >{$vo.name}</label> 
+					              		 	</td>
+					              		 	<td>
+							              		  <input  type="checkbox"  level="1"  name="priv_roleid[]" <if condition=" $vo['id'] eq 1 "> disabled</if> {$vo.init}  value="init,{$vo.id}" ><span>查看</span>
+							                      <input  type="checkbox"  level="1"  name="priv_roleid[]" <if condition=" $vo['id'] eq 1 "> disabled</if> {$vo.add}  value="add,{$vo.id}" ><span>添加</span>
+							                      <input  type="checkbox"  level="1"  name="priv_roleid[]" <if condition=" $vo['id'] eq 1 "> disabled</if> {$vo.edit}  value="edit,{$vo.id}" ><span>修改</span>
+							                      <input  type="checkbox"  level="1"  name="priv_roleid[]" <if condition=" $vo['id'] eq 1 "> disabled</if> {$vo.delete}  value="delete,{$vo.id}" ><span>删除</span>
+							                      <input  type="checkbox"  level="1"  name="priv_roleid[]" <if condition=" $vo['id'] eq 1 "> disabled</if> {$vo.listorder}  value="listorder,{$vo.id}" ><span>排序</span>
+							                      <input  type="checkbox"  level="1"  name="priv_roleid[]" <if condition=" $vo['id'] eq 1 "> disabled</if> {$vo.push}  value="push,{$vo.id}" ><span>推送</span>
+							                      <input  type="checkbox"  level="1"  name="priv_roleid[]" <if condition=" $vo['id'] eq 1 "> disabled</if> {$vo.remove}  value="remove,{$vo.id}" ><span>移动</span>
+					              		 	</td>
+					              		 </tr>
+					              		 </foreach>
+				              		 </table>
+								</div>
+							</div>
+						 
+						</fieldset>
+		          </div>
+				</div>
+			</div>
+			<div class="form-actions">
+			 	<input name="catid" type="hidden" value="{$data.catid}">
+				<button class="btn btn-primary js-ajax-submit" type="submit">{:L('SAVE')}</button>
+				<a class="btn" href="{:U('Category/index')}">{:L('BACK')}</a>
+			</div>
+		</form>
+	</div>
+	<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/js/content_addtop.js"></script>
+	<script type="text/javascript">
+		//编辑器路径定义
+		var editorURL = GV.DIMAUB;
+	</script>
+	<script type="text/javascript" src="__PUBLIC__/js/ueditor/ueditor.config.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/js/ueditor/ueditor.all.min.js"></script>
+</body>
+
+<script>
+$(function (){strlen_verify(document.getElementById("meta_title"), "meta_title_len", '110');})
+$(function (){strlen_verify(document.getElementById("meta_keywords"), "meta_keywords_len", '200');})
+$(function (){strlen_verify(document.getElementById("meta_description"), "meta_description_len", '400');})
+$(function(){
+	
+	//ueditor 初始化
+ 	editorcontent = new baidu.editor.ui.Editor();
+	editorcontent.render('container');
+})
+
+function checknode(obj) {
+    var chk = $("input[type='checkbox']");
+    var count = chk.length;
+    var num = chk.index(obj);
+    var level_top = level_bottom = chk.eq(num).attr('level');
+    for (var i = num; i >= 0; i--) {
+        var le = chk.eq(i).attr('level');
+        if (eval(le) < eval(level_top)) {
+            chk.eq(i).attr("checked", true);
+            var level_top = level_top - 1;
+        }
+    }
+    for (var j = num + 1; j < count; j++) {
+        var le = chk.eq(j).attr('level');
+        if (chk.eq(num).attr("checked") == "checked") {
+            if (eval(le) > eval(level_bottom)){
+            	chk.eq(j).attr("checked", true);
+            }
+            else if (eval(le) == eval(level_bottom)){
+            	break;
+            }
+        } else {
+            if (eval(le) > eval(level_bottom)){
+            	chk.eq(j).attr("checked", false);
+            }else if(eval(le) == eval(level_bottom)){
+            	break;
+            }
+        }
+    }
+}
+
+
+</script>
+
+</html>

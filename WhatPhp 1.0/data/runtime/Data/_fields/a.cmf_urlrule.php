@@ -1,0 +1,1 @@
+a:8:{i:0;s:9:"urlruleid";i:1;s:6:"module";i:2;s:4:"file";i:3;s:6:"ishtml";i:4;s:7:"urlrule";i:5;s:7:"example";s:3:"_pk";s:9:"urlruleid";s:5:"_type";a:6:{s:9:"urlruleid";s:20:"smallint(5) unsigned";s:6:"module";s:11:"varchar(15)";s:4:"file";s:11:"varchar(20)";s:6:"ishtml";s:19:"tinyint(1) unsigned";s:7:"urlrule";s:12:"varchar(255)";s:7:"example";s:12:"varchar(255)";}}

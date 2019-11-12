@@ -1,0 +1,360 @@
+/*.mui-plus.mui-android header.mui-bar {
+	display: none;
+}*/
+
+
+/*.mui-plus.mui-android .mui-bar-nav~.mui-content {
+	padding: 0;
+}*/
+
+
+/*
+ =============================================
+ * 下面是顶部导航样式
+ * */
+
+.hm-description {
+	margin: .5em 0;
+}
+
+.hm-description>li {
+	font-size: 14px;
+	color: #8f8f94;
+}
+
+.area {
+	margin: 20px auto 0px auto;
+}
+
+.mui-input-group {
+	margin-top: 10px;
+}
+
+.mui-input-group:first-child {
+	margin-top: 20px;
+}
+
+.mui-input-group label {
+	width: 22%;
+}
+
+.mui-input-row label~input,
+.mui-input-row label~select,
+.mui-input-row label~textarea {
+	width: 78%;
+}
+
+.mui-checkbox input[type=checkbox],
+.mui-radio input[type=radio] {
+	top: 6px;
+}
+
+.mui-btn {
+	padding: 10px;
+}
+
+.spliter {
+	color: #bbb;
+	padding: 0px 8px;
+}
+
+.oauth-area {
+	position: absolute;
+	bottom: 20px;
+	left: 0px;
+	text-align: center;
+	width: 100%;
+	padding: 0px;
+	margin: 0px;
+}
+
+.oauth-area .oauth-btn {
+	display: inline-block;
+	width: 50px;
+	height: 50px;
+	background-size: 30px 30px;
+	background-position: center center;
+	background-repeat: no-repeat;
+	margin: 0px 20px;
+	/*-webkit-filter: grayscale(100%); */
+	border: solid 1px #ddd;
+	border-radius: 25px;
+}
+
+.oauth-area .oauth-btn:active {
+	border: solid 1px #aaa;
+}
+
+.oauth-area .oauth-btn.disabled {
+	background-color: #ddd;
+}
+
+
+/*=========================================
+ * 重写样式*/
+
+html {
+	background: white;
+	font-size: 62.5%;
+	font-family: 'microsoft yahei', Helvetica, sans-serif;
+}
+
+body {
+	width: 100%;
+	height: 100%;
+	margin: 0px;
+	padding: 0px;
+	background-color: white;
+	font-size: 1.4rem;
+	font-family: 'microsoft yahei', Helvetica, sans-serif;
+}
+
+input {
+	font-family: 'microsoft yahei', Helvetica, sans-serif;
+	font-size: 1.5rem;
+}
+
+.mui-content {
+	margin: 1.2rem;
+	background: white;
+}
+
+.reanod-content {
+	margin: 1.2rem;
+	background: white;
+}
+
+.mui-input-row label {
+	width: 45px;
+}
+
+.mui-input-group:before {
+	height: 0px;
+}
+
+.mui-input-group:after {
+	height: 0px;
+}
+
+.mui-input-group .mui-input-row:after {
+	right: 15px;
+	height: 2px;
+}
+
+.mui-content-padded {
+	margin-top: 50px;
+}
+
+
+/*reanod header样式*/
+
+.mui-bar {
+	background-color: #2D3E50;
+	/*阴影*/
+	-webkit-box-shadow: 0 0.2rem 0.2rem;
+	-moz-box-shadow: 0 0.2rem 0.2rem;
+	box-shadow: 0 0.2rem 0.2rem rgba(0, 0, 0, 1.5)
+}
+
+.mui-bar .mui-btn-link,
+.mui-title {
+	color: white;
+}
+
+.mui-title img {
+	width: 11rem;
+	margin: .8rem 0 0 .2rem;
+}
+
+
+/*
+ =============================================
+ * 下拉区域
+ * */
+
+.mui-scroll-wrapper {
+	/*单位必须也要为px，头部尾部都是px，要与之对应*/
+	top: 45px;
+	height: auto;
+	bottom: 59px;
+}
+
+
+/*
+ =============================================
+ * 确认button
+ * */
+
+.mui-btn-primary {
+	border-color: #2D3E50;
+	background-color: #2D3E50;
+}
+
+.mui-btn-primary:enabled:active {
+	border-color: #CCCCCC;
+	background-color: #CCCCCC;
+}
+
+
+/*查询按钮*/
+
+.reanod-select {
+	width: 100%;
+	margin-top: 0.5rem;
+	font-size: 1.3rem;
+	color: white;
+	border-color: #CCCCCC;
+	background-color: #2D3E50;
+}
+
+.reanod-source {
+	color: #AAAAAA;
+}
+
+.reanod-date {
+	color: #AAAAAA;
+}
+
+
+/*扩展icon*/
+
+@font-face {
+	font-family: "iconfont";
+	src: url('../fonts/iconfont.eot?t=1479380053240');
+	/* IE9*/
+	src: url('../fonts/iconfont.eot?t=1479380053240#iefix') format('embedded-opentype'), /* IE6-IE8 */
+	url('../fonts/iconfont.woff?t=1479380053240') format('woff'), /* chrome, firefox */
+	url('../fonts/iconfont.ttf?t=1479380053240') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+	url('../fonts/iconfont.svg?t=1479380053240#iconfont') format('svg');
+	/* iOS 4.1- */
+}
+
+.iconfont {
+	font-family: "iconfont" !important;
+	font-size: 1.2rem;
+	font-style: normal;
+	-webkit-font-smoothing: antialiased;
+	-webkit-text-stroke-width: 0.2px;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.circle:before {
+	content: "\e608";
+}
+
+.icon-menu:before {
+	content: "\e600";
+}
+
+.filtrate:before {
+	content: "\e601";
+}
+
+.icon-xiaoxi:before {
+	content: "\e615";
+}
+
+.icon-jieduanxinxi:before {
+	content: "\e6b9";
+}
+
+.icon-goutong:before {
+	content: "\e660";
+}
+
+.icon-peixun1:before {
+	content: "\e6c8";
+}
+
+.icon-zhangdan:before {
+	content: "\e661";
+}
+
+.icon-people:before {
+	content: "\e603";
+}
+
+.icon-line:before {
+	content: "\e673";
+}
+
+.icon-mubiao:before {
+	content: "\e710";
+}
+
+.icon-gongzuojianbao:before {
+	content: "\e60f";
+}
+
+.icon-renqun:before {
+	content: "\e609";
+}
+
+.icon-dingdan:before {
+	content: "\e642";
+}
+
+.icon-hezuo-copy:before {
+	content: "\e640";
+}
+
+.icon-bianhualiang:before {
+	content: "\e634";
+}
+
+.icon-ticket:before {
+	content: "\e626";
+}
+
+.icon-tixing:before {
+	content: "\e657";
+}
+
+.icon-kehu:before {
+	content: "\e920";
+}
+
+.icon-shijian:before {
+	content: "\e613";
+	margin-right: .3rem;
+}
+
+
+/*输入框获取焦点事件*/
+
+.focusin .mui-bar.mui-bar-tab {
+	display: none;
+}
+
+
+/*底部菜单样式============================================= */
+
+.reanod-menu-right {
+	border-left: 1px solid #C7C7CC;
+}
+
+.mui-bar-tab {
+	/*阴影*/
+	box-shadow: 0.1rem 0.1rem 0.5rem #FE800F !important;
+}
+
+.mui-bar-tab .mui-tab-item {
+	height: 60px;
+	background: #F8F8F8;
+}
+
+.mui-bar-tab .mui-tab-item.mui-active {
+	color: #FE800F;
+}
+
+.mui-bar-popover {
+	width: auto;
+}
+
+.mui-popover .mui-table-view .mui-table-view-cell {
+	font-size: 1.6rem;
+}
+
+.mui-table-view-cell:after {
+	right: 1.5rem;
+}

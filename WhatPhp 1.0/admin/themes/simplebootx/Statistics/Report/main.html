@@ -1,0 +1,756 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<form class="well form-search" method="post" action="{:U('Report/main')}">
+			 <div>
+			 	日期搜索：
+			 	<input type="text" name="stime" class="js-date-now" value="{$search.stime}" style="width: 80px;" autocomplete="off">-
+				<input type="text" class="js-date-now" name="etime" value="{$search.etime}" style="width: 80px;" autocomplete="off">
+			 </div>
+			
+			 <div>
+			 	<input type="submit" class="btn btn-primary" value="搜索" />
+			 </div>
+		</form>
+		
+		<div>
+			文章统计图
+			<if condition="$articleTime neq 'null'">
+				<div id="wzmain" style="width:900px;height:400px;" ></div>
+			<else />
+				<div>没有数据!</div>
+			</if>
+			<div>推广建议：{$articleContent}</div>
+		</div>
+		<div>	
+			产品统计图
+			<div>
+				产品访问量统计
+				<if condition="$productSurfList neq '[]'">
+				<div id="productsurfmain" style="width:900px;height:400px;"></div>
+				<else />
+				<div>没有数据!</div>
+				</if>
+				<div>推广建议：{$productSurfContent}</div>
+			</div>
+			<div>
+				产品添加统计
+				<if condition="$productAddList neq '[]'">
+					<div id="productaddmain" style="width:900px;height:400px;"></div>
+				<else />
+					<div>没有数据!</div>
+				</if>
+			</div>
+			<div>
+				
+				产品发布人统计
+				<if condition="$productPubList neq '[]'">
+					<div id="productmain" style="width:900px;height:400px;"></div>
+				<else />
+				<div>没有数据!</div>
+				</if>
+				
+			</div>
+		</div>
+		<div>
+			询盘统计图
+			<div>
+				询盘地域统计
+				<if condition="$guestList neq '[]'">
+				<div id="xpdistrictmain" style="width: 900px;height:400px;" ></div>
+				<else />
+				<div>没有数据!</div>
+				</if>
+			</div>
+			<div>
+				询盘买家统计
+				 
+				<if condition="$guestBuyerTime neq 'null'">
+					<div id="xpbuyermain" style="width: 900px;height:400px;" ></div>
+				<else />
+					<div>没有数据!</div>
+				</if>
+				
+			</div>
+		</div>
+		
+
+		<div>
+				外商访问网站IP统计
+				<if condition="$listip">
+					<table class="table table-hover table-bordered table-list" >
+						<thead>
+							<tr>
+								<th style="width: 100px;" align='center'>国家</th>
+		                        <th style="width: 100px;" align='center'>访问数量</th>
+		                        <th style="width: 100px;" align='center'>时间</th>
+							</tr>
+						</thead>
+						<foreach name="listip" item="vo">
+						<php>$time = date('Y-m-d',$vo['time']);</php>
+						<tr>
+							<td><a href="{$vo.url}" target="_blank">{$vo.country}</a></td>
+		                    <td align='center'><a>{$vo.num}</a></td>
+		                    <td align='center'><a>{$time}</a></td>
+						</tr>
+						</foreach>
+						<tr>
+		                    <if condition="$json_country neq 'null'">
+		                    <td colspan="3">推广建议：{$ipmsg}</td>
+		                    <else/>
+		                    <td colspan="3">外商访问网站点击量统计，没有数据！</td>
+		                    </if>
+		                </tr>
+						<tfoot>
+							<tr>
+								<th style="width: 100px;" align='center'>国家</th>
+		                        <th style="width: 100px;" align='center'>访问数量</th>
+		                        <th style="width: 100px;" align='center'>时间</th>
+							</tr>
+						</tfoot>
+				    </table>
+				 <else />
+				 <div>没有数据!</div>
+				 </if>
+			</div>
+
+			<div>
+				外商访问网站点击量统计
+				<if condition="$listcoun">
+					<table class="table table-hover table-bordered table-list">
+		                 <tr>
+		                    <th>统计图表</th>
+		                    
+		                        <td><div id="main_country" style="width:900px;height:400px;"></div></td>
+		                    
+		                 </tr>
+		            </table>
+					<table class="table table-hover table-bordered table-list" >
+						<thead>
+							<tr>
+								<th style="width: 100px;" align='center'>国家</th>
+		                        <th style="width: 100px;" align='center'>访问数量</th>
+		                        <th style="width: 100px;" align='center'>时间</th>
+							</tr>
+						</thead>
+						<foreach name="listcoun" item="vo">
+						<php>$time = date('Y-m-d',$vo['time']);</php>
+						<tr>
+							<td><a href="{$vo.url}" target="_blank">{$vo.country}</a></td>
+		                    <td align='center'><a>{$vo.numclick}</a></td>
+		                    <td align='center'><a>{$vo.time}</a></td>
+						</tr>
+						</foreach>
+						<tr>
+		                    <if condition="$json_countryc neq 'null'">
+		                    <td colspan="3">推广建议：{$cmsg}</td>
+		                    <else/>
+		                    <td colspan="3">外商访问网站点击量统计，没有数据！</td>
+		                    </if>
+		                </tr>
+						<tfoot>
+							<tr>
+								<th style="width: 100px;" align='center'>国家</th>
+		                        <th style="width: 100px;" align='center'>访问数量</th>
+		                        <th style="width: 100px;" align='center'>时间</th>
+							</tr>
+						</tfoot>
+				    </table>
+				 <else />
+				 <div>没有数据!</div>
+				 </if>
+			</div>
+
+
+
+		<!-- <div>
+			页面浏览量统计图
+			<if condition="$forSurfCountry neq 'null'">
+			<div>
+				外商访问网站IP统计
+					<div id="foresurfmain1" style="width: 900px;height:400px;"></div>
+				<div>推广建议：{$forSurfIpMsg}</div>
+				外商访问网站点击量统计
+				<if condition="$forSurfcCountry neq 'null'">
+					<div id="foresurfmain2" style="width: 900px;height:400px;"></div>
+				<else />
+					<div>没有数据!</div>
+				</if>
+				<div>推广建议：{$forSurfcMsg}</div>
+			</div>
+			<else />
+				<div>没有数据!</div>
+			</if>
+			<div>
+				浏览国家统计
+				<if condition="$forCountry neq 'null'">
+					<div id="forecountrymain" style="width: 900px;height:400px;"></div>
+				<else />
+					<div>没有数据!</div>
+				</if>
+			</div> -->
+			
+			<div>
+				浏览页面统计
+				<if condition="$forePageList">
+					<table class="table table-hover table-bordered table-list">
+		                 <tr>
+		                    <th>统计图表</th>
+		                        <td><div id="main_page" style="width:900px;height:400px;"></div></td>
+		                 </tr>
+		            </table>
+					<table class="table table-hover table-bordered table-list" >
+						<thead>
+							<tr>
+								<th style="width: 223px;" align='center'>页面</th>
+								<th style="width: 223px;" align='center'>网址</th>
+								<th style="width: 50px;" align='center'>访问数量</th>
+							</tr>
+						</thead>
+						<foreach name="forePageList" item="vo">
+						<tr>
+							<td>{$vo.title}</td>
+							<td><a href="{$vo.url}" target="_blank">{$vo.url}</a></td>
+							<td align='center'><a>{$vo.num}</a></td>
+						</tr>
+						</foreach>
+						<tfoot>
+							<tr>
+								<th style="width: 223px;" align='center'>页面title</th>
+								<th style="width: 223px;" align='center'>网址</th>
+								<th style="width: 50px;" align='center'>访问数量</th>
+							</tr>
+						</tfoot>
+				    </table>
+				 <else />
+				 <div>没有数据!</div>
+				 </if>
+			</div>
+			<div>
+				发布链接统计
+				 
+				 <if condition="$link_time neq 'null'">
+					<div id="linksmain" style="width: 900px;height:400px;"></div>
+				 <else />
+					<div>没有数据!</div>
+				 </if>
+				 <div>推广建议：{$link_msg}</div>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+	 <script src="__PUBLIC__/js/echarts.common.min.js"></script>
+	 <script>
+	 
+	 	//文章统计
+	 	if({$articleTime}){
+	 		var articleChart = echarts.init(document.getElementById('wzmain'));
+		 	var articleoption = {
+	        	title: {
+	        		text: '文章统计'
+	        	},
+	        	tooltip: {},
+	        	legend: {
+	        		data:['文章更新数量']
+	        	},
+	        	toolbox: {
+			        show: true,
+			        feature: {
+			            saveAsImage: {}
+			        }
+			    },
+	        	xAxis: {
+	        		data: {$articleTime}
+	        	},
+	        	yAxis: {},
+	        	series: [{
+	        		name: '文章更新数量',
+	        		type: 'bar',
+	        		barWidth:'30',
+	        		data: {$articleCount}
+	        	}]
+	        };
+		 	articleChart.setOption(articleoption);
+	 	}
+	 	
+	 	
+	 	//产品访问量统计图
+	 	
+			if({$productSurfList} != ''){
+	 		var productSurfChart = echarts.init(document.getElementById('productsurfmain'));
+		 	var productSurfoption = {
+		 			 title : {
+		                 subtext: '',
+		                 x:'center'
+		             },
+		             tooltip : {
+		                 trigger: 'item',
+		                 formatter: "{a} <br/>{b} : {c} ({d}%)"
+		             },
+		             legend: {
+		                 orient: 'vertical',
+		                 left: 'left',
+		                 data: []
+		             },
+		             series : [
+		                 {
+		                	 name:'产品访问量统计',
+		                     type: 'pie',
+		                     radius : '55%',
+		                     center: ['50%', '60%'],
+		                     data:{$productSurfList},
+		                     itemStyle: {
+		                         emphasis: {
+		                             shadowBlur: 10,
+		                             shadowOffsetX: 0,
+		                             shadowColor: 'rgba(0, 0, 0, 0.5)'
+		                         }
+		                     }
+		                 }
+		             ]
+		 		
+		 	}
+		 	productSurfChart.setOption(productSurfoption);
+	 	 	}
+	 	
+	 	
+	 	
+	 	//产品添加统计图表
+	 	
+	 	if({$productAddList}!=''){
+	 		var productAddChart = echarts.init(document.getElementById('productaddmain'));
+		 	var productAddoption = {
+		 			 title : {
+		                 subtext: '',
+		                 x:'center'
+		             },
+		             tooltip : {
+		                 trigger: 'item',
+		                 formatter: "{a} <br/>{b} : {c} ({d}%)"
+		             },
+		             legend: {
+		                 orient: 'vertical',
+		                 left: 'left',
+		                 data: []
+		             },
+		             toolbox: {
+		 		        show: true,
+		 		        feature: {
+		 		            saveAsImage: {}
+		 		        }
+		 		    },
+		             series : [
+		                 {
+		                	 name:'产品添加统计',
+		                     type: 'pie',
+		                     radius : '55%',
+		                     center: ['50%', '60%'],
+		                     data:{$productAddList},
+		                     itemStyle: {
+		                         emphasis: {
+		                             shadowBlur: 10,
+		                             shadowOffsetX: 0,
+		                             shadowColor: 'rgba(0, 0, 0, 0.5)'
+		                         }
+		                     }
+		                 }
+		             ]
+		 	}
+		 	productAddChart.setOption(productAddoption);
+	 	}
+	 	
+	 	
+	 	//产品发布人图表
+	 	if({$productPubList} !=''){
+	 		var productPubChart = echarts.init(document.getElementById('productmain'));
+		 	var productPuboption = {
+		            title : {
+		                subtext: '',
+		                x:'center'
+		            },
+		            tooltip : {
+		                trigger: 'item',
+		                formatter: "{a} <br/>{b} : {c} ({d}%)"
+		            },
+		            legend: {
+		                orient: 'vertical',
+		                left: 'left',
+		                data: []
+		            },
+		            toolbox: {
+				        show: true,
+				        feature: {
+				            saveAsImage: {}
+				        }
+				    },
+		            series : [
+		                {
+		                	name:'产品发布人统计',
+		                    type: 'pie',
+		                    radius : '55%',
+		                    center: ['50%', '60%'],
+		                    data:{$productPubList},
+		                    itemStyle: {
+		                        emphasis: {
+		                            shadowBlur: 10,
+		                            shadowOffsetX: 0,
+		                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+		                        }
+		                    }
+		                }
+		            ]	
+		 			
+		 	}
+		 	productPubChart.setOption(productPuboption);
+	 	}
+	 	
+	 	
+	 	//询盘地域统计图
+	 	if({$guestList} !=''){
+	 	var guestChart = echarts.init(document.getElementById('xpdistrictmain'));
+	 	var guestoption = {
+	 			 title : {
+	                 
+	             },
+	             tooltip : {
+	                 trigger: 'item',
+	                 formatter: "{a} <br/>{b} : {c} ({d}%)"
+	             },
+	             legend: {
+	                 orient: 'vertical',
+	                 left: 'left',
+	                 data: {$guestCountry}
+	             },
+	             series : [
+	                 {
+	                	 name:'询盘地域统计',
+	                     type: 'pie',
+	                     radius : '55%',
+	                     center: ['50%', '60%'],
+	                     data:{$guestList},
+	                     itemStyle: {
+	                         emphasis: {
+	                             shadowBlur: 10,
+	                             shadowOffsetX: 0,
+	                             shadowColor: 'rgba(0, 0, 0, 0.5)'
+	                         }
+	                     }
+	                 }
+	             ]
+	 	}
+	 	
+	 	guestChart.setOption(guestoption);
+	 	}
+	 	//询盘买家统计
+	 	if({$guestBuyerTime}){
+	 		var guestBuyerChart = echarts.init(document.getElementById('xpbuyermain'));
+		 	var guestBuyeroption = {
+		 			 title: {
+		                 text: '询盘买家统计'
+		             },
+		             tooltip: {
+		                 trigger: 'axis'
+		             },
+		             legend: {
+		                 data:[]
+		             },
+		             grid: {
+		                 left: '3%',
+		                 right: '4%',
+		                 bottom: '3%',
+		                 containLabel: true
+		             },
+		             toolbox: {
+		                 feature: {
+		                     saveAsImage: {}
+		                 }
+		             },
+		             xAxis: {
+		                 type: 'category',
+		                 boundaryGap: false,
+		                 data: {$guestBuyerTime}
+		             },
+		             yAxis: {
+		                 type: 'value'
+		             },
+		             series: [
+		               
+		                 {
+		                     name:'询盘买家统计',
+		                     type:'line',
+		                     stack: '总量',
+		                     data:{$guestBuyerNum}
+		                 }
+		             ]		
+		 	}
+		 	guestBuyerChart.setOption(guestBuyeroption);
+	 		
+	 	}
+	 	
+	 	
+	 	//外商浏览量
+	 	if({$forSurfCountry}){
+		 	var foreSurfChart1 = echarts.init(document.getElementById('foresurfmain1')); 
+		 	var foreSurfoption1 = {
+		 			title: {
+				         
+				    },
+				    tooltip: {
+				        trigger: 'axis'
+				    },
+				    legend: {
+				        data:['浏览量']
+				    },
+				    toolbox: {
+				        show: true,
+				        feature: {
+				            
+				            saveAsImage: {}
+				        }
+				    },
+				    xAxis:  {
+				        type: 'category',
+				        boundaryGap: false,
+				        data: {$forSurfCountry},
+				    },
+				    yAxis: {
+				        type: 'value',
+				        axisLabel: {
+				            formatter: '{value}'
+				        }
+				    },
+				    series: [
+				        {
+				            name:'浏览量',
+				            type:'line',
+				            data:{$forSurfNum},
+				        },
+				    ]
+		 
+		 	}
+		 	foreSurfChart1.setOption(foreSurfoption1);
+	 	}
+
+	 	  
+	 	if({$forSurfcCountry}){
+	 		var foreSurfChart2 = echarts.init(document.getElementById('foresurfmain2'));
+		 	var foreSurfoption2 = {
+		 			title: {
+				       
+				    },
+				    tooltip: {
+				        trigger: 'axis'
+				    },
+				    legend: {
+				        data:['访问量']
+				    },
+				    toolbox: {
+				        show: true,
+				        feature: {
+				            
+				            saveAsImage: {}
+				        }
+				    },
+				    xAxis:  {
+				        type: 'category',
+				        boundaryGap: false,
+				        data: {$forSurfcCountry},
+				    },
+				    yAxis: {
+				        type: 'value',
+				        axisLabel: {
+				            formatter: '{value}'
+				        }
+				    },
+				    series: [
+				        {
+				            name:'访问量',
+				            type:'line',
+				            data:{$forSurfcNum},
+				        },
+				    ]
+		 	}
+		 	foreSurfChart2.setOption(foreSurfoption2);
+	 	}
+	 	
+	 	//浏览国家统计
+	   
+ 	 	if({$forCountry}){
+	 		 
+	 		var foreCountryCharts = echarts.init(document.getElementById('forecountrymain'));
+		 	var foreCountryoption = {
+		 			title : {
+		 		       
+		 		    },
+		 		    tooltip : {
+		 		        trigger: 'item',
+		 		        formatter: "{a} <br/>{b} : {c} ({d}%)"
+		 		    },
+		 		    legend: {
+		 		        orient : 'vertical',
+		 		        x : 'left',
+		 		        data:{$forCountry}
+		 		    },
+		 		    toolbox: {
+		 		        show : true,
+		 		        feature : {
+		 		            mark : {show: true},
+		 		            magicType : {
+		 		                show: true, 
+		 		                type: ['pie', 'funnel'],
+		 		                option: {
+		 		                    funnel: {
+		 		                        x: '25%',
+		 		                        width: '50%',
+		 		                        funnelAlign: 'left',
+		 		                        max: 1548
+		 		                    }
+		 		                }
+		 		            },
+		 		           
+		 		            saveAsImage : {show: true}
+		 		        }
+		 		    },
+		 		    calculable : true,
+		 		    series : [
+		 		        {
+		 		            name:'访问来源',
+		 		            type:'pie',
+		 		            radius : '55%',
+		 		            center: ['50%', '60%'],
+		 		            data:{$forCountryList}
+		 		        }
+		 		    ]	
+		 	}
+		 	foreCountryCharts.setOption(foreCountryoption);
+	 	} 
+	 	
+//发布链接
+		 
+		 if({$link_time}){
+			 
+				var linksmyChart = echarts.init(document.getElementById('linksmain'));
+		        var linksoption = {
+		            title: {
+		               
+		            },
+		            tooltip: {
+		                trigger: 'axis'
+		            },
+		            legend: {
+		                
+		            },
+		            grid: {
+		                left: '3%',
+		                right: '4%',
+		                bottom: '3%',
+		                containLabel: true
+		            },
+		            toolbox: {
+				        show: true,
+				        feature: {
+				            
+				            saveAsImage: {}
+				        }
+				    },
+		            xAxis: {
+		                type: 'category',
+		                boundaryGap: false,
+		                data: {$link_time}
+		            },
+		            yAxis: {
+		                type: 'value'
+		            },
+		            series: [
+		                {
+		                    name:'发布链接',
+		                    type:'line',
+		                    stack: '发布数',
+		                    data:{$link_num}
+		                }
+		            ]
+		        };
+		        linksmyChart.setOption(linksoption);
+		 }
+		 if({$country_data_bt}){
+		 	var myChart = echarts.init(document.getElementById('main_country'));
+		    var option_country = {
+		            title : {
+		                text: '浏览国家统计',
+		                subtext: '',
+		                x:'center'
+		            },
+		            tooltip : {
+		                trigger: 'item',
+		                formatter: "{a} <br/>{b} : {c} ({d}%)"
+		            },
+		            legend: {
+		                orient: 'vertical',
+		                left: 'left',
+		                data: {$country_bt},
+		            },
+		            series : [
+		                {
+		                    name: '浏览国家统计',
+		                    type: 'pie',
+		                    radius : '55%',
+		                    center: ['50%', '60%'],
+		                    data:{$country_data_bt},
+		                    itemStyle: {
+		                        emphasis: {
+		                            shadowBlur: 10,
+		                            shadowOffsetX: 0,
+		                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+		                        }
+		                    }
+		                }
+		            ]
+		        };
+		    
+		    myChart.setOption(option_country);
+
+		 }
+		 if({$rel_page_bt}){
+		 	var myChart = echarts.init(document.getElementById('main_page'));
+		 	var option_page = {
+		            title : {
+		                text: '浏览页面统计',
+		                subtext: '',
+		                x:'center'
+		            },
+		            tooltip : {
+		                trigger: 'item',
+		                formatter: "{a} <br/>{b} : {c} ({d}%)"
+		            },
+		            legend: {
+		                orient: 'vertical',
+		                left: 'left',
+		                data: {$title_bt},
+		            },
+		            series : [
+		                {
+		                    name: '浏览页面统计',
+		                    type: 'pie',
+		                    radius : '55%',
+		                    center: ['50%', '60%'],
+		                    data:{$rel_page_bt},
+		                    itemStyle: {
+		                        emphasis: {
+		                            shadowBlur: 10,
+		                            shadowOffsetX: 0,
+		                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+		                        }
+		                    }
+		                }
+		            ]
+		        };
+		    
+		    myChart.setOption(option_page);
+    
+		 }
+		
+
+	 </script>
+</body>
+</html>

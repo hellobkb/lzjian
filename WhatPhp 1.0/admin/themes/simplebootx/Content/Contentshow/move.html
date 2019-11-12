@@ -1,0 +1,68 @@
+<admintpl file="header" />
+</head>
+<body>
+	<style>
+		.pop_bottom {margin-top: 20px;text-align: center;}
+		.pop_bottom button{margin: 0 20px;}
+	</style>
+	<div class="wrap">
+	<div class="h_a">温馨提示</div>
+	  <div class="prompt_text">
+	    <ol>
+	      <li>信息移动只支持同模型之间进行移动，不支持跨模型移动！ </li>
+	    </ol>
+	  </div>
+		<form class="J_ajaxForm" action="{:U('Contentshow/move',array('catid'=>$catid))}" method="post">
+    <div class="pop_cont pop_table" style="overflow-x:hidden;">
+      <table width="100%">
+        <colgroup>
+        <col width="50%" />
+        <col width="50%" />
+        </colgroup>
+        <thead>
+          <tr>
+            <td align="center">指定来源</td>
+            <td align="center">目标栏目</td>
+          </tr>
+        </thead>
+        <tr>
+          <td align="center" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+              <td align="center" valign="middle">
+                 <ul class="switch_list cc J_radio_change" id="fromtype">
+					<li class="fl" style="width: 50%;text-align: left;"><label><input type="radio" data-arr="ids" name="fromtype" value="0"  checked><span>从指定ID</span></label></li>
+					<li class="fl" style="width: 50%;text-align: left;"><label><input type="radio" data-arr="catid_list" name="fromtype" value="1" ><span>从指定栏目</span></label></li>
+					<div class="clear"></div>
+				  </ul>
+               </td>
+            </tr>
+            <tr>
+              <td align="center">
+              <div id="ids" class="J_radio_tbody"><textarea class="length_4" name="ids" style="width: 206px;height:286px;margin-bottom: 0;">{$ids}</textarea></div>
+              <div id="catid_list" class="J_radio_tbody">
+              <select name="fromid[]" id="fromid" size="2" multiple  class="select_4" style=" height:300px;">
+                 <option value='0' style="background:#F1F3F5;color:blue;">从指定栏目</option>
+                  {$source_string}
+               </select>
+              </div>
+              </td>
+            </tr>
+          </table></td>
+          <td align="center" valign="top">
+             <select name="tocatid" id="tocatid"  size="2" class="select_4" style=" margin-top: 35px;height:300px;">
+                <option value='0' style="background:#F1F3F5;color:blue;">目标栏目</option>
+                {$string}
+              </select>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div class="pop_bottom">
+      <button type="submit" class="btn btn_submit J_ajax_submit_btn mr10">提交</button>
+      <button class="btn" id="J_dialog_close" type="button">取消</button>
+    </div>
+  </form>
+	</div>
+	<script src="__PUBLIC__/js/commons.js"></script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li><a href="{:U('Models/index')}">{:L('MODELS_MANAGE')}</a></li>
+			<li><a href="{:U('Models/add')}">{:L('MODELS_CREATE')}</a></li>
+			<li><a href="{:U('Models/import')}">{:L('MODELS_IMPORT')}</a></li>
+		</ul>
+		
+		<form action="{:U('Models/edit')}" method="post" class="form-horizontal js-ajax-forms" enctype="multipart/form-data">
+			<div class="row-fluid">
+				<div class="span9">
+					<table class="table table-bordered">
+						
+						<tr>
+							<th>{:L('MODELNAME')}</th>
+							<td>
+								<input type="text" style="width:400px;" name="name" require  value="{$data.name}" placeholder="{:L('MODELNAME')}"/>
+								
+							</td>
+						</tr>
+						<tr>
+							<th>{:L('TABLE')}</th>
+							<td><input type="text" name="tablename" value="{$data.tablename}" required style="width: 400px" placeholder="{:L('TABLE')}"> <span class="form-required">*</span></td>
+						</tr>
+						<tr>
+							<th>{:L('DESC')}</th>
+							<td><input type="text" name="description" value="{$data.description}" style="width: 400px" placeholder="{:L('DESC')}"></td>
+						</tr>
+					</table>
+				</div>
+				<div class="span3">
+					
+				</div>
+			</div>
+			<div class="form-actions">
+			<input type="hidden" value="{$data.modelid}" name="modelid" />
+				<button class="btn btn-primary js-ajax-submit mright" type="submit">提交</button>
+				<a class="btn" href="{:U('Models/index')}">返回</a>
+			</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+	<script>
+		setCookie('refersh_time', 0);
+		function refersh_window() {
+			var refersh_time = getCookie('refersh_time');
+			if (refersh_time == 1) {
+				window.location.reload();
+			}
+		}
+		setInterval(function() {
+			refersh_window()
+		}, 2000);
+	</script>
+</body>
+</html>

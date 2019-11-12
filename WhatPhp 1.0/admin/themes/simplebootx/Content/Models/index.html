@@ -1,0 +1,81 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="{:U('Models/index')}">{:L('MODELS_MANAGE')}</a></li>
+			<li><a href="{:U('Models/add')}">{:L('MODELS_CREATE')}</a></li>
+			<li><a href="{:U('Models/import')}">{:L('MODELS_IMPORT')}</a></li>
+		</ul>
+		<form class="well form-search" >
+			<a>温馨提示：非专业人员，请勿修改或删除模型信息哦！</a>
+		</form>
+		<form class="js-ajax-form" method="post">
+			
+			<table class="table table-hover table-bordered table-list">
+				<thead>
+					<tr>
+						<th width="55">ID</th>
+						<th width="100">{:L('MODELNAME')}</th>
+						<!-- <th>点击量</th> -->
+						<th width="80">{:L('TABLE')}</th>
+						<th width="120">{:L('DESC')}</th>
+						<th width="50">{:L('STATUS')}</th>
+						<th width="120">{:L('MANAGE')}</th>
+					</tr>
+				</thead>
+				<foreach name="data" item="vo">
+				<tr>
+					<td>{$vo.modelid}</td>
+					<td><a>{$vo.name}</a></td>
+					<td>{$pre}{$vo.tablename}</td>
+					<!--  <td>0</td> -->
+					<td>{$vo.description}</td>
+					<td><if condition="$vo['disabled'] eq '1' ">╳<else />√</if></td>
+					<td>
+						<a href="{:U('Models/edit',array('modelid'=>$vo['modelid']))}">{:L('X_EDIT')}</a>|
+						<a href="{:U('Field/index',array('modelid'=>$vo['modelid']))}">{:L('FIELDMANE')}</a>|
+						<php> if($vo['disabled'] == 0){ </php>
+							<a href="{:U('disabled',array('modelid'=>$vo['modelid'],'disabled'=>0))}">{:L('NOUSE')}</a>|
+						<php> }else{ </php>
+							<a href="{:U('disabled',array('modelid'=>$vo['modelid'],'disabled'=>1))}">{:L('DISPLAY')}</a>|
+
+						<php> } </php>
+						
+						<a href="{:U('delete',array('modelid'=>$vo['modelid']))}" class="js-ajax-delete">{:L('DEL')}</a>|
+						<a href="{:U('export',array('modelid'=>$vo['modelid']))}">{:L('MODELS_OUT')}</a>
+					</td>
+				</tr>
+				</foreach>
+				<tfoot>
+					<tr>
+						
+						<th width="55">ID</th>
+						<th width="100">{:L('MODELNAME')}</th>
+						<!-- <th>点击量</th> -->
+						<th width="80">{:L('TABLE')}</th>
+						<th width="120">{:L('DESC')}</th>
+						<th width="50">{:L('STATUS')}</th>
+						<th width="120">{:L('MANAGE')}</th>
+					</tr>
+				</tfoot>
+			</table>
+			
+			<div class="pagination">{$Page}</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+	<script>
+		setCookie('refersh_time', 0);
+		function refersh_window() {
+			var refersh_time = getCookie('refersh_time');
+			if (refersh_time == 1) {
+				window.location.reload();
+			}
+		}
+		setInterval(function() {
+			refersh_window()
+		}, 2000);
+	</script>
+</body>
+</html>

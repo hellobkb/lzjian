@@ -1,0 +1,103 @@
+<div class="bg">
+
+<div class="body cus">
+    <div class="cus_pic">
+        <div class="zong">
+        	<img src="__TMPL__xinyu/images/customer-pic1.jpg" alt="" title="" />
+            <img src="__TMPL__xinyu/images/customer-pic2.jpg" alt="" title="" />
+            <img src="__TMPL__xinyu/images/customer-pic3.jpg" alt="" title="" />
+            <img src="__TMPL__xinyu/images/customer-pic4.jpg" alt="" title="" />
+            <img src="__TMPL__xinyu/images/customer-pic5.jpg" alt="" title=""  class="cus_piclast" />
+            
+            <img src="__TMPL__xinyu/images/customer-pic6.jpg" alt="" title="" />
+            <img src="__TMPL__xinyu/images/customer-pic7.jpg" alt="" title="" />
+            <img src="__TMPL__xinyu/images/customer-pic8.jpg" alt="" title="" />
+            <img src="__TMPL__xinyu/images/customer-pic9.jpg" alt="" title="" />
+            <img src="__TMPL__xinyu/images/customer-pic10.jpg" alt="" title=""  class="cus_piclast" />
+            
+            <img src="__TMPL__xinyu/images/customer-pic11.jpg" alt="" title="" />
+            <img src="__TMPL__xinyu/images/customer-pic12.jpg" alt="" title="" />
+            <img src="__TMPL__xinyu/images/customer-pic13.jpg" alt="" title="" />
+            <img src="__TMPL__xinyu/images/customer-pic14.jpg" alt="" title="" />
+            <img src="__TMPL__xinyu/images/customer-pic15.jpg" alt="" title=""  class="cus_piclast" />
+            
+        	<div class="clear"></div>
+        </div>
+    </div>
+    
+    <php>
+		$content = json_decode($zcmod['content'],true);
+		$catid = $content['zcmsg']['attr']['argu']['catid'];
+		$limit = $content['zcmsg']['attr']['argu']['limit'];
+		$modelid = 1;
+			 
+		$category = M("Category")->where("modelid = 1 and parentid=0")->select();
+		$catid = "";
+		foreach($category as $cate){
+			$catid .= ",".$cate['catid'];
+		}
+		$catid = ltrim($catid, ",");
+		
+		$siteOption = sp_get_site_options();
+		  
+	</php>
+<content action="lists" catid="$catid" where="recommend=1" order="listorder DESC,id DESC" limit="$limit" moreinfo="1">
+				<php>
+        			
+        			$temp = array();
+        			foreach($data as $value){
+        				$temp[] = $value;
+        			}
+        			$data = $temp;
+        		</php>
+
+ 
+    <div class="cus_news">
+    	<div class="zong">
+        	<div class="cus_ntitle">
+            	<a href="{:u('Content/Pagedis/lists_art',array('catid'=>96))}" title="NEWS"><img src="__TMPL__xinyu/images/news.jpg" alt="NEWS" title="NEWS" /></a>
+            </div>
+            <div class="cus_ntop">
+            	<div class="cus_nhx"></div>
+            </div>
+
+            
+            <foreach name="data" item="news_vo" key="news_key">
+            <div <if condition="($news_key+1)%2 eq 0"> class="n1_nr cus_lastnr"<else />class="n1_nr"</if> >
+                <div class="n1_pic">
+                    <a href="{:zcurl($news_vo['url'] , $news_vo['moveurl'])}" title="{$news_vo.title}"><img src="<php>echo $siteOption['site_host'] . $news_vo['thumb']</php>" alt="{$news_vo.title}" title="{$news_vo.title}" /></a>
+                </div>
+                
+                <div class="n1_right">
+                    <div class="n1_title">
+                        <a href="{:zcurl($news_vo['url'] , $news_vo['moveurl'])}" title="{$news_vo.title}">{$news_vo.title}</a>
+                    </div>
+                    <div class="n1_wz">
+                        <a href="{:zcurl($news_vo['url'] , $news_vo['moveurl'])}" title="{$news_vo.title}">{$news_vo.description}...</a>
+                    </div>
+                    <div class="n1_tm">
+                    <php> 
+	                  $time = date("M.d,Y",$news_vo['updatetime']);
+	                </php>
+                        <div class="n1_time">{$time}</div>
+                        <div class="n1_more">
+                            <a href="{:zcurl($news_vo['url'] , $news_vo['moveurl'])}" title="{$news_vo.title}">More >></a>
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+         	</foreach>   
+    	</div>
+    </div>
+</content>   
+</div>
+
+
+
+
+
+
+
+</div>

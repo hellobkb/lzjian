@@ -1,0 +1,135 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li><a href="{:U('user/index')}">{:L('ADMIN_USER_INDEX')}</a></li>
+			<li><a href="{:U('user/add')}">{:L('ADMIN_USER_ADD')}</a></li>
+		</ul>
+		<form method="post" class="form-horizontal js-ajax-form" action="{:U('User/edit_post')}">
+			<fieldset>
+				<div class="control-group">
+					<label class="control-label">{:L('USERNAME')}</label>
+					<div class="controls">
+						<input type="text" name="user_login" value="{$user_login}">
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">{:L('PASSWORD')}</label>
+					<div class="controls">
+						<input type="password" name="user_pass" value="" placeholder="******">
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">{:L('EMAIL')}</label>
+					<div class="controls">
+						<input type="text" name="user_email" value="{$user_email}">
+					</div>
+				</div>
+				
+				<div class="control-group">
+					<label class="control-label">{:L('ROLE')}</label>
+					<div class="controls">
+						<foreach name="roles" item="vo">
+						<label class="checkbox inline">
+							<php>$role_id_checked=in_array($vo['id'],$role_ids)?"checked":"";</php>
+							<input value="{$vo.id}" type="checkbox" name="role_id[]" {$role_id_checked} onclick="checksale(this);">{$vo.name}
+						</label>
+						</foreach>
+					</div>
+				</div>
+				<div class="control-group" id="salemanager" <if condition="!$mid">style="display:none"</if> >
+					<label class="control-label">{:L('SALAMANAGER')}</label>
+					<div class="controls">
+						 <select name="salemanager">
+						 	<option value="0">=请选择业务经理=</option>
+						 	<foreach name="crole" item="v">
+						 		<option value="{$v.id}" <if condition="$mid['mid'] eq $v['id']"> selected </if> >{$v.user_login}</option>
+						 	</foreach>
+						 </select>
+					</div>
+				</div>
+
+				<!-- 只有超级管理员才能分配账号身份 -->
+				<if condition="$admininfo['id'] eq 1 || $admininfo['identity'] eq 2">
+				<div class="control-group">
+					<label class="control-label">身份</label>
+					<div class="controls">
+						<select name="identity" onchange="get_point_auth(this.value)">
+							<option value="0" <if condition="$identity eq 0"> selected </if>>=请选择=</option>
+							<option value="1" <if condition="$identity eq 1"> selected </if>>客户</option>
+							<option value="2" <if condition="$identity eq 2"> selected </if>>推广</option>
+						</select>此身份跟积分有关
+					</div>
+
+				</div>
+				<div class="control-group" id="point_tg_show" style="display: none;">
+					<label class="control-label">客户账号</label>
+					<div class="controls">
+						
+						<select name="customer" <if condition="$customer"> disabled </if>>
+							<option value="">请选择</option>
+							<volist name="customers" id="v">
+							<option value="{$v.id}" <if condition="$v['id'] eq $customer"> selected </if>>{$v.user_login}</option>
+							</volist>
+						</select>
+						
+					</div>
+				</div>
+				<div class="control-group" id="point_auth_show" style="display: none;">
+					<label class="control-label">获取积分权限</label>
+					<div class="controls">
+					<php>$points_auth = explode(',',$points_auth);</php>
+						<foreach name="qx_points" item="vo">
+						<php>
+						$points_auth_checked=in_array($key,$points_auth)?"checked":"";
+						</php>
+						<label class="checkbox inline"><input value="{$key}" type="checkbox" {$points_auth_checked} name="points_auths[]">{$vo}</label>
+						</foreach>
+						
+					</div>
+				</div>
+				</if>
+			
+			</fieldset>
+			<div class="form-actions">
+				<input type="hidden" name="id" value="{$id}" />
+				<button type="submit" class="btn btn-primary js-ajax-submit">{:L('SAVE')}</button>
+				<a class="btn" href="{:U('user/index')}">{:L('BACK')}</a>
+			</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+	<script>
+	$(document).ready(function(){
+		get_point_auth({$identity});
+	})
+	
+		function checksale(obj){
+			
+			if(obj.value ==5){
+				if(obj.checked){  
+					$("#salemanager").show();
+					
+				}else {
+					$("#salemanager").hide();
+					$("#salemanager select").val('0');
+				}
+			}
+		}
+		function get_point_auth(val){
+			if(val == 1){
+				$('#point_auth_show').show();
+				$('#point_tg_show').hide();
+			}else if(val == 2){
+				$('#point_auth_show').hide();
+				$('#point_tg_show').show();
+			}else{
+				$('#point_auth_show').hide();
+				$('#point_tg_show').hide();
+			}
+		}
+	
+	</script>
+</body>
+</html>

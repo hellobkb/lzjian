@@ -1,0 +1,52 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="javascript:;">URL规则管理</a></li>
+			<li><a href="{:U('Urlrule/add')}" target="_self">添加规则</a></li>
+		</ul>
+		<form class="js-ajax-form" action="" method="post">
+			 
+			<table class="table table-hover table-bordered table-list">
+				<thead>
+					<tr>
+					
+						<th width="30">ID</th>
+						<th width="50">所属模块</th>
+						<th width="60">名称</th>
+						<th width="50">生成静态</th>
+						<th>URL示例</th>
+						<th>URL规则</th>
+						<th width="80">管理操作</th>
+						 
+					</tr>
+				</thead>
+				 
+				<foreach name="list" item="vo">
+				<tr>
+					
+					<td>{$vo.urlruleid}</td>
+					<td>{$Module[$vo['module']]['name']}</td>
+					<td>{$vo.file}</td>
+					<td><if condition="$vo['ishtml'] eq '1' "><font color="red">√</font> <elseif condition="$vo['ishtml'] eq '0' " /><font color="blue">×</font></if></td>
+					 
+					<td>{$vo.example}</td>
+					<td>{$vo.urlrule}</td>
+					
+					<td>
+						<a href="{:U('Urlrule/edit',array('urlruleid'=>$vo['urlruleid']))}">{:L('EDIT')}</a> | 
+						<a href="{:U('Urlrule/delete',array('urlruleid'=>$vo['urlruleid']))}" >{:L('DELETE')}</a>
+					</td>
+				</tr>
+				</foreach>
+				 
+			</table>
+			 
+			<div class="pagination">{$Page}</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+ 
+</body>
+</html>

@@ -1,0 +1,104 @@
+<php>$siteOption = sp_get_site_options(); </php>
+<div class="container">
+  <div class="nav">
+    <ul>
+      <li><a href="__ROOT__/">{:L('RNHOME')}</a></li>
+      <content action="category" catid="0" order="listorder asc ">
+        <foreach name="data" item="cat_value">
+          <li><a href="{$cat_value.url}" >{$cat_value.catname}</a></li>
+        </foreach>
+      </content>
+      <div class="clear"></div>
+    </ul>
+  </div>
+  <div class="menubtn"> <span class="one"></span> <span class='two'></span> <span class="three"></span> </div>
+</div>
+
+
+<!--  head  -->
+<div class="head">
+<div class="zong">
+<div class="logo">
+  <a href="<php>echo $siteOption['site_host'];</php>" title="{$siteOption.site_name}" class="logon">
+    <img src="__TMPL__zhbeifan/images/logo.jpg" title="{$siteOption.site_name}" alt="{$siteOption.site_name}" />
+  </a>
+  
+  <div class="clear"></div>
+</div>
+
+
+<php>
+  $linkin = getContactValue(25);
+  $google = getContactValue(26);
+  $facebook = getContactValue(24);
+  $twitter = getContactValue(28);
+</php>
+
+
+<div class="shejiao">
+<a href="{$facebook.v}" target="_blank" rel="nofollow"><img src="__TMPL__zhbeifan/images/facebook.jpg" onmouseover="this.src='__TMPL__zhbeifan/images/facebookh.jpg';" onmouseout="this.src='__TMPL__zhbeifan/images/facebook.jpg';" /></a>
+<a href="{$twitter.v}" target="_blank" rel="nofollow"><img src="__TMPL__zhbeifan/images/twitter.jpg" onmouseover="this.src='__TMPL__zhbeifan/images/twitterh.jpg';" onmouseout="this.src='__TMPL__zhbeifan/images/twitter.jpg';" /></a>
+<a href="{$google.v}" target="_blank" rel="nofollow"><img src="__TMPL__zhbeifan/images/google.jpg" onmouseover="this.src='__TMPL__zhbeifan/images/googleh.jpg';" onmouseout="this.src='__TMPL__zhbeifan/images/google.jpg';" /></a>
+<a href="{$linkin.v}" target="_blank" rel="nofollow"><img src="__TMPL__zhbeifan/images/linkedin.jpg" onmouseover="this.src='__TMPL__zhbeifan/images/linkedinh.jpg';" onmouseout="this.src='__TMPL__zhbeifan/images/linkedin.jpg';" /></a>
+<div class="clear"></div>
+</div>
+<div class="clear"></div>
+</div>
+
+  </div>
+  </div>
+
+<div class="daoz">
+<div class="zong">
+<ul class="daohang">
+      <li><a href="<php>echo $siteOption['site_host'];</php>" <if condition="$home eq 1"> class="dangqiandao" </if>>{:L('RNHOME')}</a></li>
+      <content action="category" catid="0"  order="listorder ASC" >
+       <php>$data = zc_children_more($data);</php> 
+        <volist name="data" id="r">
+          <li><a href="{:zcurl($r['url'],$r['moveurl'])}" title="{$r.catname}" <if condition="in_array($catid,explode(',',$r['arrchildid'])) || ($iss eq 1 && $r['catid'] eq 72)">class="dangqiandao"</if>>{$r.catname}</a>
+            <if condition="$r['catid'] eq 72">
+              <content action="category" catid="$r['catid']"  order="listorder ASC" >
+                  <ul class="yiji">
+                   <volist name="data" id="r">
+                      <li><a href="{:zcurl($r['url'],$r['moveurl'])}" title="{$r.catname}" >{$r.catname}</a>
+                        <content action="category" catid="$r['catid']"  order="listorder ASC" >
+                          <if condition="$data">
+                            <ul class="erji">
+                                <volist name="data" id="r">
+                                  <li><a href="{:zcurl($r['url'],$r['moveurl'])}" title="{$r.catname}">{$r.catname}</a></li>
+                                </volist>
+                            </ul>
+                          </if>
+                        </content>
+                      </li>
+                  </volist>
+                    
+                  </ul>
+              </content>
+            </if>
+          </li>
+        </volist>
+      
+    </content>
+      <div class="clear"></div>
+</ul>
+<php>$ss40 = getContactValue(40);</php>
+    <form class="sousuo" method="post"  action="{:U('Search/Index/index')}">
+    <input type="text" class="sou" value="{$ss40.v}" name="q" onfocus="if(this.value=='{$ss40.v}') {this.value='';}" onblur="if(this.value=='') {this.value='{$ss40.v}';}" />
+    <input type="submit" class="suo" value="" />
+    </form>
+    <div class="clear"></div>
+    </div>
+  <div class="daohang2"> 
+  <a href="<php>echo $siteOption['site_host'];</php>" <if condition="$home eq 1"> class="dangqiandao" </if>>{:L('RNHOME')}</a>
+    <content action="category" catid="0" order="listorder asc ">
+      <foreach name="data" item="cat_value">
+      <if condition="$cat_value['catid'] eq 72 || $cat_value['catid'] eq 96 || $cat_value['catid'] eq 101">
+       <a href="{$cat_value.url}" <if condition="in_array($catid,explode(',',$cat_value['arrchildid']))">class="dangqiandao"</if>>{$cat_value.catname}</a>
+       </if>
+      </foreach>
+    </content>
+
+    <div class="clear"></div>
+  </div>
+    </div>

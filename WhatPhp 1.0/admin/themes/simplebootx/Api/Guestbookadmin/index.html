@@ -1,0 +1,261 @@
+<admintpl file="header" />
+
+</head>
+
+<body>
+
+	<div class="wrap">
+
+		<ul class="nav nav-tabs">
+
+			<li class="active"><a href="{:U('guestbookadmin/index')}">{:L('API_GUESTBOOKADMIN_INDEX')}</a></li>
+
+		</ul>
+
+		<form class="well form-search" method="post" action="{:U('guestbookadmin/index')}">
+
+			时间：
+
+			<input type="text" name="start_time" class="js-date-now" value="{$post.start_time|default=''}" style="width: 80px;" autocomplete="off">-
+
+			<input type="text" class="js-date-now" name="end_time" value="{$post.end_time}" style="width: 80px;" autocomplete="off"> &nbsp; &nbsp;
+
+			<select class="select_2" name="type" style="width:98px;">
+
+	          <option value='0' <if condition=" $post['type'] eq '0' "> selected</if>>请选择</option>
+
+	          <option value='1' <if condition=" $post['type'] eq '1' "> selected</if>>姓名</option>
+
+	          <option value='2' <if condition=" $post['type'] eq '2' "> selected</if>>邮箱</option>
+
+	          <!-- <option value='3' <if condition=" $post['type'] eq '3' "> selected</if>>公司</option> -->
+
+	        </select>
+
+			关键字：
+
+			<input type="text" name="keyword" style="width:200px;" value="{$post.keyword}" placeholder="请输入关键字...">
+
+			<input type="hidden" name="catid" value="{$catid}">
+
+			国家：
+
+			<select class="select_2" name="from_country" style="width:162px;">
+
+	          <option value='' <if condition=" $post['from_country'] eq ' ' "> selected</if>>请选择</option>
+
+	          <foreach name="from_country" item="v">
+
+	          <if condition="$v neq ''">
+
+	          <option value='{$v}' <if condition=" $v eq $post['from_country'] "> selected</if>>{$v}</option>
+
+	          </if>
+
+	          </foreach>
+
+	        </select>
+
+	      <!--  业务员：
+
+			<select class="select_2" name="salesman" style="width:162px;">
+
+	          <option value='0' <if condition=" $post['salesman'] eq '0' "> selected</if>>请选择</option>
+
+	          <foreach name="yw_data" item="vo">
+
+	          <if condition="$vo['ywid'] neq '0'">
+
+	          <option value='{$vo.ywid}' <if condition=" $vo['ywid'] eq $post['salesman'] "> selected</if>>{$vo.name}（{$vo.nicename}）</option>
+
+	          </if>
+
+	          </foreach>
+
+	        </select>-->
+
+<!--
+
+	    询盘位置：
+
+	    	<select class="select_2" name="ltype">
+
+	    		<option value="0">请选择</option>
+
+	    		 <foreach name="group" item="gv">
+
+	    		 	<option value="{$gv.id}" <if condition="$post['ltype'] eq $gv['id']"> selected </if>  >{$gv.name}</option>
+
+	    		 </foreach>
+
+	    	</select>
+
+-->
+
+			<input type="submit" class="btn btn-primary" value="搜索" />
+
+		</form>
+
+		<php>$xplx = array('联系我们','底部','首页','侧栏');</php>
+
+		<form method="post" class="js-ajax-form js-check-wrap">
+
+		<a href="{:U('guestbookadmin/excel',array('where'=>$where))}" class="btn">导出excel</a>
+
+		<button class="btn btn-primary btn-small js-ajax-submit" type="submit" data-action="{:U('guestbookadmin/deleteall',array('uncheck'=>1))}" data-subcheck="true">批量删除</button>
+
+		<!--<span class="btn" onClick="zccheck()">批量分配</span>-->
+
+			<table class="table table-hover table-bordered">
+
+				<thead>
+
+					<tr>
+
+						<th width="80">
+
+							<label><input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x">全部</label>
+
+						</th>
+
+						<!--<th width="300">公司</th>-->
+
+						<th width="100">联系人</th>
+
+						<th width="100">邮箱</th>
+
+						<th width="150">国家（客户填写）</th>
+
+						<th width="300">询盘类型</th>
+
+						<th width="100">发送时间</th>
+
+					<!--	<th width="100">业务归属</th>-->
+
+						<th width="100">操作</th>
+
+					</tr>
+
+				</thead>
+
+				<tbody>
+
+					<foreach name="guestmsgs" item="vo">
+
+					<tr <if condition="$vo['read'] eq 0">style="font-weight:bold;"</if>>
+
+						<td>
+
+							<input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="ids[]" value="{$vo.id}">
+
+						</td>
+
+						<!--<td>{$vo.company_name}</td>-->
+
+						<td>{$vo.full_name}</td>
+
+						<td>{$vo.email}</td>
+
+						<td>{$vo.from_country}</td>
+
+						<td>{$xplx[$vo[type]]}</td>
+
+						<td>{$vo.createtime}</td>
+
+						<!--<if condition="$vo['user_login']">
+
+							<td>{$vo.user_login}（{$vo.user_nicename}）</td>
+
+						<else />
+
+<php>
+
+  if(!empty($vo['company_name']) && !empty($vo['email'])){
+
+    $zccount = M('Client')->field('id')->where('cname="'.$vo['company_name'].'" or email="'.$vo['email'].'"')->find();
+
+    $url = U('Crm/Cindex/editClient',array('id'=>$zccount['id'],'status'=>2));
+
+  }else{
+
+    $zccount = '';
+
+  }
+
+</php>
+
+<php>if($zccount):</php>
+
+<td><span style="color:red">未分配<a href="javascript:open_iframe_dialog('{$url}','存在客户详情')">（客户信息已经存在）</a></span></td>
+
+<php>else:</php>
+
+							<td><span style="color:red">未分配</span></td>
+
+<php>endif;</php>
+
+						</if>-->
+
+						<td>
+
+<!--
+
+javascript:open_iframe_dialog('{:U('guestbookadmin/distribution',array('id'=>$vo['id']))}','分配：{$vo.company_name}')
+
+-->
+
+							<a href="{:U('guestbookadmin/delete',array('id'=>$vo['id']))}" class="js-ajax-delete">{:L('DELETE')}</a>
+
+							<if condition="$vo['user_login']">
+
+							<a href="javascript:open_iframe_dialog('{:U('guestbookadmin/see',array('id'=>$vo['id']))}','详情：{$vo.company_name}')">详情</a>
+
+							<else />
+
+							<a href="{:U('guestbookadmin/distribution',array('id'=>$vo['id']))}">详情</a>
+
+							<!-- <a href="javascript:open_iframe_dialog('{:U('guestbookadmin/distribution',array('id'=>$vo['id']))}','分配：{$vo.company_name}')">分配</a> -->
+
+							</if>
+
+						</td>
+
+					</tr>
+
+					</foreach>
+
+				</tbody>
+
+			</table>
+
+			<div class="pagination">{$Page}</div>
+
+		</form>
+
+	</div>
+
+<script type="text/javascript">
+function zccheck(){
+	var zczz = '';
+	$('.js-check').each(function (k,v){
+		if($(v).attr('checked')=='checked'){
+			zczz += ','+$(v).val();
+		}
+	});
+
+if(zczz){
+zczz = zczz.substring(1);
+window.location.href = "{:U('guestbookadmin/distributionall','','',true)}"+'?zczz='+zczz;
+}else{
+isalert('请先选择需要分配的询盘！');
+}
+}
+</script>
+
+<script src="__PUBLIC__/js/common.js"></script>
+
+<script src="__PUBLIC__/js/content_addtop.js"></script>
+
+</body>
+
+</html>

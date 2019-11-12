@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>{$site_seo_title}{$site_name}</title>
+<meta name="keywords" content="{$site_seo_keywords}" />
+<meta name="description" content="{$site_seo_description}">
+<script src="__PUBLIC__/js/jquery.js"></script>
+<script src="__PUBLIC__/js/index.js"></script>
+<style>
+#left, #right {
+	float: left;
+	width: 140px;
+}
+.foot {
+	clear: both
+}
+</style>
+<tc_include file="Public:head" />
+</head>
+<body>
+<div class="tou_h"></div>
+<div class="zong header">
+{:zcload('navs')}
+<div class="zong">
+  <p class="f24 hui4d juzhong top30">Tell us what you want to buy</p>
+</div>
+<div class="zong">
+  <div class="way_form">
+    <form name="" method='post' action="{:U('api/guestbook/addmsg2')}" onSubmit="return submitMsg2()" enctype='multipart/form-data'>
+      <div class="way_input">
+        <div class="way_left f14 hui4d">Product Name:</div>
+        <input type="text"  class="hui4d f14 zitia" name="pro_name" id="pro_name" value=""  />
+        <span>*</span>
+        <div class="clear"></div>
+      </div>
+      <div class="way_input">
+        <div class="way_left f14 hui4d">Product Category:</div>
+        <input type="text"  class="hui4d f14 zitia" name="pro_cate" id="pro_cate" value="" />
+        <div class="clear"></div>
+      </div>
+      <div class="way_input">
+        <div class="way_left f14 hui4d">Product Description:</div>
+        <textarea   class="hui4d f14 zitia" name="pro_des" id="pro_des"></textarea>
+        <span>*</span>
+        <div class="clear"></div>
+      </div>
+      <div class="way_qur">
+        <div class="way_left f14 hui4d">Purchase Quantity:</div>
+        <input type="text"  class="quantity hui4d f14 zitia" name="pro_shu" id="pro_shu"/>
+        <select class="hui4d f14 zitia" name="danwei" id="danwei">
+          <option value="Piece(s)">Piece(s)</option>
+        </select>
+        <span>*</span>
+        <div class="clear"></div>
+      </div>
+      <div class="way_qur">
+        <div class="way_left f14 hui4d">Valid to:</div>
+        <input type="text" id="datepicker" name="datepicker"/>
+        <span>*</span>
+        <div class="clear"></div>
+      </div>
+      <div class="way_qur">
+        <div class="way_left f14 hui4d">CAPTCHA:</div>
+        <input type="text"  class="yanzhengma hui4d f14 zitia" name="verify" id="verify"/><span>*</span>
+          <php>$ver = sp_verifycode_img('length=4&font_size=18&width=129&height=40&use_noise=1&use_curve=0','style="cursor: pointer;" title="'.L('DJ_TIP').'"');</php>
+          {$ver}
+        <div class="clear"></div>
+        
+      </div>
+      <if condition="$_GET['hcatid']">
+        <input type="hidden" name="pid" value="{$_GET['hcatid']}">
+        <else />
+        <input type="hidden" name="pid" value='
+                        <volist name="pro" id="v">
+                            <a href="{:zcurl($v['url'],$v['moveurl'])}" title="{$v.title}" target="_blank">
+        {$v.title}</a><br />
+        </volist>
+        '> </if>
+         <input type="hidden"  name="type" id="type" value="1"  />
+        <input type="hidden"  name="full_name" id="full_name" value="Sourcing Ways"  />
+        <input type="hidden"  name="email" id="email" value="Sourcing@163.com"  />
+        <input type="hidden"  name="msg" id="msg" value="Sourcing Ways"  />
+      <div class="way_sub">
+        <input type="submit" class=" send_tj hui4d f18 zitia" value="Submit" name="dosubmit">
+      </div>
+    </form>
+  </div>
+</div>
+<script src="__TMPL__xinyu/js/pikaday.js"></script> 
+<script>
+
+    var picker = new Pikaday(
+    {
+        field: document.getElementById('datepicker'),
+        firstDay: 1,
+        minDate: new Date('2000-01-01'),
+        maxDate: new Date('2020-12-31'),
+        yearRange: [2000,2020]
+    });
+
+    </script>
+<div class="foot"> {:zcload('footer')} </div>
+{$site_copyright}
+{:zcload('script')}
+</body>
+</html>

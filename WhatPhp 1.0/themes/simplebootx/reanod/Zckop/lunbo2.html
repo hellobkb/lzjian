@@ -1,0 +1,33 @@
+<!--  lun bo   --> 
+<script type="text/javascript" src="__TMPL__zhbeifan/js/jquery.SuperSlide.js"></script>
+<div class="index_focus2"> <a href="javascript:;" class="index_focus_pre2" ></a> <a href="javascript:;" class="index_focus_next2" ></a>
+  <div class="index_focusn2">
+    <div class="bd">
+      <ul>
+        <php>$adst = getPsitionAds(3);</php>
+        <volist name="adst" id="vo">
+          <li> <a href="{$vo.url1}" class="pic" title="{$vo.alt}"> <img class="pic" src="{$vo.image}" alt="{$vo.alt}" title="{$vo.alt}"> </a> </li>
+        </volist>
+      </ul>
+    </div>
+      <div class="slide_nav"> <volist name="adst" id="vo"><a href="javascript:"></a></volist></div>
+  </div>
+</div>
+
+<!--  640 banner  -->
+<div class="carousel" id="carousel">
+  <ul>
+  <php>$ads = getPsitionAds(1);</php>
+    <volist name="ads" id="vo">
+        <li> <a href="{$vo.url1}" title="{$vo.alt}"> <img src="{$vo.image}" alt="{$vo.alt}" title="{$vo.alt}"> </a> </li>
+    </volist>
+  
+  </ul>
+  <ol>
+    <volist name="ads" id="vo">
+      <li <if condition="$key eq 0"> class="cur" </if>></li>
+    </volist>
+ 
+  </ol>
+</div>
+<div class="clear"></div>

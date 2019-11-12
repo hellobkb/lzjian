@@ -1,0 +1,62 @@
+<php> $content2 = json_decode($zcmod['content'],true);
+  $limit = $content2['zcmsg']['attr']['argu']['limit'];
+  $relation = show_relation($catid,$id);
+  
+  //图片列表
+  $imgList = json_decode($mopic ,true);
+  </php>
+<div class="chanp_y"> 
+  <script src="__TMPL__xinyu/js/teyi.js" type="text/javascript"></script>
+  <div id="tsShopContainer">
+    <div id="tsImgS"> <a href="{$thumb}" title="Images" class="MagicZoom" id="MagicZoom" onclick="return false"><img  src="{$thumb}" title="{$title}" alt="{$title}" /></a> </div>
+    <div id="tsPicContainer">
+      <div id="tsImgSArrL" onclick="tsScrollArrLeft()"></div>
+      <div id="tsImgSCon">
+        <ul>
+          <php> $i=0;</php>
+          <foreach name="imgList" item="big_img">
+            <li onmouseover="showPic({$i})" rel="MagicZoom" class="tsSelectImg"><a><img src="{$big_img.url}" tsImgS="{$big_img.url}"  title="{$title}" alt="{$title}" /></a></li>
+            <php> $i++;</php>
+          </foreach>
+        </ul>
+      </div>
+      <div id="tsImgSArrR" onclick="tsScrollArrRight()"></div>
+    </div>
+  </div>
+  <script src="__TMPL__xinyu/js/teer.js"></script>
+  <div class="chanpin">
+    <foreach name="imgList" item="big_img"> <img src="{$big_img.url}"  title="{$title}" alt="{$title}" /> </foreach>
+    <div class="clear"></div>
+  </div>
+  <div class="youce_xx top35">
+    <h1 class="hg1417 f18 hui4d ">{$title}</h1>
+    <div class="pro_share  juzhong"> <span class="f14 colcla">Share</span>
+    <style>.p2_share img{ width:26px !important; height:26px; border-radius:3px; margin-top:8px; }
+  .p2_share a{ width:26px !important; height:26px; margin:0 auto; float:left; margin-right:5px !important; margin-top:8px; }
+  .down{ margin-right:25px !important; margin-left:100px !important; float:left; margin-top:0 }
+  @media screen and (max-width:1000px){.down{ margin-right:25px !important; margin-left:0px !important; float:left; margin-top:0 }}
+  </style>
+ <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5772392d706bad73"></script> 
+<a style="width:165px !important;"><div class="addthis_sharing_toolbox" style="margin-top:15px; float:left !important; "></div></a>
+      <div class="clear"></div>
+    </div>
+    <div class="anliu_se f16 "> <a href="{:U('Content/Pagedis/lists',array('id'=>$id,'catid'=>101,'hcatid'=>$id))}" class="inquire">Inquire Now </a><a href="" class="next">Next Product555555</a>
+      <div class="clear"></div>
+    </div>
+  </div>
+  <div class="clear"></div>
+  <p class="colcla prod_ms f22 jiacu top35"><span>PRODUCT DETAIL</span></p>
+  <div class="ser_zhengw f14 hui4d top20 hg1415 cpxq"> {$content} </div>
+  <p class="colcla prod_ms f22 jiacu top40"><span>RELATED PRODUCT</span></p>
+  <div class="consuma2_lis">
+    <php>$i=0;</php>
+    <foreach name="relation" item="vo">
+    <if condition="$i lt 4">
+    <div  <if condition="$i eq 0">class="chanp_list_s juzuo03" <else/> class="chanp_list_s juzuo30"</if>> <a href="{:zcurl($vo['url'],$vo['moveurl'])}" title="{$vo.title}"><img src="{$vo.thumb}" alt="{$vo.title}" title="{$vo.title}" /></a> <a href="{:zcurl($vo['url'],$vo['moveurl'])}" title="{$vo.title}" class="biaoti f14 hg1415 juzhong hui4d top5">{$vo.title}</a> </div>
+  </if>
+  <php>$i++;</php>
+  </foreach>
+  <div class="clear"></div>
+</div>
+<div class="clear"></div>
+</div>

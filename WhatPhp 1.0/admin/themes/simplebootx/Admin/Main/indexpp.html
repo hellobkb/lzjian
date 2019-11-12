@@ -1,0 +1,109 @@
+<admintpl file="header" />
+<style>
+.home_info li em {
+  float: left;
+  width: 120px;
+  font-style: normal;
+}
+li {
+  list-style: none;
+}
+</style>
+</head><body>
+<div class="wrap" style="margin-left:0; padding-left:0">
+	
+   <admintpl file="main_lunbo" />
+
+  <div class="well2 font11">
+ 
+    <div class="sypic1"><img src="__ROOT__/images/htsy1.jpg" /></div>
+    <div class="sypic1"><img src="__ROOT__/images/htsy2.jpg" /></div>
+    <div class="sypic"><img src="__ROOT__/images/htsy3.jpg" /></div>
+    <div class="sypic"><img src="__ROOT__/images/htsy4.jpg" /></div>
+    <div class="sypic"><img src="__ROOT__/images/htsy5.jpg" /></div>
+    <div class="sykuai1"><img src="__ROOT__/images/htbiao1.png" /></div>
+    <div class="sykuai2"><img src="__ROOT__/images/heidian.jpg" /> <a href="{:U('Content/Contents/product',array('modelid'=>5))}">产品管理</a></div>
+    <div class="sykuai3"><img src="__ROOT__/images/heidian.jpg" /> <a href="{:U('Content/Category/index')}">导航栏目管理</a></div>
+    <!-- <div class="sykuai4"><img src="__ROOT__/images/heidian.jpg" /> <a href="{:U('Content/Contents/index')}">导航栏目管理</a></div> -->
+    <div class="sykuai5"><img src="__ROOT__/images/heidian.jpg" /> <a href="{:U('Content/Contents/article',array('modelid'=>1))}">文章管理</a></div>
+    <div class="sykuai6"><img src="__ROOT__/images/heidian.jpg" /> <a href="{:U('Content/Createhtml/category')}">更新栏目页</a></div>
+
+
+
+    <div class="sy2kuai1"><img src="__ROOT__/images/htbiao2-2.png" /></div>
+
+    <div class="sy2kuai2"><img src="__ROOT__/images/heidian.jpg" /> <a href="{:U('Release/Release/index')}">平台管理</a></div>
+    <div class="sy2kuai3"><img src="__ROOT__/images/heidian.jpg" /> <a href="{:U('Statistics/Foreignvis/index')}">访客统计</a></div>
+    <div class="sy2kuai4"><img src="__ROOT__/images/heidian.jpg" /> <a href="{:U('Statistics/Report/index')}">营销报告</a></div>
+    <div class="sy2kuai5"><img src="__ROOT__/images/heidian.jpg" /> <a href="{:U('Content/Category/listtdk')}">关键词管理</a></div>
+    <div class="sy2kuai6"><img src="__ROOT__/images/heidian.jpg" /> <a href="{:U('Statistics/Articlestatistics/statisticsarticle')}">文章统计</a></div>
+    <div class="sy2kuai7"><img src="__ROOT__/images/heidian.jpg" /> <a href="{:U('Content/Socially/index')}">社交管理</a></div>
+
+    <div class="sy3kuai1"><img src="__ROOT__/images/htbiao3.png" /></div>
+    <div class="sy3kuai2"><img src="__ROOT__/images/baidian.jpg" /> <a href="{:U('Crm/Cdata/index')}">数据看板</a></div>
+    <!-- <div class="sy3kuai3"><img src="__ROOT__/images/baidian.jpg" /> <a href="{:U('Crm/Cdata/index')}">智能简报</a></div> -->
+    <div class="sy3kuai4"><img src="__ROOT__/images/baidian.jpg" /> <a href="{:U('Crm/Corder/orderList')}">订单管理</a></div>
+    
+    
+    <!-- <iframe src="http://www.xinguwen.com/video/Page/index.html"></iframe> -->
+    <div class="sy4kuai1"><img src="__ROOT__/images/htbiao4.png" /></div>
+
+    <div class="sy4kuai2"><img src="__ROOT__/images/baidian.jpg" /> <a href="{:U('Admin/Peixun/index')}">新顾问课程</a></div>
+    <div class="sy4kuai3"><img src="__ROOT__/images/baidian.jpg" /> <a href="{:U('Admin/Peixun/index')}">更多精品课程</a></div>
+    
+    
+    <div class="sy5kuai1"><img src="__ROOT__/images/htbiao5.png" /></div>
+    
+    <div class="sy5kuai2"><img src="__ROOT__/images/baidian.jpg" /> <a href="{:U('Gadgets/Currency/index')}">货币汇率</a></div>
+    <div class="sy5kuai3"><img src="__ROOT__/images/baidian.jpg" /> <a href="http://www.i5a6.com/hscode/" target="_blank">海关查询</a></div>
+    <div class="sy5kuai4"><img src="__ROOT__/images/baidian.jpg" /> <a href="{:U('Gadgets/Worldtime/index')}">世界时间</a></div>
+    <div class="sy5kuai5"><img src="__ROOT__/images/baidian.jpg" /> <a href="{:U('Gadgets/Exchagerate/index')}">汇率查询</a></div>
+  </div>
+  
+  
+  <!--  <div class="sy_f">
+  	<span>技术咨询电话： 15633081023 </span>
+    <span class="sy_f_span1">QQ: <a href="" title="">2839921604</a></span>
+  </div> -->
+  
+</div>
+<script src="__PUBLIC__/js/common.js"></script> 
+<script>
+    //获取官方通知
+    
+  /*  $.get("{:U('Main/getVersion')}", {} ,function(str){
+    	 if(str.status ==1){
+    		 if(window.confirm(str.msg)){
+    			 window.open('http://www.xinguwen.com/thinkcmf_update.html');
+    		 } 
+    		
+    	 } 
+    },'json');*/
+ /*    $.getJSON("{:U('Main/getVersion')}",
+    function(data) {
+    	
+    	 
+    	
+      var tpl = '<li><em class="title"></em><span class="content"></span></li>';
+      var $thinkcmf_notices = $("#thinkcmf_notices");
+      $thinkcmf_notices.empty();
+      alert(data);
+      if (data.length > 0) {
+        $.each(data, function(i, n) {
+          var $tpl = $(tpl);
+          $(".title", $tpl).html(n.title);
+          $(".content", $tpl).html(n.content);
+          $thinkcmf_notices.append($tpl);
+        });
+      } else {
+        $thinkcmf_notices.append("<li>^_^,{:L('NO_NOTICE')}~~</li>");
+      }  
+
+    });
+    
+     */
+    
+  </script>
+   <div class="clear"></div>
+</body>
+</html>

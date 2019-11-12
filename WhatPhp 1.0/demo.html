@@ -1,0 +1,780 @@
+<!-- css路径、js路径、图片路径 -->
+{:img_cdn_url('__TMPL__langrui/css/slide5.css')}
+{:img_cdn_url('__TMPL__langrui/js/placeholder.js')}
+{:img_cdn_url('__TMPL__picbanners/logo.png')}
+{$r.thumb}
+direction: rtl;
+object-fit: fill;    //视频铺满
+4 2
+{:getVisits(zcurl($r['url'],$r['moveurl']))}
+javascript:void(0);
+http://192.168.1.88/aitewo/themes/simplebootx/style/
+http://192.168.1.88/chengpu/themes/simplebootx/picbanners
+<tc_include file="Public:head" />
+<!-- 网站名称 -->
+{$siteOption['site_name']}
+
+<!-- 网站地图 -->
+{$siteOption[site_ditu]}
+
+<!-- 获取栏目链接 -->
+{:get_category_url(1)}
+
+<!-- 获取栏目名称 -->
+{:wps_getcatname($catid)}
+
+<!-- 获取栏目简介 -->
+{:wps_getcatdescription(1)}
+
+<!-- 获取栏目缩略图 -->
+{:wps_getcatimage()}
+
+<!-- 截取字符串 -->
+{:str_cut($r['title'] , 30)}
+{:str_cut($r['description'] , 80)}
+
+<!-- 时间样式 -->
+<php>echo date('M. d, Y',$r[updatetime]);</php>
+
+<php>echo date('M. d, Y',$updatetime);</php>
+
+<php>echo date('dS. F, Y',$updatetime);</php>
+
+<!-- 获取列表的链接处理 -->
+{:zcurl($r['url'],$r['moveurl'])}
+
+<!-- 获取页面信息 -->
+{:getContactValue(25)['v']}
+
+<!-- 调取附表 -->
+moreinfo="1"
+
+<!--调取系统图片-->
+__TMPL__picbanners
+
+<!-- 获取单页的内容 -->
+{:get_c_content(3)}
+
+function get_c_content($catid){
+
+	$cate = M("page")->where(" catid = $catid ")->find();
+
+	return $cate['content'];
+}
+
+<!-- 搜索提示语 -->
+'RNSOO' => 'We\'re sorry, we could not find any matches about your search. Please try another keywords or click our product categories.',
+
+$result
+
+<!-- 去除前端标签 -->
+{:strip_tags($r['title'])}
+
+<!-- 调取其他单页面信息 -->
+<php>
+    $catid=8;
+    $arr = M('Page')->where("catid =".$catid)->select();
+    $catparentid=$arr[0]['content'];
+</php>
+{$catparentid}
+
+<!-- TDK -->
+<php>
+    $site_seo = get_site_options(); 
+    if(empty($SEO)){
+        $SEO = array();
+        $SEO['title'] = $site_seo['site_seo_title'];
+        $SEO['keyword'] = $site_seo['site_seo_keywords'];
+        $SEO['description'] = $site_seo['site_seo_description'];
+    }
+</php>
+<title>{$SEO.title}</title>
+<meta name="keywords" content="{$SEO.keyword}" />
+<meta name="description" content="{$SEO.description}">
+<link rel="shortcut icon" href="__ROOT__/favicon.ico">
+
+<!-- head.html 修改css、js路径 底部添加如下代码 -->
+	<!-- 获取网站配置信息 -->
+	<!-- 获取谷歌统计 -->
+	<php>$siteOption = sp_get_site_options();</php>
+	{$siteOption[site_copyright]}
+	<!-- ie css 路径 -->
+	<php>echo $siteOption[site_host];</php>themes/simplebootx/style/
+
+<!-- nav.html 修改图片路径 -->
+
+	<!-- 关键字 -->
+	<content action="lists" catid="7" num="10" moreinfo="1" order="listorder ASC">
+    <php>$a=count($data);</php>
+    <volist name="data" id="r">
+    <php>$a--;</php>
+    <a href="{$r.tzurl}" title="{$r.title}"> {$r.title}</a><if condition='$a neq 0'>, <else/>...</if>
+    </volist>
+    </content>
+
+	<!-- 搜索 -->{:U('Search/Index/index')} name="q" {:L('RNSEARCH')}
+	<!-- PC 导航 模板 -->
+	<ul class="m-hdnav">
+		<div class="f-box">
+			<li <if condition="$home eq 1">class="nav-active"</if>>
+                <a href="__ROOT__/">{:L('RNHOME')}</a>
+            </li>
+			<content action="category" catid="0" order="listorder ASC">
+			<volist name="data" id="r">
+			<li <if condition="in_array($catid,explode(',',$r['arrchildid']))">class="on"</if>>
+				<a href="{:zcurl($r['url'],$r['moveurl'])}">
+					{$r.catname}
+				</a>
+				<content action="category" catid="$r['catid']" order="listorder ASC" >
+				<if condition="$data">
+				<div class=" sbnav-wp2">
+					<ul class="sbnav-list">
+						<volist name="data" id="r">
+						<li class="list-item">
+							<a href="{:zcurl($r['url'],$r['moveurl'])}">{$r.catname}</a>
+						</li>
+						</volist>
+					</ul>
+				</div>
+				</if>
+				</content>
+			</li>
+			</volist>
+			</content>
+		</div>
+	</ul>
+
+	<!-- 固定导航 模板 -->
+	<ul class="wap-hd-nav">
+		<li class="wap-hd-nav-item">
+			<a <if condition="$home eq 1">class="active"</if> href="__ROOT__/">
+				{:L('RNHOME')}
+			</a>
+		</li>
+		<php>$chanpfl=getCategory(1);</php>
+		<li class="wap-hd-nav-item">
+			<a <if condition="in_array($catid,explode(',',$chanpfl[arrchildid]))">class="active"</if> href="{:get_category_url(1)}">
+				{:L('RNPRODUCTS')}
+			</a>
+		</li>
+		<li class="wap-hd-nav-item">
+			<a <if condition="$catid eq 2">class="active"</if> href="{:get_category_url(2)}">
+				{:L('RNABOUT_US')}
+			</a>
+		</li>
+		<li class="wap-hd-nav-item">
+			<a <if condition="$catid eq 6">class="active"</if> href="{:get_category_url(6)}">
+				{:L('RNCONTACTS')}
+			</a>
+		</li>
+	</ul>
+
+	<!-- 手机导航 模板 -->
+	<div class="wap-nav">
+		<div class="nav">
+			<ul class=""> 
+				<form action="{:U('Search/Index/index')}" method="get" class="fix">
+	                <input type="text" name="q" placeholder="{:L('RNSEARCH')}..." class="iptc pull-left">
+	                <input type="submit" value="" class="ipsc pull-right">
+	                <i class="icon-search5 iconfont"></i>
+	            </form>
+				<li <if condition="$home eq 1">class="on"</if>>
+					<a href="__ROOT__/">{:L('RNHOME')}</a>
+				</li>
+				<content action="category" catid="0" order="listorder ASC" >
+				<volist name="data" id="r">
+				<li class="">
+					<a href="{:zcurl($r['url'],$r['moveurl'])}">{$r.catname}</a>
+					<content action="category" catid="$r[catid]"  order="listorder ASC" >
+					<if condition="count($data) gt '0'">
+					<div class="addition"></div>
+					<div class="c-show c-show1">
+						<volist name="data" id="r">
+						<div class="c-s1">
+							<a href="{:zcurl($r['url'],$r['moveurl'])}" class="fa fa-dot-circle-o">
+								<span>{$r.catname}</span>
+							</a>
+							<content action="category" catid="$r[catid]"  order="listorder ASC" >
+							<if condition="count($data) gt '0'">
+							<div class="addition"></div>
+							<div class="c-show c-show2">
+								<volist name="data" id="r">
+								<div class="c-s2">
+									<a href="{:zcurl($r['url'],$r['moveurl'])}" class="fa fa-asterisk">
+										<span>{$r.catname}</span>
+									</a>
+									<content action="category" catid="$r['catid']"  order="listorder ASC" >
+									<if condition="count($data) gt 0">
+									<div class="addition"></div>
+									<div class="c-show c-show3">
+										<volist name="data" id="r">
+										<div class="c-s3">
+											<a href="{:zcurl($r['url'],$r['moveurl'])}" class="fa fa-asterisk">
+												<span>{$r.catname}</span>
+											</a>
+										</div>
+										</volist>
+									</div>
+									</if>
+									</content>
+								</div>
+								</volist>
+							</div>
+							</if>
+							</content>
+						</div>
+						</volist>
+					</div>
+					</if>
+					</content>
+				</li>     
+				</volist>
+				</content>
+			</ul>
+		</div>
+		<div class="menubtn">
+			<span class="one"></span>
+			<span class="two"></span>
+			<span class="three"></span>
+		</div>
+	</div>
+
+	<!-- 搜索 -->
+	<form action="{:U('Search/Index/index')}" method="get" class=""> 
+		<input type="submit" class="sub">
+		<input type="text" name="q" placeholder="{:L('RNSEARCH')}..." class="tex">
+	</form>
+
+<!-- banner.html -->
+	<volist name="ads" id="r">
+	<div class="slideItem" onclick="window.location.href='{$r.url1}'">
+		<img class="banner-img" src="{$r.image}" alt="{$r.alt}" title="{$r.alt}">
+	</div>
+	</volist>
+	<!-- banner_fenye.html -->
+	<php>$ads = getPsitionAds(3);</php>
+	<volist name="ads" id="r">
+	<div class="slideItem" onclick="window.location.href='{$r.url1}'">
+		<img class="banner-img" src="{$r.image}" alt="{$r.alt}" title="{$r.alt}">
+	</div>
+	</volist>
+
+<!-- footer -->
+	<!-- 国外分享媒体 -->
+	f    Facebook
+	in   Linkedin
+	p    Pinterest
+	小鸟 Twitter
+	You Tube
+	Google+
+	照相机    Instagram
+	<!-- cnzz -->
+	{$siteOption['site_tongji']}
+	
+	<!-- 统计代码 -->
+	<tc_include file="reanod:Zckop:script" />
+
+	<!-- 技术支持 -->
+	https://www.reanod.com/
+
+	<!-- 底部导航 -->
+	<ul class="m-ftnav m-ftnav1 c-fl">
+		<li>
+			<a href="__ROOT__/">{:L('RNHOME')}</a>
+		</li>
+		<content action="category" catid="0" order="listorder ASC">
+		<volist name="data" id="r">
+		<li>
+			<a href="{:zcurl($r['url'],$r['moveurl'])}">{$r.catname}</a>
+		</li>
+		</volist>
+		</content> 
+	</ul>
+
+	<!-- 友情链接 -->
+	<if condition="$home eq 1">
+	<ul class="m-ftlnk">
+		<php>$links=sp_getlinks();</php>
+		<li class="lnk-item">
+			{:L('RNLINKS')}：
+		</li>
+		<foreach name="links" item="r">
+		<li class="lnk-item">
+			<a href="{$r.link_url}" title="{$r.link_name}" target="{$r.link_target}">{$r.link_name}</a>
+		</li>
+		</foreach>
+	</ul>
+	</if>
+
+<!-- index.html -->
+<ul class="m-hprol">
+	<content action="lists" catid="2" where="recommend=1" num="4">
+	<php>$a=0;</php>
+	<volist name="data" id="r">
+	<php>$a++;</php>
+	<li class="list-item <if condition='$a eq 3'>c-nomr</if>">
+		<div class="item-top">
+			<a class="item-pic" href="{:zcurl($r['url'],$r['moveurl'])}" title="{$r.title}">
+				<img class="j-lazy" data-original="{$r.thumb}" alt="{$r.title}" title="{$r.title}">
+			</a>
+			<p class="item-modal m-provm">
+				<a href="{:zcurl($r['url'],$r['moveurl'])}" title="">{:L('RNVIEW_MORE')}</a>
+			</p>
+		</div>
+		<div class="item-text">
+			<p class="item-title">
+				<a href="{:zcurl($r['url'],$r['moveurl'])}" title="{$r.title}">{:str_cut($r['title'] , 15)}</a>
+			</p>
+			<p class="item-desc">
+				<a href="{:zcurl($r['url'],$r['moveurl'])}" title="{$r.description}">{:str_cut($r['description'] , 50)}</a>
+			</p>
+		</div>
+	</li>
+	<php>if($a==3)$a=0;</php>
+	</volist>
+	</content>
+</ul>
+
+<!-- mbx.html -->
+<php> $category = S("Category");$father = zc_father($category,$catid); </php>
+<php>$str = " &gt; "</php>
+<div class="m-crm m-crm1">
+	<div class="f-box">
+		<a href="__ROOT__/" title="">{:L('RNHOME')}</a>
+		<span> &gt; </span>
+		<navigate catid="$catid" space="$str" mmc="active" />
+	</div>
+</div>
+
+<!-- pro.html -->
+
+<content action="keywordList">
+<foreach name="data" item="vo">
+	<if condition="$vo['url'] and $vo['name']">
+        <a href="{:leuu('search/index/keywordsearch', array('q'=>$vo['url']))}" title="{$vo['name']}">{$vo['name']}, </a>
+    </if>
+</foreach>
+</content>
+
+<php>
+	$content = json_decode($zcmod['content'],true);
+	$limit = $content['zcmsg']['attr']['argu']['limit'];
+	$pagestely = array('listlong' => 4, 'listsidelong' => 2, "first" => "home page", "last" => "Shadowe", "prev" => L('RNPREVIOUS'), "next" => L('RNNEXT'), "list" => "*","currentclass" => "active", "disabledclass" => "",'ss'=>true);
+	$pagetpl = '{prev}{liststart}{list}{listend}{next}';
+</php>
+	<!-- 产品列表页 -->
+	<ul class="m-prol">
+		<content action="lists" catid="$catid" num="12" page="$p" page_tplconfig="$pagestely" page_tpl="$pagetpl">
+		<if condition="$data">
+		<form action="{:U('Content/Pagedis/inquiry')}" method="post">
+		<php>$a=0;</php>
+		<volist name="data" id="r">
+		<php>$a++;</php>
+		<li class="list-item <if condition='$a eq 3'>c-nomr</if>">
+			<a class="item-pic" href="{:zcurl($r['url'],$r['moveurl'])}" title="{$r.title}">
+				<img class="j-lazy" data-original="{$r.thumb}" alt="{$r.title}" title="{$r.title}">
+			</a>
+			<div class="item-text">
+				<p class="item-title">
+					<a href="{:zcurl($r['url'],$r['moveurl'])}" title="{$r.title}">{:str_cut($r['title'] , 15)}</a>
+				</p>
+				<p class="item-link">
+					<input type="checkbox" name="pro[]" value="{$r.id}">
+					<a href="{:U('Content/Pagedis/lists',array('id'=>$r['id'],'catid'=>5,'hcatid'=>$r['id']))}">{:L('RNINQUIRE_NOW')}</a>
+				</p>
+			</div>
+		</li>
+		<php>if($a==3)$a=0;</php>
+		</volist>
+		<else/>
+		<p class="ppp">{:L(RNNONE)}</p>
+		</if>
+		</content>
+		<div class="c-cb"></div>
+	</ul>
+
+<!-- pro_left.html -->
+<div class="subNavBox">
+    <content action="category" catid="1" order="listorder ASC">
+    <volist name="data" id="r">
+    <div class="subNav <if condition="in_array($catid,explode(',',$r['arrchildid']))">currentDd currentDt</if>"><a href="{:zcurl($r['url'],$r['moveurl'])}">{$r.catname}</a></div>
+    <content action="category" catid="$r['catid']" order="listorder ASC" >
+    <if condition="count($data) gt 0">
+    <ul class="navContent " style="display:<if condition="in_array($catid,explode(',',$r['arrchildid']))">block<else/>none</if>">
+        <volist name="data" id="r">
+        <li <if condition="in_array($catid,explode(',',$r['arrchildid']))">class="on"</if>>
+            <a href="{:zcurl($r['url'],$r['moveurl'])}">{$r.catname}</a>
+            <content action="category" catid="$r['catid']" order="listorder ASC" >
+            <if condition="count($data) gt 0">
+            <div class="div_p">
+                <p><a <if condition="in_array($catid,explode(',',$r['arrchildid']))">class="oon"</if> href="{:zcurl($r['url'],$r['moveurl'])}">{$r.catname}</a></p>
+            </div>
+            </if>
+            </content>
+        </li>
+        </volist>
+    </ul>
+    </if>
+    </content>
+    </volist>
+    </content>
+</div> 
+
+
+<!-- voide -->
+<content action="lists" catid="4" num="7" page="$p" page_tplconfig="$pagestely" page_tpl="$pagetpl" moreinfo="1">
+<if condition="$data">
+<php>$a=1;$b=0</php>
+<volist name="data" id="r">
+<php>$b++;</php>
+<if condition="$b eq 1">
+<div class="m-video m-video1">
+	<div class="box-img">
+		<iframe src="./images/video2.png" marginwidth="0" marginheight="0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+	</div>
+	<p class="box-title">
+		Video
+	</p>
+	<p class="box-desc">
+		Provide an intergrated service of construction industry for our customers, individual, Brickies, contractors, developers, with a wide range of products that they can perform any work in anytime. 
+	</p>
+</div>
+<!-- .m-video end -->
+<!-- .m-videol start -->
+<ul class="m-videol m-videol1">
+	<else/>
+	<li class="list-item c-nomr">
+		<div class="item-img">
+			<iframe src="./images/video3.png" marginwidth="0" marginheight="0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+		</div>
+		<div class="item-font">
+			<p class="item-title">
+				Video 
+			</p>
+			<p class="item-desc">
+				Yangzhou Hiwin International Trading Co.,Ltd is a professional nonwoven machineery manufacturer located in Changshu city near Shanghai. 
+			</p>
+		</div>
+	</li>
+	<if condition="$a eq 3"><php>$a=0;</php></if>
+	<php>$a++;</php>
+	</if>
+	</volist>
+</ul>
+
+<!-- pro.show -->
+
+	
+	$content2 = json_decode($zcmod['content'],true);
+	$limit = $content2['zcmsg']['attr']['argu']['limit'];
+	$relation = show_relation($catid,$id);
+	$imgList = json_decode($mopic ,true);
+	$xiayige_url = M('product')->where("id < $id and is_del=0 and catid = $catid")->order('listorder DESC,id DESC')->find();
+
+	<!-- 询盘 -->
+	{:U('Content/Pagedis/lists',array('id'=>$id,'catid'=>5,'hcatid'=>$id))}
+
+	<!-- 下一个 -->
+	{:zcurl($xiayige_url['url'],$xiayige_url['moveurl'])}
+
+	<!-- 大小图 -->
+	<ul>
+		<volist name="imgList" id="big_img" offset="0" length='1'>
+		<li class="list-item">
+			<a class="item-pic" href="{$big_img.url}" title="{$title}" rel="{gallery: 'gal1', smallimage: '{$big_img.url}',largeimage: '{$big_img.url}'}">
+				<img src="{$big_img.url}" <if condition="$big_img[alt]">title="{$big_img.alt}" alt="{$big_img.alt}" <else />title="{$title}" alt="{$title}"</if>>
+			</a>
+		</li>
+		</volist>
+	</ul>
+
+	<if condition="$big_img[alt]"> title="{$big_img.alt}" alt="{$big_img.alt}" <else />title="{$title}" alt="{$title}"</if>
+
+	<!-- 单页面组图 -->
+	<php> $zhengshu = json_decode($photo ,true); </php>
+    <volist name="zhengshu" id="r">
+    <li class="list-item">
+        <div class="item-pic">
+            <a href="{$r.url}" title="{$r.alt}">
+                <img src="{$r.url}" alt="{$r.alt}" title="{$r.alt}" />
+                <div class="scroll-backdrop"></div>
+            </a>
+        </div>
+        <p class="item-title" title="{$r.alt}">{$r.alt}</p>
+    </li>
+    </volist>
+
+	<!-- 社交媒体分享样式 -->
+	<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5c36ba4cc441e256"></script>
+	<div class="addthis_inline_share_toolbox_d1ka"></div>
+	<style>
+	.at-resp-share-element .at-icon{width: 24px!important;height: 24px!important;}
+	.at-style-responsive .at-share-btn{padding: 0!important; border-radius: 2px!important;}
+	.at-resp-share-element .at-share-btn .at-icon-wrapper{width: 24px!important;height: 24px!important;}
+	.at-resp-share-element .at-share-btn{margin-bottom: 0!important;margin-right: 3px!important;}
+	</style>
+	
+	<!-- 中文分享 -->
+	<div class="bshare-custom icon-medium"><a title="分享到QQ空间" class="bshare-qzone"></a><a title="分享到新浪微博" class="bshare-sinaminiblog"></a><a title="分享到人人网" class="bshare-renren"></a><a title="分享到腾讯微博" class="bshare-qqmb"></a><a title="分享到网易微博" class="bshare-neteasemb"></a></div><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#style=-1&amp;uuid=&amp;pophcol=2&amp;lang=zh"></script><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/bshareC0.js"></script>
+	
+	<!-- 中文站注意事项 -->
+	1首航缩进
+	2字体替换
+	font-family:"Microsoft Yahei","微软雅黑"; 
+
+
+
+<!-- 购物车 -->
+<style>
+.list_cart .list_cart_a1 { background: #004299;padding: 8px;color: white; float:left; }
+.list_cart .list_cart_a2 { background: #004299;padding: 8px;color: white; float:right; }
+</style>
+{:U('Content/Pagedis/inquiry')}
+$data2
+
+
+<br/>
+<br/>
+<div class="list_cart">
+    <a class="list_cart_a1" href="{:U('Content/Pagedis/lists',array('catid'=>5))}">{:L('RNINQUIRE_NOW')}</a>
+    <a class="list_cart_a2" href="{:get_category_url(1)}">{:L('RNCONTINUE_TO_INQUIRE')}</a>
+<div class="clear"></div>
+</div>
+<br/>
+<br/>
+
+<a href="{:U('Content/Pagedis/Inquiry',array('signdel'=>'del','pro'=>$r['id']))}" rel="nofollow">{:L('RNDELETE')}</a>
+
+<!-- 询盘 -->
+<div class="m-ctusform1">
+				<form method='post' action="{:U('api/guestbook/addmsg1')}" onSubmit="return submitMsg1()" enctype='multipart/form-data'>
+					{:wps_getcatdescription($catid)}
+					<div class="box-form">
+						<div class="form-item form-item-1 important  pull-left">
+							<input id="full_namea" name="full_name" class="item-text item-text1 name-text" type="text" placeholder="{:L('RNNAME')}">
+						</div>
+						<div class="form-item form-item-1 important pull-right">
+							<input id="emaila" name="email" class="item-text item-text1 mail-text" type="text" placeholder="{:L('RNEMAIL')}">
+						</div>
+						<div class="form-item form-item-1 pull-left">
+							<input name="tel" class="item-text item-text1 tel-text" type="text" placeholder="{:L(RNTEL)}">
+						</div>
+						<div class="form-item form-item-1  pull-right">
+							<input id="from_countrya" name="from_country" class="item-text item-text1 country-text" type="text" placeholder="{:L('RNCOUNTRY')}">
+						</div>
+						<div class="form-item form-item-2 important pull-left">
+							<textarea id="msga" name="msg" class="item-text item-text2 mes-text" placeholder="{:L('RNMESSAGE')}"></textarea>
+						</div>
+						<div class="form-item form-item-4 pull-left">
+							<input id="verifya" name="verify" type="text" class="int4" placeholder="{:L('RNCAPTCHA')}">
+							<php>
+							    $ver =sp_verifycode_img('length=4&font_size=14&width=98&height=44&use_noise=0&use_curve=0&id=2','class="" ');
+							</php>
+							{$ver}
+							<input name="verifyid" value="2" type="hidden">
+							<input type="hidden" id="type" name="type" value="0">
+						</div>
+						<div class="form-item form-item-5">
+							<input class="item-btn item-btn1" type="submit" value="{:L(RNSEND)}">
+						</div>
+					</div>
+					<if condition="$_GET['hcatid']"> <input type="hidden" name="pid" value='{$pro_href2}'><else /> <input type="hidden" name="pid" value='<volist name="pro" id="v"> <a href="{:zcurl($v['url'],$v['moveurl'])}" title="{$v.title}" target="_blank">{$v.title}</a><br /> </volist>'> </if>
+                            <if condition="$pro_href">
+                            <div style=" padding-top:25px !important;" class="xunpanc">
+                                <table style="border: 1px solid #cccccc; width: 100%;" width="100%"  cellpadding="0" cellspacing="0">
+                                  <tbody>
+                                        <tr style="height: 40px;">
+                                            <td style="background-color: #E8651C ; width: 60%; color: #fff; padding-left: 12px;"> {:L('RNPRODUCT_NAME')} </td>
+                                        </tr>
+                                        <foreach name="pro_href" item="vo">
+                                        <tr style="background-color: #fff; border-width: 1px; border-style: solid; height: 25px;">
+                                            <td style="padding-left: 12px;"> {$vo} </td>
+                                        </tr>
+                                        </foreach>
+                                    </tbody>
+                                </table>
+                            </div>
+                            </if>
+				</form>
+			</div>
+
+
+<!-- 验证码 -->
+
+I('post.verifyid',0)
+<!-- news show.html -->
+<php>
+$pre_url = M('article')->where("id>$id and catid=$catid and is_del=0")->order('id ASC')->find();
+$next_url = M('article')->where("id<$id and catid=$catid and is_del=0")->order('id DESC')->find();
+</php>
+<div class="up">
+    <p>
+        {:L('RNPREVIOUS')}: <if condition="$pre_url"><a href="{:zcurl($pre_url['url'],$pre_url['moveurl'])}" title="{$pre_url['title']}">{$pre_url['title']}</a><else /><span>{:L('RNNONE')}</span></if>
+    </p>
+</div>
+<div class="down">
+    <p>
+        {:L('RNNEXT')}: <if condition="$next_url"><a href="{:zcurl($next_url['url'],$next_url['moveurl'])}" title="{$next_url['title']}">{$next_url['title']}</a><else /><span>{:L('RNNONE')}</span></if>
+    </p>
+</div>
+
+<!-- db.php -->
+
+return array(
+	'DB_TYPE' => 'mysql',
+	'DB_HOST' => 'localhost',
+	'DB_NAME' => 'hiwinnon_haiweiyi',
+	'DB_USER' => 'hiwinnon_user',
+	'DB_PWD' => 'Haiweiyi_haiweiyi',
+	'DB_PORT' => '3306',
+	'DB_PREFIX' => 'cmf_',
+	//密钥
+	"AUTHCODE" => 'U0tYKi50BKoyyKy2tC',
+	// 服务器入口文件
+	'FWQ_HOST' => '173.193.191.111',
+	'REANODFWQ' => 'http://107.150.98.212/zht/index.php/',
+	//cookies
+	"COOKIE_PREFIX" => '90CfBI_',
+);
+
+<!-- 修改文本框placeholder样式 -->
+.tex::-webkit-input-placeholder {/* WebKit browsers */
+ color:#fff;}
+.tex:-o-placeholder {/* Mozilla Firefox 4 to 18 */
+ color:#fff;}
+.tex::-moz-placeholder {/* Mozilla Firefox 19+ */
+ color:#fff;}
+.tex:-ms-input-placeholder {/* Internet Explorer 10+ */
+ color:#fff;}
+
+<!-- 相关产品 -->
+$relation = show_relation($catid,$id);
+<if condition="$relation">
+<volist name="relation" id="r">
+<li class="list-item">
+    <a class="item-pic" href="{:zcurl($r['url'],$r['moveurl'])}" title="{$r.title}">
+        <img src="{$r.thumb}" alt="{$r.title}" title="{$r.title}">
+    </a>
+    <div class="item-text">
+        <p class="item-title">
+            <a href="{:zcurl($r['url'],$r['moveurl'])}" title="{$r.title}">{$r.title}</a>
+        </p>
+        <p class="item-link">
+            <a href="{:zcurl($r['url'],$r['moveurl'])}" title="">{:L('RNVIEW_MORE')}</a>
+        </p>
+    </div>
+</li>
+</volist>
+<else/>
+<php>
+$where_c['id'] = array('neq',$id);
+$where_c['catid'] = $catid;
+$where_c['isdelay'] = 0;
+$where_c['is_del'] = 0;
+$pro = M('product')->where($where_c)->order('rand()')->limit(5)->select();
+</php>
+<if condition='$pro'>
+<volist name="pro" id="r">
+<li class="list-item">
+    <a class="item-pic" href="{:zcurl($r['url'],$r['moveurl'])}" title="{$r.title}">
+        <img src="{$r.thumb}" alt="{$r.title}" title="{$r.title}">
+    </a>
+    <div class="item-text">
+        <p class="item-title">
+            <a href="{:zcurl($r['url'],$r['moveurl'])}" title="{$r.title}">{$r.title}</a>
+        </p>
+        <p class="item-link">
+            <a href="{:zcurl($r['url'],$r['moveurl'])}" title="">{:L('RNVIEW_MORE')}</a>
+        </p>
+    </div>
+</li>
+</volist>
+<else/>
+<script>$('.prmain').hide();$('.pro_hide').hide();</script>
+</if>
+</if>
+
+
+<!-- 单页轮播 -->
+<php> $zhengshu = json_decode($photo ,true); </php>
+<volist name="zhengshu" id="r">
+<li class="list-item">
+    <div class="item-pic">
+        <a href="{$r.url}" title="{$r.alt}">
+            <img src="{$r.url}" alt="{$r.alt}" title="{$r.alt}" />
+            <div class="scroll-backdrop"></div>
+        </a>
+    </div>
+    <p class="item-title" title="{$r.alt}">{$r.alt}</p>
+</li>
+</volist>
+
+<!-- video -->
+<video controls poster="/images/w3school.gif">
+    <source src="movie.mp4" type="video/mp4">
+</video> 
+
+<!-- 首页获取单页面多图 -->
+function get_c_photo($catid){
+
+	 $arr = M('Page')->where("catid =".$catid)->select();
+
+	 $catparentid=$arr[0]['photo'];
+
+	 return $catparentid;
+
+}
+<php>
+$photoa = get_c_photo(28);
+$photo = json_decode($photoa ,true);
+</php>
+	<volist name="photo" id="big_img" offset="0" length='4'>
+<img src="{$big_img.url}" title="{$big_img.alt}" alt="{$big_img.alt}" >
+</volist>
+
+
+
+
+
+
+
+<php>$k1=getContactValue(1)['k'];$v1=getContactValue(1)['v'];
+$k2=getContactValue(2)['k'];$v2=getContactValue(2)['v'];
+$k3=getContactValue(3)['k'];$v3=getContactValue(3)['v'];
+$k4=getContactValue(4)['k'];$v4=getContactValue(4)['v'];
+$k5=getContactValue(5)['k'];$v5=getContactValue(5)['v'];
+$k6=getContactValue(6)['k'];$v6=getContactValue(6)['v'];
+$k7=getContactValue(7)['k'];$v7=getContactValue(7)['v'];
+$k8=getContactValue(8)['k'];$v8=getContactValue(8)['v'];
+$k9=getContactValue(9)['k'];$v9=getContactValue(9)['v'];
+$k10=getContactValue(10)['k'];$v10=getContactValue(10)['v'];
+$k11=getContactValue(11)['k'];$v11=getContactValue(11)['v'];
+$k12=getContactValue(12)['k'];$v12=getContactValue(12)['v'];
+$k13=getContactValue(13)['k'];$v13=getContactValue(13)['v'];
+$k14=getContactValue(14)['k'];$v14=getContactValue(14)['v'];
+$k15=getContactValue(15)['k'];$v15=getContactValue(15)['v'];
+$k16=getContactValue(16)['k'];$v16=getContactValue(16)['v'];
+$k17=getContactValue(17)['k'];$v17=getContactValue(17)['v'];
+$k18=getContactValue(18)['k'];$v18=getContactValue(18)['v'];
+$k19=getContactValue(19)['k'];$v19=getContactValue(19)['v'];
+$k20=getContactValue(20)['k'];$v20=getContactValue(20)['v'];
+$k21=getContactValue(21)['k'];$v21=getContactValue(21)['v'];
+$k22=getContactValue(22)['k'];$v22=getContactValue(22)['v'];
+$k23=getContactValue(23)['k'];$v23=getContactValue(23)['v'];
+$k24=getContactValue(24)['k'];$v24=getContactValue(24)['v'];
+$k25=getContactValue(25)['k'];$v25=getContactValue(25)['v'];
+$k26=getContactValue(26)['k'];$v26=getContactValue(26)['v'];
+$k27=getContactValue(27)['k'];$v27=getContactValue(27)['v'];
+$k28=getContactValue(28)['k'];$v28=getContactValue(28)['v'];
+$k29=getContactValue(29)['k'];$v29=getContactValue(29)['v'];
+$k30=getContactValue(30)['k'];$v30=getContactValue(30)['v'];
+$k31=getContactValue(31)['k'];$v31=getContactValue(31)['v'];
+$k32=getContactValue(32)['k'];$v32=getContactValue(32)['v'];
+$k33=getContactValue(33)['k'];$v33=getContactValue(33)['v'];
+$k34=getContactValue(34)['k'];$v34=getContactValue(34)['v'];
+$k35=getContactValue(35)['k'];$v35=getContactValue(35)['v'];
+$k36=getContactValue(36)['k'];$v36=getContactValue(36)['v'];
+$k37=getContactValue(37)['k'];$v37=getContactValue(37)['v'];
+$k38=getContactValue(38)['k'];$v38=getContactValue(38)['v'];
+$k39=getContactValue(39)['k'];$v39=getContactValue(39)['v'];
+$k40=getContactValue(40)['k'];$v40=getContactValue(40)['v'];</php>

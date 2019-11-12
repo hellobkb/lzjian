@@ -1,0 +1,64 @@
+<admintpl file="header"/>
+<style type="text/css">
+.col-auto { overflow: auto; _zoom: 1;_float: left;}
+.col-right { float: right; width: 210px; overflow: hidden; margin-left: 6px; }
+.table th, .table td {vertical-align: middle;}
+.picList li{margin-bottom: 5px;}
+</style>
+</head>
+<body class="J_scroll_fixed">
+<div class="wrap J_check_wrap">
+	 
+  <form name="myform"  action="{:U('Indexadmin/editReminder')}" method="post"  >
+  <div class="col-auto">
+    <div class="table_full">
+      <table class="table table-bordered">
+            <tr>
+              <th width="80">提醒类型 </th>
+              <td>
+              	<input type="radio" name="type" id="cx_type_1" value="1" <if condition="$info['type'] eq 1 "> checked</if> /><label for="cx_type_1">服务器</label>
+              	<input type="radio" name="type" id="cx_type_2" value="2" <if condition="$info['type'] eq 2 "> checked</if> /><label for="cx_type_2">域名</label>
+              </td>
+            </tr>
+            <tr>
+              <th width="80">到期时间 </th>
+              <td>
+              	<input type="text" name="endtime" class="js-date" style="width: 80px;" autocomplete="off" value="{$info.endtime|date='Y-m-d',###}"  />
+              	<span class="must_red">*(到期时间以选择时间的0点为期限)</span>
+              </td>
+            </tr>
+            <tr>
+            	<th width="80">提前提醒天数</th>
+            	<td>
+            		<input type="text" name="rday" value="{$info.rday}" />天<span class="must_red">*(请输入天数，到期之前<font color="red" id="tmsg">{$info.rday}</font>天开始提醒)</span>
+            	</td>
+            </tr>
+            <tr>
+              <th width="80">备注 </th>
+              <td><textarea name='content'  style='width:98%;height:50px;' placeholder='备注'>{$info.content}</textarea></td>
+            </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="form-actions">
+  		<input name="id" value="{$info.id}" type="hidden" />
+        <button class="btn btn-primary mright" type="submit">提交</button>
+        <a class="btn" href="{:U('Indexadmin/reminder')}">返回</a>
+  </div>
+ </form>
+</div>
+<script type="text/javascript" src="__PUBLIC__/js/content_addtop.js"></script>
+<script src="__PUBLIC__/js/common.js"></script>
+<script>
+	$("input[name=rday]").change(function(){
+		var rday = $("input[name=rday]").val();
+		var ext = /^\d+$/;
+		
+		if(ext.test(rday)){
+			$("#tmsg").html(rday);
+		}
+	});
+</script>
+</body>
+</html>

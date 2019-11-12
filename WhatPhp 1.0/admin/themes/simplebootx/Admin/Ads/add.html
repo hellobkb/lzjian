@@ -1,0 +1,100 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li><a href="{:U('AdsPosition/index')}">广告位列表</a></li>
+			<li class="active"><a href="JAVASCRIPT:;">添加广告图</a></li>
+		</ul>
+		<form class="form-horizontal js-ajax-form" action="{:U('Ads/add_post')}" method="post">
+			<div class="tabbable">
+				<div class="tab-content">
+					<div class="tab-pane active" id="A">
+						<fieldset>
+							<div class="control-group">
+								<label class="control-label">上传广告图</label>
+								<div class="controls">
+									<input type="hidden" name="image" id="thumb" value="">
+									<a href="javascript:void(0);" onclick="flashupload('thumb_images', '附件上传','thumb',thumb_images,'1,jpg|jpeg|gif|png|bmp,{$uploadimgsize},,,1','','','',1);return false;">
+										<img src="__TMPL__Public/assets/images/default-thumbnail.png" id="thumb_preview" width="135" style="cursor: hand" />
+									</a>
+									<input type="button" class="btn btn-small" onclick="$('#thumb_preview').attr('src','__TMPL__Public/assets/images/default-thumbnail.png');$('#thumb').val('');return false;" value="取消图片">
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label">alt</label>
+								<div class="controls">
+									<input type="text" name="alt" value=""></input>
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label">链接</label>
+								<div class="controls">
+									<input type="text" name="url1" value=""></input>
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label">排序</label>
+								<div class="controls">
+									<input type="text" name="sort" value=""></input>
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label">状态</label>
+								<div class="controls">
+									<input type="radio" name="status" value="0" checked>显示</input>
+									<input type="radio" name="status" value="1">隐藏</input>
+								</div>
+							</div>
+						</fieldset>
+					</div>
+				</div>
+			</div>
+			<div class="form-actions">
+				<input type="hidden" name="position_id" value="{$position_id}"></input>
+				<button class="btn btn-primary js-ajax-submit" type="submit">{:L('SAVE')}</button>
+				<a class="btn" href="{:U('AdsPosition/index')}">{:L('BACK')}</a>
+			</div>
+		</form>
+	</div>
+	<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/js/content_addtop.js"></script>
+</body>
+
+<script>
+
+function checknode(obj) {
+    var chk = $("input[type='checkbox']");
+    var count = chk.length;
+    var num = chk.index(obj);
+    var level_top = level_bottom = chk.eq(num).attr('level');
+    for (var i = num; i >= 0; i--) {
+        var le = chk.eq(i).attr('level');
+        if (eval(le) < eval(level_top)) {
+            chk.eq(i).attr("checked", true);
+            var level_top = level_top - 1;
+        }
+    }
+    for (var j = num + 1; j < count; j++) {
+        var le = chk.eq(j).attr('level');
+        if (chk.eq(num).attr("checked") == "checked") {
+            if (eval(le) > eval(level_bottom)){
+            	chk.eq(j).attr("checked", true);
+            }
+            else if (eval(le) == eval(level_bottom)){
+            	break;
+            }
+        } else {
+            if (eval(le) > eval(level_bottom)){
+            	chk.eq(j).attr("checked", false);
+            }else if(eval(le) == eval(level_bottom)){
+            	break;
+            }
+        }
+    }
+}
+
+
+</script>
+
+</html>

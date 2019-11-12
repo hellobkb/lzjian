@@ -1,0 +1,118 @@
+<admintpl file="header" />
+</head>
+<body>
+	<script src="__PUBLIC__/js/echarts.common.min.js"></script>
+    <script src="__PUBLIC__/js/jquery.js"></script>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li><a href="{:U('Foreignvis/index')}">外商浏览量</a></li>
+            <!-- <li><a href="{:U('Foreignvis/indexip')}">外商IP浏览量</a></li> -->
+			<li class="active"> <a href="{:U('Foreignvis/country')}" >浏览国家统计</a></li>
+			<li><a href="{:U('Foreignvis/pagetj')}" >浏览页面统计</a></li>
+		</ul>
+		<form class="well form-search" method="post" action="{:U('Foreignvis/country')}">
+			日期：
+			<input type="text" name="start_time" class="js-date-now" value="{$start_time|default=''}" style="width: 80px;" autocomplete="off">-
+			<input type="text" class="js-date-now" name="end_time" value="{$end_time}" style="width: 80px;" autocomplete="off"> &nbsp; &nbsp;
+			
+			<input type="submit" class="btn btn-primary" value="搜索" />
+		</form>
+        <a href="{:U('Foreignvis/excelCountry',array('where'=>$where))}" class="btn" style="float:right;margin-right: 2%">导出excel</a>
+		<if condition="$list">
+            <table class="table table-hover table-bordered table-list">
+                 <tr>
+                    <th>统计图表</th>
+                    <if condition="$list neq '[]'">
+                        <td><div id="main" style="width:900px;height:400px;"></div></td>
+                    <else />
+                        <td>没有数据</td>
+                    </if>
+                 </tr>
+            </table>
+
+
+            <table class="table table-hover table-bordered table-list" >
+
+                    <thead>
+                        <tr>
+                            <th style="width: 100px;" align='center'>国家</th>
+                            <th style="width: 100px;" align='center'>会话次数</th>
+                            <th style="width: 100px;" align='center'>会话次数占比</th>
+                            <th style="width: 100px;" align='center'>网页浏览次数</th>
+                            <th style="width: 100px;" align='center'>网页浏览次数占比</th>
+                        </tr>
+                    </thead>
+                    <tr>
+                        <td>总计</td>
+                        <td align='center'>{$total_con}</td>
+                        <td align='center'>100%</td>
+                        <td align='center'>{$total_bro}</td>
+                        <td align='center'>100%</td>
+                    </tr>
+                    <foreach name="list" item="vo">
+                    <php>$time = date('Y-m-d',$vo['time']);</php>
+                    <tr>
+                        <td>{$vo.country}</td>
+                        <td align='center'>{$vo.value}</td>
+                        <td align='center'>{$vo['value']*100/$total_con|round=###,2}%</td>
+                        <td align='center'>{$vo.clicks}</td>
+                        <td align='center'>{$vo['clicks']*100/$total_bro|round=###,2}%</td>
+                    </tr>
+                    </foreach>
+                    <tfoot>
+                        <tr>
+                            <th style="width: 100px;" align='center'>国家</th>
+                            <th style="width: 100px;" align='center'>会话次数</th>
+                            <th style="width: 100px;" align='center'>会话次数占比</th>
+                            <th style="width: 100px;" align='center'>网页浏览次数</th>
+                            <th style="width: 100px;" align='center'>网页浏览次数占比</th>
+                        </tr>
+                    </tfoot>
+            </table>
+            <div class="pagination">{$Page}</div>
+        <else />
+            <div>没有数据!</div>
+        </if>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+    <script src="__PUBLIC__/js/echarts.common.min.js"></script>
+    <script>
+    var myChart = echarts.init(document.getElementById('main'));
+    var option = {
+            title : {
+                text: '浏览国家统计',
+                subtext: '',
+                x:'center'
+            },
+            tooltip : {
+                trigger: 'item',
+                formatter: "{a} <br/>{b} : {c} ({d}%)"
+            },
+            legend: {
+                orient: 'vertical',
+                left: 'left',
+                data: {$country_bt},
+            },
+            series : [
+                {
+                    name: '浏览国家统计',
+                    type: 'pie',
+                    radius : '55%',
+                    center: ['50%', '60%'],
+                    data:{$country_data_bt},
+                    itemStyle: {
+                        emphasis: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                }
+            ]
+        };
+    
+    myChart.setOption(option);
+    
+    </script>
+</body>
+</html>

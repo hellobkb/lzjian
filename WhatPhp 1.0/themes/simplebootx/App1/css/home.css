@@ -1,0 +1,250 @@
+html {
+	font-size: 62.5%;
+}
+
+body,
+html,
+body,
+.mui-content,
+.reanod-content {
+	background: #2D3E50;
+}
+
+
+/*轮播=============================================*/
+
+.mui-slider-indicator {
+	text-align: right;
+	padding-right: 2rem;
+	bottom: 0.5rem;
+}
+
+.mui-slider-indicator .mui-indicator {
+	margin: 0.1rem 0.4rem;
+}
+
+.mui-slider .mui-slider-group .mui-slider-item img {
+	height: 100%;
+}
+
+.mui-slider-title {
+	z-index: 2;
+	top: 0;
+	opacity: 0.7;
+	background-color: #B3B3B3;
+}
+
+.mui-slider-title~span {
+	position: absolute;
+	left: 0;
+	top: 0;
+	margin: 0;
+	width: 100%;
+	height: 30px;
+	z-index: 3;
+	opacity: 1;
+	text-align: left;
+	text-indent: 12px;
+	line-height: 30px;
+	color: white;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+
+/*内容=============================================*/
+
+.mui-content {
+	margin: 0;
+}
+
+.reanod-echarts {
+	margin-top: 1.5rem;
+	border: 0.1rem solid white;
+	background: white;
+	/*圆角*/
+	border-radius: 0.7rem;
+	-moz-border-radius: 0.7rem;
+	-webkit-border-radius: 0.7rem;
+	/*阴影*/
+	box-shadow: 0 0.3rem 1rem rgba(0, 0, 0, .5)
+}
+
+.reanod-echarts-head {
+	background: #F9F9F9;
+	padding-top: 0.4rem;
+	border-bottom: 0.1rem solid #CCCCCC;
+	border-radius: 0.7rem 0.7rem 0rem 0rem;
+}
+
+.reanod-echarts-head a {
+	float: right;
+	padding: 0 1.5rem;
+	color: #2D3E50;
+	font-size: 1.2rem;
+}
+
+.reanod-echarts-head span:first-child {
+	margin-left: 1rem;
+	font-size: 1.6rem;
+	width: 1.8rem;
+	height: 1.5rem;
+	margin-bottom: -0.2rem;
+	color: #3390BC;
+}
+
+.reanod-echarts-head span:nth-child(2) {
+	font-size: 1.3rem;
+	font-weight: bold;
+	color: #3390BC;
+}
+
+
+/*表格=============================================*/
+
+.reanod-table {
+	height: auto;
+	padding: 0.5rem 0.5rem 1rem 0.5rem;
+	font-size: 1.1rem;
+	text-align: center;
+	color: #2D3E50;
+}
+
+.reanod-table table {
+	table-layout: fixed;
+	width: 100%;
+}
+
+.reanod-table table tr {
+	border-bottom: 1px dashed #CCCCCC;
+}
+
+.reanod-table table tr td {
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+	padding: 0.2rem;
+}
+
+th {
+	border-bottom: 1px solid #CCCCCC !important;
+	color: #AAAAAA;
+}
+
+th:nth-child(1) {
+	width: 25%;
+}
+
+th:nth-child(2) {
+	width: 40%;
+}
+
+th:nth-child(3) {
+	width: 35%;
+}
+
+
+/*培训课程=============================================*/
+
+.reanod-video {
+	height: auto;
+	font-size: 1.1rem;
+	text-align: center;
+	padding: 6% 3% 0 3%;
+	overflow: auto;
+}
+
+.reanod-video div {
+	float: left;
+	width: 50%;
+	height: auto;
+	padding-left: 3%;
+	padding-right: 3%;
+}
+
+.reanod-video div a {
+	display:block;
+	position: relative;
+}
+
+.reanod-video div img {
+	opacity: 0.9;
+	width: 100%;
+	height:68px;
+	-webkit-filter: brightness(.9);
+}
+
+.reanod-video-play {
+	position: absolute;
+	width: 34px;
+	height: 34px;
+	background: url(../image/play.png) no-repeat;
+	background-size: 100%;
+	text-align: center;
+	top:50%;
+	left:50%;
+	margin-top:-24px;
+	margin-left:-17px;
+	z-index: 1;
+}
+@media screen and (min-width:376px) {
+.reanod-video-play {
+	width: 40px;
+	height: 40px;
+	margin-top:-26px;
+	margin-left:-20px;
+	}
+}
+@media screen and (min-width:426px) {
+.reanod-video-play {
+	width: 45px;
+	height: 45px;
+	margin-left:-22.5px;
+	margin-top:-28px;
+	}
+}
+
+@media screen and (min-width:350px) {.reanod-video div img {height:82px;}}
+@media screen and (min-width:400px) {.reanod-video div img {height:90px;}}
+@media screen and (min-width:450px) {.reanod-video div img {height:95px;}}
+@media screen and (min-width:500px) {.reanod-video div img {height:100px;}}
+@media screen and (min-width:550px) {.reanod-video div img {height:110px;}}
+@media screen and (min-width:600px) {.reanod-video div img {height:120px;}}
+@media screen and (min-width:700px) {.reanod-video div img {height:150px;}}
+@media screen and (min-width:800px) {.reanod-video div img {height:170px;}}
+@media screen and (min-width:900px) {.reanod-video div img {height:190px;}}
+@media screen and (min-width:1000px) {.reanod-video div img {height:220px;}}
+@media screen and (min-width:1200px) {.reanod-video div img {height:250px;}}
+@media screen and (min-width:1300px) {.reanod-video div img {height:300px;}}
+
+.reanod-video-play:hover,
+.reanod-video-play:active {
+	opacity: 0.6;
+}
+
+.reanod-video-play:hover~img,
+.reanod-video-play:active~img {
+	opacity: 1;
+	-webkit-filter: brightness(1);
+}
+
+.reanod-video div p {
+	margin: -0.2rem 0 1rem 0;
+	line-height: 1.4rem;
+	font-size: 1.2rem;
+	color: #2D3E50;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+
+/*顶部备用按钮=============================================*/
+
+.reanod-beiyong span {
+	position: absolute;
+	width: 1.5rem;
+	margin: 1.5rem 0 0 0;
+	content: url(../image/beiyong.png);
+}

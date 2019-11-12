@@ -1,0 +1,230 @@
+<admintpl file="header" />
+<style type="text/css">
+	table{border-collapse:collapse;border:none;border-top: 1px solid #333;border-left: 1px solid #333;}
+	th,td{font-size: 12px;color: #000;line-height: 20px !important;padding: 5px !important;
+		border:none;border-bottom:1px solid #333;border-right:1px solid #333;}
+	div{}
+	a{color: #000;text-decoration: none;}
+	.titleb1{font-family: "微软雅黑";font-size: 18px;font-weight: bold;color: #000;text-align: left;}
+</style>
+</head>
+<body>
+	<php>$i=1;</php>
+	<div class="wrap js-check-wrap">
+		<h1 style="text-align: center;">{$site_options.site_name} 数据报告</h1>
+		<h2 style="text-align: center;">{$stime}--{$etime}</h2>
+		<div class="tabbable">
+	        <div class="tab-content">
+	          <div class="tab-pane active" id="A">
+					<foreach name="out_list" item="v" key="k" >
+
+						<if condition="$k eq 1 ">
+							<!-- 文章统计 -->
+							<p class="titleb1">{$i++}、文章统计</p>
+							<div class="control-group" >
+								<img src="{$v.imgurl}" width="900px" height="400px" alt="{$v.title}">
+							</div>
+							<if condition="$data['articleContent'] and $data['articleContent'] neq 'undefined'">
+								<div>推广建议：{$data['articleContent']}</div>
+							</if>
+						<elseif condition="$k eq 3 " />
+							<!-- 产品访问量统计 -->
+							<if condition="$pro_vis_list">
+								<div class="control-group" width="100%">
+									<p class="titleb1">{$i++}、产品访问量统计</p>
+									<table >
+										<thead>
+											<tr>
+												<th width="20%" style="text-align:center;">产品名称</th>
+												<th width="40%" style="text-align:center;">网址</th>
+												<th width="20%" style="text-align:center;">访问次数</th>
+												<th width="20%" style="text-align:center;">访问时间</th>
+											</tr>
+										</thead>
+											<foreach name="pro_vis_list" item="vo">
+											<tr>
+												<td width="20%" style="text-align:center;">{$vo.title}</td>
+												<td width="40%" style="text-align:center;"><a href="{$vo.url}" target="_blank">{$vo.url}</a></td>
+												<td width="20%" style="text-align:center;">{$vo.clicks}</td>
+												<td width="20%" style="text-align:center;">{$vo.time}</td>
+											</tr>
+											</foreach>
+									</table>
+								</div>
+							</if>
+							<if condition='$data["productContent"] and $data["productContent"] neq "undefined"'>
+									<div>推广建议：{$data['productContent']}</div>
+							</if>
+						<elseif condition="$k eq 4" />
+							<!-- 产品添加时间统计 -->
+							<if condition="$pro_type_list">
+								<div class="control-group"  width="100%">
+									<p class="titleb1">{$i++}、产品添加时间统计</p>
+									<table class="table table-hover table-bordered table-list">
+										<thead>
+											<tr>
+												<th width="40%" style="text-align:center;">分类名称</th>
+												<th width="20%" style="text-align:center;">产品数量</th>
+												<th width="40%" style="text-align:center;">添加时间</th>
+											</tr>
+										</thead>
+											<tr>
+												<td width="40%" style="text-align:center;font-weight:bold">总计</td>
+												<td width="20%" style="text-align:center;">{$total_pro_type}</td>
+												<td width="40%"></td>
+											</tr>
+											<foreach name="pro_type_list" item="vo">
+											<tr>
+												<td width="40%" style="text-align:center;">{$vo.name}</td>
+												<td width="20%" style="text-align:center;">{$vo.value}</td>
+												<td width="40%" vstyle="text-align:center;">{$vo.time}</td>
+											</tr>
+											</foreach>
+									</table>
+								</div>
+							</if>
+							<if condition="$data['product_add_content'] and $data['product_add_content'] neq 'undefined'" >
+								<div>推广建议：{$data['product_add_content']}</div>
+							</if>
+						<elseif condition="$k eq 5" />
+							<!-- 产品发布人统计 -->
+							<p class="titleb1">{$i++}、产品发布人统计</p>
+							<div class="control-group" id="xp">
+								<img src="{$v.imgurl}" width="900px" height="400px" alt="{$v.title}">
+							</div>
+							<if condition="$data['product_add_user'] and $data['product_add_user'] neq 'undefined'" >
+								<div>推广建议：{$data['product_add_user']}</div>
+							</if>
+						<elseif condition="$k eq 7 " />
+							<!-- 询盘地域统计 -->
+							<p class="titleb1">{$i++}、询盘地域统计</p>
+							<div class="control-group" id="xp">
+								<img src="{$v.imgurl}" width="900px" height="400px" alt="{$v.title}">
+							</div>
+							<if condition="$data['guestbook_position'] and $data['guestbook_position'] neq 'undefined'" >
+								<div>推广建议：{$data['guestbook_position']}</div>
+							</if>
+						<elseif condition="$k eq 8" />
+							<!-- 询盘买家统计 -->
+							<p class="titleb1">{$i++}、询盘买家统计</p>
+							<div class="control-group" id="xp">
+								<img src="{$v.imgurl}" width="900px" height="400px" alt="{$v.title}">
+							</div>
+							<if condition="$data['guestbook_buyer'] and $data['guestbook_buyer'] neq 'undefined'" >
+								<div>推广建议：{$data['guestbook_buyer']}</div>
+							</if>
+						<elseif condition="$k eq 10" />
+						<p class="titleb1">{$i++}、浏览页面统计</p>
+						<div class="controls" >
+
+								<img src="{$v.imgurl}" width="900px" height="400px" alt="{$v.title}">
+
+<table class="table table-hover table-bordered table-list" >
+							<tr>
+								<td>页面</td>
+								<td>网址</td>
+								<td>访问数量</td>
+							</tr>
+							<foreach name="forePageList" item="vo">
+								<tr>
+									<td>
+										{$vo.title}
+									</td>
+									<td><a href="{$vo.url}" target="_blank">{$vo.url}</a></td>
+									<td align='center'><a>{$vo.num}</a></td>
+								</tr>
+							</foreach>
+							<tfoot>
+								<tr>
+									<td>页面</td>
+									<td>网址</td>
+									<td>访问数量</td>
+								</tr>
+							</tfoot>
+							</table>
+							<div>推广建议：{$data['surf_webpage']}</div>
+						</div>
+
+						<elseif condition="$k eq 11 " />
+							<!-- 浏览国家统计 -->
+							<div class="control-group" id="xp">
+								<p class="titleb1">{$i++}、浏览国家统计</p>
+							<div class="control-group" id="xp">
+								<img src="{$v.imgurl}" width="900px" height="400px" alt="{$v.title}">
+							</div>
+								<table class="table table-hover table-bordered table-list" >
+					                    <thead>
+					                        <tr>
+					                            <th width="20%" align='center'>国家</th>
+					                            <th style="width: 20%;" align='center'>会话次数</th>
+					                            <th style="width: 20%;" align='center'>会话次数占比</th>
+					                            <th style="width: 20%;" align='center'>网页浏览次数</th>
+					                            <th style="width: 20%;" align='center'>网页浏览次数占比</th>
+					                        </tr>
+					                    </thead>
+					                    <tr>
+					                        <td width="20%">总计</td>
+					                        <td width="20%" align='center'>{$total_con_country}</td>
+					                        <td width="20%" align='center'>100%</td>
+					                        <td width="20%" align='center'>{$total_bro_country}</td>
+					                        <td width="20%" align='center'>100%</td>
+					                    </tr>
+					                    <foreach name="country_list" item="vo">
+					                     
+					                    <tr>
+					                        <td width="20%">{$vo.country}</td>
+					                        <td width="20%">{$vo.value}</td>
+					                        <td width="20%">{$vo['value']*100/$total_con_country|round=###,2}%</td>
+					                        <td width="20%">{$vo.clicks}</td>
+					                        <td width="20%" align='center'>{$vo['clicks']*100/$total_bro_country|round=###,2}%</td>
+					                    </tr>
+					                    </foreach>
+					            </table>
+							</div>
+							<if condition="$data['surf_country'] and $data['surf_country'] neq 'undefined'">
+								<div>推广建议：{$data['surf_country']}</div>
+							</if>
+						<elseif condition="$k eq 12 " />
+							<!-- 浏览页面统计 -->
+							<if condition="$data['forePageList']">
+								<div class="control-group" >
+									<p class="titleb1">{$i++}、浏览页面统计</p>
+									<table class="table table-hover table-bordered table-list" >
+										<thead>
+										<tr>
+											<th style="width: 70%;" align='center'>页面title</th>
+											<th style="width: 30%;" align='center'>访问数量</th>
+										</tr>
+										</thead>
+										<foreach name="forePageList" item="vo">
+											<tr>
+												<td width="70%"><a href="{$vo.url}" target="_blank">{$vo.title}</a></td>
+												<td width="70%" align='center'>{$vo.num}</td>
+											</tr>
+										</foreach>
+									</table>
+								</div>
+								<if condition="$data['surf_webpage'] and $data['surf_webpage'] neq 'undefined'">
+									<div>推广建议：{$data['surf_webpage']}</div>
+								</if>
+							</if>
+						<elseif condition="$k eq 13 " />
+							<!-- 发布链接统计 -->
+							<p class="titleb1">{$i++}、发布链接统计</p>
+							<div class="control-group" id="xp">
+								<img src="{$v.imgurl}" width="900px" height="400px" alt="{$v.title}">
+							</div>
+							<if condition="$data['linkContent'] and $data['linkContent'] neq 'undefined'" >
+								<div>推广建议：{$data['linkContent']}</div>
+							</if>
+						</if>
+				</foreach>
+
+				<div class="control-group" >
+					{$data.comment}
+				</div>
+	        </div>
+		</div>
+</div>
+</body>
+</html>

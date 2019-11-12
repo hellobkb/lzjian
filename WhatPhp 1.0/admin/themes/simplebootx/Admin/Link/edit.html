@@ -1,0 +1,68 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li><a href="{:U('link/index')}">{:L('ADMIN_LINK_INDEX')}</a></li>
+			<li><a href="{:U('link/add')}">{:L('ADMIN_LINK_ADD')}</a></li>
+		</ul>
+		<form method="post" class="form-horizontal js-ajax-form" action="{:U('link/edit_post')}">
+			<fieldset>
+
+				<div class="control-group">
+					<label class="control-label">{:L('LINK_ICON')}</label>
+					<div style="margin-left: 230px;">
+						<input type="hidden" name="link_image" id="thumb" value="{$link_image}">
+						<a href="javascript:void(0);" onclick="flashupload('thumb_images', '附件上传','thumb',thumb_images,'1,jpg|jpeg|gif|png|bmp,1,,,1','','','');return false;">
+						<if condition="$link_image">
+							<img src="{$link_image}" id="thumb_preview" width="135" style="cursor: hand" />
+							<else />
+							<img src="__TMPL__Public/assets/images/default-thumbnail.png" id="thumb_preview" width="135" style="cursor: hand" />
+						</if> 
+						</a>
+						<input type="button" class="btn btn-small" onclick="$('#thumb_preview').attr('src','__TMPL__Public/assets/images/default-thumbnail.png');$('#thumb').val('');return false;" value="取消图片">
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">{:L('NAME')}</label>
+					<div class="controls">
+						<input type="text" name="link_name" value="{$link_name}">
+						<span class="form-required">*</span>
+						<input type="hidden" name="link_id" value="{$link_id}">
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">{:L('LINK_ADDRESS')}</label>
+					<div class="controls">
+						<input type="text" name="link_url" value="{$link_url}">
+						<span class="form-required">*</span>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">{:L('LINK_TARGET')}</label>
+					<div class="controls">
+						<select name="link_target">
+							<foreach name="targets" item="vo">
+							<php>$link_target_selected=$link_target==$key?"selected='selected'":"";</php>
+							<option value="{$key}" {$link_target_selected}>{$vo}</option>
+							</foreach>
+						</select>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">{:L('LINK_DESCRIPTION')}</label>
+					<div class="controls">
+						<textarea name="link_description" rows="5" cols="57">{$link_description}</textarea>
+					</div>
+				</div>
+			</fieldset>
+			<div class="form-actions">
+				<button type="submit" class="btn btn-primary js-ajax-submit">{:L('SAVE')}</button>
+				<a class="btn" href="{:U('link/index')}">{:L('BACK')}</a>
+			</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/js/content_addtop.js"></script>
+</body>
+</html>

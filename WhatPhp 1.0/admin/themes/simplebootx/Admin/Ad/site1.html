@@ -1,0 +1,53 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li  class="active"><a href="{:U('ad/site')}">{:L('ADMIN_AD_INDEX')}</a></li>
+			
+
+		</ul>
+		<form method="post" class="form-horizontal js-ajax-form" action="{:U('ad/site_post')}">
+			<fieldset>
+				<div class="control-group">
+					<label class="control-label"></label>
+					<div class="controls">
+						<fieldset>
+							<legend>广告图</legend>
+							<ul id="photos" class="pic-list unstyled">
+								<if condition="$ads">
+									<volist name="ads" id="vo">
+										<li id='image_{$key}'>
+										图片路径
+										<input title='双击查看' type='text' name='photos_url[]' value='{$vo.url}' style='width:310px;' ondblclick='image_priview(this.value);' class='input image-url-input' id='thumb_{$vo.url}'>
+											图片title：
+							                <input type='text' name='photos_alt[]' value='{$vo.alt}' style='width:160px;' class='input' id='thumb_preview_{$vo.url}'> 
+											链接：
+							                <input  type='text' name='photos_href[]' value='{$vo.href}' style='width:100px;'  class='input image-url-input'>  
+											排序：
+							                <input  type='text' name='photos_sort[]' value='{$vo.sort}' style='width:100px;'  class='input image-url-input'>  
+
+
+							                <a href="javascript:remove_div('image_{$key}')">移除</a>
+							             </li>
+									</volist>
+								</if>
+
+							</ul>
+						</fieldset>
+						<a href="javascript:;" onclick="javascript:flashupload('albums_images', '图片上传','photos',change_images2,'10,gif|jpg|jpeg|png|bmp,0','','','')" class="btn btn-small">选择图片</a>
+					</div>
+				</div>
+				
+			</fieldset>
+			<div class="form-actions">
+
+				<button type="submit" class="btn btn-primary js-ajax-submit">提交</button>
+				
+			</div>
+		</form>
+	</div>
+	<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/js/content_addtop.js"></script>
+</body>
+</html>

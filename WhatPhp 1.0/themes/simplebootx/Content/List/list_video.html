@@ -1,0 +1,26 @@
+shipinurl
+<content action="lists" catid="249" num="6" page="$page" page_tplconfig="$pagestely" page_tpl="$pagetpl">
+<div class="pjmain zong">
+<if condition="$data">
+  <php>$pj1 = 0;</php>
+  <volist name="data" id="vo">
+    <div <if condition="$pj1%3 eq 0"> class="pjlie maln"<else />class="pjlie"</if>>
+    <a href="{:zcurl($vo['url'],$vo['moveurl'])}" title="{$vo.title}" class="pjtu"><img src="{$vo.thumb}" title="{$vo.title}" alt="{$vo.title}" /></a>
+    <div class="pjzi">
+    <a href="{:zcurl($vo['url'],$vo['moveurl'])}" title="{$vo.title}">{$vo.title}</a>
+    <p><a href="{:zcurl($vo['url'],$vo['moveurl'])}" title="{$vo.description}">{$vo.description}</a></p>
+    </div>
+    </div>
+    <php>$pj1++;</php>
+  </volist>
+
+  <div class="clear"></div>
+  <div class="fenyen jvzhong">
+  {$pages}
+  <div class="clear"></div>
+  </div>
+<else />
+None.
+</if>
+</div>
+</content>

@@ -1,0 +1,303 @@
+<admintpl file="header" />
+<style>
+	.fixed{
+		padding-top: 40px;
+	}
+	.fixed .fixed-top{
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		padding-left: 20px;
+		padding-bottom: 10px !important;
+		margin-top: auto;
+		background: #fff;
+	}
+	.table td{
+		padding-left: 10px !important;
+	}
+</style>
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="javascript:;">{$catname}列表</a></li>
+		</ul>
+		<php>$count_arrchildid = count(explode(',', $arrchildid));</php>
+		<if condition="$count_arrchildid eq 1">
+			<form class="well form-search" >
+				<a href="{:U('Contentshow/add',array('catid'=>$catid))}" target="_blank" class="btn btn-primary js-ajax-submit" id="add_content">添加内容</a>
+				栏目列表生成： 
+				  <select class="select_2" onChange="window.location.href=''+this.value+''">
+				  	<option value="{:U('Createhtml/categoryhtml',array('catid'=>$catid))}" >列表生成</option>
+				  		       <option value="{:U('Createhtml/categoryhtml',array('catid'=>$catid))}">生成当前栏目列表</option>
+				  		       <if condition=" $parentid neq 0"> 
+				  		       <option value="{:U('Createhtml/categoryhtml',array('catid'=>$parentid))}">生成父栏目列表</option>
+				         </if>
+				  </select> &nbsp;&nbsp;
+				<a href="{$url}" target="_blank">访问该栏目</a>
+			</form>
+
+		</if>
+		
+		<form class="well form-search" method="post" action="{:U('Contentshow/classlist',array('catid'=>$catid))}" style="float: left;padding-right: 60px;">
+			
+			时间：
+			<input type="text" name="start_time" class="js-date" value="{$start_time|default=''}" style="width: 80px;" autocomplete="off">-
+			<input type="text" class="js-date" name="end_time" value="{$end_time}" style="width: 80px;" autocomplete="off"> &nbsp; &nbsp;
+			
+			<select class="select_2" name="searchtype" style="width:70px;">
+	          <option value='0' <if condition=" $searchtype == '0' "> selected</if>>标题</option>
+	          <option value='1' <if condition=" $searchtype == '1' "> selected</if>>简介</option>
+	          <option value='2' <if condition=" $searchtype == '2' "> selected</if>>用户名</option>
+	          <option value='3' <if condition=" $searchtype == '3' "> selected</if>>ID</option>
+	        </select>
+			关键字： 
+			<input type="text" name="keyword" style="width:200px;" value="{$keyword}" placeholder="请输入关键字...">
+			<input type="hidden" name="catid" value="{$catid}">
+			<input type="submit" class="btn btn-primary" value="搜索" />
+		</form>
+		<form class="well form-search" method="post" action="{:U('Contentshow/sortorder')}">
+			
+			
+			<select class="select_2" name="sort" style="width:91px;">
+			  <option value='' >请选择</option>
+	          <option value='id' <if condition="$orderinfo['sort'] eq 'id'">selected</if>>ID</option>
+	          <option value='listorder' <if condition="$orderinfo['sort'] eq 'listorder'">selected</if>>排序</option>
+	          <option value='updatetime' <if condition="$orderinfo['sort'] eq 'updatetime'">selected</if>>更新时间</option>
+	          <option value='inputtime' <if condition="$orderinfo['sort'] eq 'inputtime'">selected</if>>发布时间</option>
+	        </select>
+	        <select class="select_2" name="order" style="width:80px;">
+	          <option value='' >请选择</option>
+	          <option value='asc' <if condition="$orderinfo['order'] eq 'asc'">selected</if>>升序</option>
+	          <option value='desc' <if condition="$orderinfo['order'] eq 'desc'">selected</if>>降序</option>
+	        </select>
+	        <select class="select_2" name="priv_child" style="width:120px;">
+	          <option value='' >应用到子栏目</option>
+	          <option value='1' >是</option>
+	          <option value='2' >否</option>
+	        </select>
+
+			<input type="hidden" name="catid" value="{$catid}">
+			<input type="hidden" name="modelid" value="{$modelid}">
+			<input type="submit" class="btn btn-primary" value="排序" />
+		</form>
+
+		<form class="js-ajax-form" action="" method="post" id="fixed_form">
+			<div class="table-actions fixed-top" >
+				<button class="btn btn-primary btn-small js-ajax-submit" type="submit" data-action="{:U('Contentshow/listorder',array('catid'=>$catid))}">{:L('SORT')}</button>
+				
+				<button class="btn btn-primary btn-small js-ajax-submit" type="submit" data-action="{:U('Contentshow/delete',array('catid'=>$catid,'is_del'=>1))}" data-subcheck="true" data-msg="你确定删除吗？">{:L('DELETE')}</button>
+				<button class="btn btn-primary btn-small js-articles-move" type="button">批量移动</button>
+				<button class="btn btn-primary btn-small js-ajax-submit" type="submit" data-action="{:U('Createhtml/batch_show',array('catid'=>$catid,'steps'=>0))}" data-subcheck="true">批量生成HTML</button>
+			</div>
+			<table class="table table-hover table-bordered table-list">
+				<thead>
+					<tr>
+						<th width="15"><label><input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x"></label></th>
+						<th width="50">{:L('SORT')}</th>
+						<th width="50">id</th>
+						<th width="70">标题</th>
+						<th width="50">图片</th>
+						<th width="50">发布时间</th>
+						<th width="50">更新时间</th>
+						<th width="50">热销</th>
+						<th width="50">推荐</th>
+						<th width="60">管理操作</th>
+					</tr>
+				</thead>
+				<php>
+				$status=array("1"=>"已审核","0"=>"未审核");
+				$top_status=array("1"=>"已置顶","0"=>"未置顶");
+				$recommend_status=array("1"=>"已推荐","0"=>"未推荐");
+				</php>
+				<volist name="data" id="vo">
+				<tr>
+					<td><input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="ids[]" value="{$vo.id}" title="ID:{$vo.id}"></td>
+					<td><input name="listorders[{$vo.id}]" class="input input-order" type="text" size="5" value="{$vo.listorder}" title="ID:{$vo.tid}"></td>
+					<td>{$vo.id}</td>
+					<td>
+						<if condition=" $vo['status']==99 ">
+							<a <if condition="$modelid eq 3 || $modelid eq 31 ||  $modelid eq 42 || $modelid eq 43 || $modelid eq 44">href="javascript:;"<else />href="{$vo.url}" target="_blank"</if>><span>{$vo.title}</span></a>
+			            <else/>
+			                <a <if condition="$modelid eq 3 || $modelid eq 31 ||  $modelid eq 42 || $modelid eq 43 || $modelid eq 44">href="javascript:;"<else />href="{:U('public_preview',array('catid'=>$vo['catid'],'id'=>$vo['id']) )}" target="_blank"</if> ><font color="#FF0000">[未审核]</font> - {$vo.title}</a>
+			            </if>
+			            
+		             </td>
+				
+					<td><img src="{$vo['thumb']}" style="width:200px;"></td>
+					<td>{$vo.inputtime|date="Y-m-d H:i:s",###}</td>
+					<td>{$vo.updatetime|date="Y-m-d",###}</td>
+					<input type="hidden" id="istop1{$vo.id}" value="{$vo['istop']}"></input>
+					<input type="hidden" id="recommend1{$vo.id}" value="{$vo['recommend']}"></input>
+					<td><a onclick="istopajax({$catid},{$vo['id']})" style="cursor: pointer;" id="istop{$vo.id}"><if condition="$vo['istop']">是<else />否</if></a> </td>
+					<td>
+					<a onclick="recommendajax({$catid},{$vo['id']})" style="cursor: pointer;" id="recommend{$vo.id}"><if condition="$vo['recommend']">是<else />否</if></a>
+					</td>
+					<td>
+						<a href="{:U('Contentshow/edit',array('catid'=>$vo['catid'],'id'=>$vo['id']))}" target="_blank">{:L('EDIT')}</a> |
+						<a href="{:U('Contentshow/copy',array('catid'=>$vo['catid'],'id'=>$vo['id']))}">复制</a>|
+						<a href="{:U('Contentshow/delete',array('catid'=>$vo['catid'],'id'=>$vo['id'],'is_del'=>1))}" class="js-ajax-delete">{:L('DELETE')}</a>
+						</td>
+				</tr>
+				</volist>
+				<input type="hidden" value="{$catid}" name="catid"></input>
+				<input type="hidden" value="1" name="is_del"></input>
+				<tfoot>
+					<tr>
+						<th width="15"><label><input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x"></label></th>
+						<th width="50">{:L('SORT')}</th>
+						<th width="50">id</th>
+						<th width="70">标题</th>
+						<th width="50">图片</th>
+						<th width="50">发布时间</th>
+						<th width="50">更新时间</th>
+						<th width="50">热销</th>
+						<th width="50">推荐</th>
+						<th width="60">管理操作</th>
+					</tr>
+				</tfoot>
+			</table>
+			<div class="table-actions">
+				<button class="btn btn-primary btn-small js-ajax-submit" type="submit" data-action="{:U('Contentshow/listorder',array('catid'=>$catid))}">{:L('SORT')}</button>
+				
+				<button class="btn btn-primary btn-small js-ajax-submit" type="submit" data-action="{:U('Contentshow/delete',array('catid'=>$catid,'is_del'=>1))}" data-subcheck="true" data-msg="你确定删除吗？">{:L('DELETE')}</button>
+				<button class="btn btn-primary btn-small js-articles-move" type="button">批量移动</button>
+				<button class="btn btn-primary btn-small js-ajax-submit" type="submit" data-action="{:U('Createhtml/batch_show',array('catid'=>$catid,'steps'=>0))}" data-subcheck="true">批量生成HTML</button>
+			</div>
+			<div class="pagination">
+				{$Page}
+			</div>
+		</form>
+	</div>
+
+	<script src="__PUBLIC__/js/common.js"></script>
+	
+	<script>
+    $(function() {
+      // 固定头部
+      var sform = $('#fixed_form'),
+        thead = sform.find('thead'),
+				thtop = thead.offset().top,
+				add_w = $('#add_content')[0]? 100 : 0;
+
+
+      $(window).scroll(function() {
+        var sctop = $(this).scrollTop();
+        if(sctop > 160 + add_w){
+          var ty = sctop - thtop + 38;
+          thead.css({'transform':'translateY('+ ty +'px)'});
+          sform.addClass('fixed');
+        } else{
+          thead.css({'transform':'translateY(0px)'});
+          sform.removeClass('fixed');
+        }
+      })
+    })
+		
+		function new_url(){
+			var catid_s = $("#catid_s").val();
+			window.open("{:U('Contentshow/add')}&catid_s="+catid_s);
+			return false;
+		}
+		function refersh_window() {
+			var refersh_time = getCookie('refersh_time');
+			if (refersh_time == 1) {
+				window.location = "{:U('Contentshow/classlist',array('catid'=>$catid))}";
+			}
+		}
+		setInterval(function() {
+			refersh_window();
+		}, 2000);
+		$(function() {
+			setCookie("refersh_time", 0);
+			Wind.use('ajaxForm', 'artDialog', 'iframeTools', function() {
+				//批量移动
+				$('.js-articles-move').click(function(e) {
+					var str = 0;
+					var id = tag = '';
+					$("input[name='ids[]']").each(function() {
+						if ($(this).attr('checked')) {
+							str = 1;
+							id += tag + $(this).val();
+							tag = ',';
+						}
+					});
+					if (str == 0) {
+						art.dialog.through({
+							id : 'error',
+							icon : 'error',
+							content : '您没有勾选信息，无法进行操作！',
+							cancelVal : '关闭',
+							cancel : true
+						});
+						return false;
+					}
+					var $this = $(this);
+					art.dialog.open("__ROOT__/index.php?g=Content&m=Contentshow&a=move&catid={$catid}&ids="+ id, {
+						title : "批量移动",
+						width : "700px"
+					});
+				});
+			});
+		});
+		function pushs() {
+		    var str = 0;
+		    var id = tag = '';
+		    $("input[name='ids[]']").each(function () {
+		        if ($(this).attr('checked')) {
+		            str = 1;
+		            id += tag + $(this).val();
+		            tag = '|';
+		        }
+		    });
+		    if (str == 0) {
+		       art.dialog({
+				   id:'error',
+				   icon: 'error',
+				   content: '您没有勾选信息，无法进行操作！',
+				   cancelVal: '关闭',
+				   cancel: true
+				});
+		        return false;
+		    }
+		    Wind.use('artDialog','iframeTools', function () {
+		         art.dialog.open("__ROOT__/index.php?g=Content&m=Contentshow&a=move&ids="+ id, {
+						title : "批量移动",
+						width : "50%"
+		        });
+		    });
+		}
+	</script>
+	 
+	<script type="text/javascript">
+		function istopajax(catid,id){
+			var istop = $("#istop1"+id).val();
+			$.get("__ROOT__/index.php?g=Content&m=Contentshow&a=istopajax&istop="+istop+"&catid="+catid+"&id="+id,function(data) {
+				 if(data.status ==1 ){
+
+				 	$('#istop'+id).html(data.info.msg);
+		        	$('#istop1'+id).val(data.info.istop);
+
+				 }else {
+				 	alert(data.info);
+				 }	
+		        
+		    });
+		}
+		function recommendajax(catid,id){
+			var recommend = $("#recommend1"+id).val();
+			$.get("__ROOT__/index.php?g=Content&m=Contentshow&a=recommendajax&recommend="+recommend+"&catid="+catid+"&id="+id,function(data) {
+				if(data.status ==1 ){
+					$('#recommend'+id).html(data.info.msg);
+		        	$('#recommend1'+id).val(data.info.recommend);
+				}else {
+					alert(data.info);
+				}
+		       
+		    });
+		}
+
+	</script>
+</body>
+</html>

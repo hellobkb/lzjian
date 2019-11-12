@@ -1,0 +1,64 @@
+ 
+<php>
+$content = json_decode($zcmod['content'],true);
+$image = $content['image'];
+$yangshi = $content['yangshi'];
+
+
+
+</php>
+
+<if condition="$yangshi eq 1">
+
+
+<elseif condition="$yangshi eq 2" />
+
+
+ <!-- 首页轮播3开始 --> 
+<div class="icenter">
+  <div class="ipart6">
+        <div class="zong">
+            <div class="ipart6_title">
+                <a href="{:U('Content/Pagedis/lists',array('catid'=>102))}" title="CUSTOMERS"><img src="__TMPL__xinyu/images/customers.jpg" alt="CUSTOMERS" title="CUSTOMERS" /></a>
+            </div>
+            
+            <div class="ipart6_top">
+                <div class="ipart6_hx"></div>
+            </div>
+            
+            <div class="ipart6_lunbo">
+            	 
+                <div class="carouseld"> 
+                    <a href="javascript:void(0);" class="dnext" id="dnext-02">&nbsp; </a>
+                    <a href="javascript:void(0);" class="dprev" id="dprev-02">&nbsp; </a>
+                      <div class="jCarouselLited" id="ddemo-02">
+                        <ul>
+                        <foreach name="image" item="customer">
+                        	<li><a href="{$customer.tar}" title="{$customer.alt}"><img src="{$customer.url}" alt="{$customer.alt}" title="{$customer.alt}"/></a></li>
+                        </foreach>
+                        </ul>
+                      </div>
+                      
+                      <div class="clear"></div>
+                    </div>
+                    <script type="text/javascript">
+		                $(document).ready(function(){
+		                	$('#ddemo-02').jCarouselLite({
+				                btnPrev: '#dnext-02',
+				                btnNext: '#dprev-02',
+				                auto: null,
+				                speed: 1000
+		                	});		
+		                });
+                     </script>
+            </div>
+        
+        </div>
+    </div>
+</div>
+
+<!-- 首页轮播3结束 -->
+
+
+</if>
+

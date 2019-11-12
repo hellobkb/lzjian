@@ -1,0 +1,44 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<form action="{:U('Contacttype/edit_post')}" method="post" class="form-horizontal js-ajax-forms" name="myform">
+			<div class="tab-pane" id="B">
+				<php>$i=0</php>
+				<foreach name="contactInfo" item="contactV" key="contactK">
+					<php>$i++;</php>
+					<fieldset>
+						<div class="control-group">
+							<div class="control-group">
+								<label class="control-label"></label>
+								<div class="controls">
+									字段名：<input type="text" name="reg_{$i}" value="{$contactK}" />
+									值：<input type="text" name="B_{$i}" alt="" value="{$contactV}" />
+								</div>
+							</div>
+						</div>
+					</fieldset>
+				</foreach>
+			</div>
+			<div class="form-actions">
+			<input type="hidden"  name="id" value="{$id}"/>
+				<button class="btn btn-primary js-ajax-submit mright"type="submit">提交</button>
+				<a class="btn" href="{:U('Contacttype/index')}">返回</a>
+			</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+	<script>
+		setCookie('refersh_time', 0);
+		function refersh_window() {
+			var refersh_time = getCookie('refersh_time');
+			if (refersh_time == 1) {
+				window.location.reload();
+			}
+		}
+		setInterval(function() {
+			refersh_window()
+		}, 2000);
+	</script>
+</body>
+</html>

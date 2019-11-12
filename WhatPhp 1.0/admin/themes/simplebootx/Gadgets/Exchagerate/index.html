@@ -1,0 +1,68 @@
+<admintpl file="header" />
+</head>
+<body>
+    <div class="wrap js-check-wrap">
+        <ul class="nav nav-tabs">
+            
+            <li class="active"><a href="{:U('Exchagerate/index')}">常用汇率查询</a></li>
+            <li><a href="{:U('Exchagerate/currency_list')}">货币列表</a></li>
+            <li><a href="{:U('Exchagerate/real_rate')}">汇率查询换算</a></li>
+        </ul>
+        <form class="well form-search" action="{:U('Currency/index')}" method="post" >
+        <a>更新时间：{$update}</a><br>
+        
+        </form>
+        
+        <form class="js-ajax-form" method="post">
+            <table class="table table-hover table-bordered table-list">
+                <thead>
+                    <tr>
+                        <th width="100">货币名称</th>
+                        <th width="100">交易单位</th>
+                        <th width="150">现汇买入价</th>
+                        <th width="120">现钞买入价</th>
+                        <th width="120">现钞卖出价</th>
+                        <th width="100">中行折算价</th>
+                        
+                    </tr>
+                </thead>
+                <foreach name="list" item="vo">
+                <tr>
+                    <td>{$vo.0}</td>
+                    <td>{$vo.1}</td>
+                    <td>{$vo.2}</td>
+                    <td>{$vo.3}</td>
+                    <td>{$vo.4}</td>
+                    <td>{$vo.5}</td>
+                   
+                </tr>
+                </foreach>
+                <tfoot>
+                    <tr>
+                        <th width="100">货币名称</th>
+                        <th width="100">交易单位</th>
+                        <th width="150">现汇买入价</th>
+                        <th width="120">现钞买入价</th>
+                        <th width="120">现钞卖出价</th>
+                        <th width="100">中行折算价</th>
+                    </tr>
+                </tfoot>
+            </table>
+            <div class="pagination">{$Page}</div>
+        </form>
+    </div>
+    <script src="__PUBLIC__/js/common.js"></script>
+    <script>
+        setCookie('refersh_time', 0);
+        function refersh_window() {
+            var refersh_time = getCookie('refersh_time');
+            if (refersh_time == 1) {
+                window.location.reload();
+            }
+        }
+        setInterval(function() {
+            refersh_window()
+        }, 2000);
+    </script>
+</body>
+</html>

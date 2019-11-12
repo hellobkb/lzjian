@@ -1,0 +1,12 @@
+<script>
+var dxurl = window.location.href;
+var title = "<if condition="$title">{$title}<else />{$catname}</if>";
+if(!title)title='{:L('RNOTHER')}';
+$.get("__ROOT__/index.php?g=Demo&m=Index&a=views&zxurl="+dxurl+"&title="+title);
+
+var proarttitle = '<if condition="$title">{$title}<else />{$catname}</if>';
+<if condition="$modelid eq 1 or $modelid eq 5">
+var mod = '{$modelid}';
+$.get("__ROOT__/index.php?g=Demo&m=Index&a=arp&modelid=" + mod + "&zxurl="+dxurl+"&title="+proarttitle);
+</if>
+</script>

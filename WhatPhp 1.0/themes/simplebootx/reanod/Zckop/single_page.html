@@ -1,0 +1,7 @@
+<php>
+$content = json_decode($zcmod['content'],true);
+$strnum = $content['strnum'];
+$db = D('Content/Page');
+$info = $db->getPage($content['zcmsg']['attr']['argu']['catid']);
+</php>
+<div>{$info['content']|strip_tags|str_cut=###,$strnum}</div>

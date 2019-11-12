@@ -1,0 +1,88 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="javascript:;">生成水印</a></li>
+		</ul>
+		<div>
+			<font color="red">*</font>请不要进行其它任何操作，时间较长请内心等待，否则可能会造成网站错误
+		</div>
+		<form action="{:U('Content/Createhtml/generatewatermark')}" method="post" class="form-horizontal js-ajax-forms" id="J_ajaxForms" name="myform" >
+			<div class="row-fluid">
+				<div class="span9" style="border:none">
+					<table class="table table-bordered" style="border:none">
+					<tbody>
+						<tr>
+							<th rowspan="6" style="border:none">
+							  生成水印
+							  <button class="btn btn-primary js-ajax-submit btn_submit J_ajax_submit_btn1 mright" type="submit">开始生成</button>
+							</th>
+						</tr>
+					</tbody>
+					</table>
+				</div>
+			</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+	<script>
+	    Wind.use('validate', 'ajaxForm', 'artDialog', function () {
+			//javascript
+	        {$formJavascript}
+	        var form = $('form#J_ajaxForms');
+	        //ie处理placeholder提交问题
+	        if ($.browser.msie) {
+	            form.find('[placeholder]').each(function () {
+	                var input = $(this);
+	                if (input.val() == input.attr('placeholder')) {
+	                    input.val('');
+	                }
+	            });
+	        }
+	        //表单验证开始
+	        form.validate({
+	            //验证通过，提交表单
+	            submitHandler: function (forms) {
+					var dialog = art.dialog({id: 'loading',fixed: true,lock: true,background: "#CCCCCC",opacity: 0,esc:false,title: '勿刷新',content:'请不要进行其它任何操作，时间较长请内心等待，否则可能会造成网站错误'});
+	                $(forms).ajaxSubmit({
+	                    url: form.attr('action'), //按钮上是否自定义提交地址(多按钮情况)
+	                    dataType: 'json',
+	                    beforeSubmit: function (arr, $form, options) {
+	                    },
+	                    success: function (data, statusText, xhr, $form) {
+							dialog.close();
+							if(data.status){
+								//添加成功
+								Wind.use("artDialog", function () {
+								    art.dialog({
+								        id: "succeed",
+								        icon: "succeed",
+								        fixed: true,
+								        lock: true,
+								        background: "#CCCCCC",
+								        opacity: 0,
+								        content: data.info,
+								        time: 86400,
+								        button:[
+											{
+												name: '确定',
+												callback:function(){
+													return true;
+												},
+											}
+										]
+								    });
+								});
+							}else{
+								isalert(data.info);
+							}
+	                    }
+	                });
+	            }
+	        });
+	    });
+
+	</script>
+</body>
+</html>

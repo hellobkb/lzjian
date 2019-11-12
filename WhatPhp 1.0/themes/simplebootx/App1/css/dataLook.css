@@ -1,0 +1,99 @@
+html,
+body,
+.mui-content {
+	background: #2D3E50;
+}
+
+.reanod-echarts {
+	height: auto;
+	margin-bottom: 1.5rem;
+	padding-top: 1rem;
+	padding-bottom: 1.5rem;
+	border: 0.1rem solid white;
+	background: white;
+	/*圆角*/
+	-moz-border-radius: 0.8rem;
+	-webkit-border-radius: 0.8rem;
+	border-radius: 0.8rem;
+	/*阴影*/
+	box-shadow: 0 0.3rem 1rem rgba(0, 0, 0, .5);
+}
+
+.reanod-echarts-head {
+	border-bottom: 0.1rem solid #CCCCCC;
+}
+
+.reanod-echarts-head a {
+	float: right;
+	margin-right: 1.5rem;
+	color: #595959;
+	font-size: 1.2rem;
+}
+
+.reanod-echarts-head span:first-child {
+	margin-left: 1rem;
+	color: #3390BC;
+	font-size: 1.6rem;
+}
+
+.reanod-echarts-head span:nth-child(2) {
+	font-size: 1.2rem;
+	font-weight: bold;
+	color: #3390BC;
+}
+
+.reanod-chart {
+	height: 16rem;
+	padding-right: 1rem;
+}
+/*特殊定义*/
+
+#barChart {
+	height: 14rem;
+}
+
+.reanod-bulletin {
+	padding: 1rem 2rem;
+}
+
+.reanod-bulletin div {
+	padding: 0.2rem;
+	padding-bottom: 0;
+	font-size: 1.4rem;
+	border-bottom: 0.1rem solid #CCCCCC;
+}
+
+.reanod-bulletin div span:first-child {
+	color: #AAA;
+	font-size: 1.6rem;
+}
+
+.reanod-bulletin div span:nth-child(2) {
+	margin-left: .5rem;
+}
+
+.reanod-bulletin div span:last-child {
+	color: red;
+}
+
+.reanod-bulletin div:last-child {
+	height: auto;
+}
+/*柱状图 legend*/
+
+.barLegend {
+	overflow: auto;
+	z-index: 2;
+	padding-top: .9rem;
+	padding-left: 1rem;
+	padding-right: 1rem;
+	font-size: 1.4rem;
+	min-height: 6.5rem;
+}
+
+.barLegend div {
+	float: left;
+	text-align: center;
+	width: 50%;
+	padding-top: .25rem;
+}

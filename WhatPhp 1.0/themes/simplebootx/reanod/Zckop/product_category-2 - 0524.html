@@ -1,0 +1,61 @@
+<php> $modelid = 5;
+  if(!($result = S('modelid'.$modelid))){
+  $where['modelid'] = $modelid;
+  $resultarr = M("Category")->where($where)->select();
+  $result =array();
+  foreach($resultarr as $k=>$v){
+  $result[$v['catid']] =$v;
+  }
+  S('modelid'.$modelid,$result);
+  }
+  
+  $result = zc_children_more($result); 
+   
+  </php>
+
+<div class="chanp_z f14 top30">
+	<div class="cp_biaot f20"><a href="__ROOT__/products/">Product Categories</a></div>
+   <div class="subNavBox">
+     
+      <volist name="result" id="v" key="key">
+          <volist name="v['child']" id="t">
+          <div <if condition="in_array($catid,explode(',',$t['arrchildid']))"> class="subNav f14 top0 currentDd currentDt" <else />  class="subNav"</if> >
+            <div class="subn"><a href="{:zcurl($t['url'],$t['moveurl'])}" title="{$t.catname}" >{$t.catname}</a></div>
+          </div>
+
+          <php>if(count($t['child'])> 0){</php>
+                <ul class="navContent f14" <if condition="in_array($catid,explode(',',$t['arrchildid']))"> style="display:block;" </if> >
+                    <volist name="t['child']" id="g">
+                          <li> 
+                          <a href="{:zcurl($g['url'],$g['moveurl'])}" title="{$g.catname}" <if condition="in_array($catid,explode(',',$g['arrchildid']))">style="text-decoration: underline; color:#c1a25f !important"</if>>{$g.catname}</a>
+                         	
+                              <php> if(count($g['child'])){</php>
+                                <ul class="prsanji f14">
+                                    <foreach name="g['child']" item="j">
+                                    	<li><a href="{:zcurl($j['url'],$j['moveurl'])}" title="{$g.catname}" <if condition="in_array($catid,explode(',',$j['arrchildid']))">style="text-decoration: underline; color:#c1a25f !important"</if>>{$j.catname}</a></li>
+                                    </foreach>
+ 
+                                 </ul>
+                             <php>}</php>
+                        
+                            </li>
+                    </volist>
+                </ul>
+          
+          <php>}</php>
+
+        </volist>
+  	</volist>
+    </div>
+<script type="text/javascript">
+$(function(){
+$(".subNav").click(function(){
+$(this).toggleClass("currentDd").siblings(".subNav").removeClass("currentDd")
+$(this).toggleClass("currentDt").siblings(".subNav").removeClass("currentDt")
+
+$(this).next(".navContent").slideToggle(500).siblings(".navContent").slideUp(500);
+})	
+})
+</script>
+
+

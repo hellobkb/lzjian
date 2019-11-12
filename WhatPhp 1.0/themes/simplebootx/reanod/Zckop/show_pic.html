@@ -1,0 +1,15 @@
+<php>
+$content2 = json_decode($zcmod['content'],true);
+$limit = $content2['zcmsg']['attr']['argu']['limit'];
+</php>
+<div class="left">
+  <h1>{$title}</h1>
+  <div>
+    <ul class="rnfdj">
+    <volist name="mopic" id="v">
+    <li><img src="{$v.url}"/></li>
+    </volist>
+    </ul>
+  </div>
+  <div>{$content}</div>
+</div>

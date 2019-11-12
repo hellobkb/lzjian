@@ -1,0 +1,55 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div style="text-align: center; margin-top: 10px">
+		<textarea id="keywordsArea" style="height: 200px; width: 90%"></textarea>
+	</div>
+	<div style="text-align: center;background: #DFE1E3;height: 50px">
+		<span class="btn btn-primary" style="margin-top: 8px;" onclick="addkeys();" >提交</span>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<span class="btn btn-primary" style="margin-top: 8px" onclick="backtoTop();">取消</span> <span id="msg"></span>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+	<script type="text/javascript">
+		setCookie('refersh_time', 0);
+		function refersh_window() {
+			var refersh_time = getCookie('refersh_time');
+			if (refersh_time == 1) {
+				window.location.reload();
+			}
+		}
+		setInterval(function() {
+			refersh_window()
+		}, 2000);
+		
+		//ajax提交，返回刷新父级页面，关闭iframe
+		function addkeys(){
+			$("#msg").html("");
+			var keywordsArea = $("#keywordsArea").val();
+			if (keywordsArea == "") {
+				$("#msg").html("<font color='red'>必须添加关键词</font>");
+				return;
+			}
+			
+			$.post("{:U('KeywordInquiry/addkeywords')}", {keywordsArea:keywordsArea},function(data){
+				if(data.status == "OK"){  
+					  $("#msg").html("<font color='green'>添加成功</font>");
+					  setInterval(backtoTop, 3000);
+					  
+				}else if (data.status == "error"){
+					$("#msg").html("<font color='red'>关键词已存在</font>");
+				}else if (data.status == "limit"){
+					$("#msg").html("<font color='red'>"+data.description+"</font>");
+				}
+			},'json');
+			 
+		}
+		
+		function backtoTop(){
+			parent.location.reload();
+			window.close();
+		}
+		 	
+	</script>
+</body>
+</html>

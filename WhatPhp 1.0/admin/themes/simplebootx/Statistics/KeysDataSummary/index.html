@@ -1,0 +1,167 @@
+<admintpl file="header" />
+</head>
+<body>
+	<script src="__PUBLIC__/js/echarts.common.min.js"></script>
+    <script src="__PUBLIC__/js/jquery.js"></script>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+            <li><a href="{:U('KeywordInquiry/index')}">关键词排名明细表</a></li>
+            <li class="active"><a href="{:U('KeysDataSummary/index')}" >关键词数据汇总</a></li>
+		</ul>
+        关键词总量：{$countKeys}个
+        <if condition="$countKeys">
+            <table class="table table-hover table-bordered table-list">
+                 <tr>
+                    <th>统计图表</th>
+                    <td><div id="main" style="width:1280px;height:300px;"></div></td>
+                 </tr>
+                 <tr style="width:1280px;height:350px;">
+                    <th>统计图表</th>
+                    <td>
+                        <if condition="$time neq 'null'">
+                            <div id="polyline" style="width:1280px;height:350px;"></div>
+                        <else />
+                            <div>没有数据</div>
+                        </if>
+                    </td>
+                </tr>
+            </table>
+        <else />
+            <div>没有数据!</div>
+        </if>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+    <script type="text/javascript">
+    /*饼状图*/
+        var myChart = echarts.init(document.getElementById('main'));
+        var option = {
+                title : {
+                    text: '排名位置占比',
+                    subtext: '',
+                    x:'center'
+                },
+                tooltip : {
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b} : {c} ({d}%)"
+                },
+                legend: {
+                    orient: 'vertical',
+                    left: 'left',
+                    data: {$keywords_top_name},
+                },
+                series : [
+                    {
+                        name: '排名位置占比',
+                        type: 'pie',
+                        radius : '55%',
+                        center: ['50%', '60%'],
+                        data:{$keywords_top_data},
+                        itemStyle: {
+                            emphasis: {
+                                shadowBlur: 10,
+                                shadowOffsetX: 0,
+                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                            },
+                            normal:{
+                                label:{
+                                    show: true,
+                                    formatter: '{b} : {c} ({d}%)' 
+                                },
+                                labelLine: {
+                                    show: true,
+                                }
+                            }
+                        }
+                    }
+                ]
+            };
+        myChart.setOption(option);
+        /*折线图*/
+        if({$dates}){
+            var polyline = echarts.init(document.getElementById('polyline'));
+            var top2_countKeys = {$top2_countKeys};
+            var top3_5_countKeys = {$top3_5_countKeys};
+            var flag = false;
+            for (var i = top2_countKeys.length - 1; i >= 0; i--) {
+                if (top2_countKeys[i] > 1 || top3_5_countKeys > 1 ) {
+                    flag = true;
+                }
+            }
+            if (flag) {
+                var polylineOption = {
+                    title: {
+                        text: '近30天排名变化曲线'
+                    },
+                    tooltip: { trigger: 'axis'},
+                    legend: {
+                        data:['1-2页', '3-5页']
+                    },
+                    toolbox: {
+                        show: true,
+                        feature: {
+                            saveAsImage: {}
+                        }
+                    },
+                    xAxis: {
+                        type: 'category',
+                        boundaryGap: false,
+                        axisLabel: {
+                            rotate: 45,
+                            interval:0
+                        },
+                        data: {$dates}
+                    },
+                    yAxis: {type:'value'},
+                    series: [{
+                        name: '1-2页',
+                        type: 'line',
+                        data: top2_countKeys
+                    },{
+                        name: '3-5页',
+                        type: 'line',
+                        data: top3_5_countKeys
+                    }]
+                };
+            }else{
+                var polylineOption = {
+                    title: {
+                        text: '近30天排名变化曲线'
+                    },
+                    tooltip: { trigger: 'axis'},
+                    legend: {
+                        data:['1-2页', '3-5页']
+                    },
+                    toolbox: {
+                        show: true,
+                        feature: {
+                            saveAsImage: {}
+                        }
+                    },
+                    xAxis: {
+                        type: 'category',
+                        boundaryGap: false,
+                        axisLabel: {
+                            rotate: 60,
+                            interval:0
+                        },
+                        data: {$dates}
+                    },
+                    yAxis: {type:'value',minInterval: 1,splitNumber:1},
+                    series: [{
+                        name: '1-2页',
+                        type: 'line',
+                        data: top2_countKeys
+                    },{
+                        name: '3-5页',
+                        type: 'line',
+                        data: top3_5_countKeys
+                    }]
+                };
+            }
+            polyline.setOption(polylineOption);
+        }
+        
+    
+    </script>
+</body>
+</html>

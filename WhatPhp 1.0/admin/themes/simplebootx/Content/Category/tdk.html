@@ -1,0 +1,126 @@
+<admintpl file="header" />
+</head>
+<body>
+<div class="wrap js-check-wrap">
+  <ul class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab">{$data['catname']}-关键词管理</a></li>
+  </ul>
+  <form class="form-horizontal js-ajax-form" action="{:U('Category/tdk')}" method="post">
+    <div class="tabbable">
+      <div class="tab-content"> 
+        <!--  -->
+        <php> $url = "'".U('Tkslibrary/selecttks',array('type'=>1))."'";
+          $url2 = "'".U('Tkslibrary/selecttks',array('type'=>2))."'"; </php>
+        <div class="tab-pane active">
+          <fieldset>
+            <div class="control-group">
+              <label class="control-label" style="width: 193px;">Title（栏目标题）:</label>
+              <div class="controls">
+                <textarea type="text" name="setting[title]" rows="7" cols="88" id="lib_text" >{$data['title']}</textarea>
+                <input type="button" value="添加" class="btn btn-primary js-ajax-submit" onClick="omnipotent('selectid',{$url},'选择关键词',1)">
+                <!-- <textarea  name="lib_text"></textarea> -->
+                <input type="hidden" id="words" value="">
+                </input>
+                <input type="hidden" name="lib_add_key" id="lib_add_key" value="">
+                </input>
+                title之间用,分隔开。例如：title apple,titl pear </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" style="width: 193px;">Keywords（栏目关键词）:</label>
+              <div class="controls">
+                <textarea type="text" name="setting[keywords]" id="lib_text2" rows="7" cols="88" >{$data['keywords']}</textarea>
+                <input type="button" value="添加" class="btn btn-primary js-ajax-submit" onClick="omnipotent('selectid',{$url2},'选择关键词',1)">
+                <input type="hidden" name="lib_add_key2" id="lib_add_key2" value="">
+                keywords之间用,分隔开 </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" style="width: 193px;">Description（栏目描述）:</label>
+              <div class="controls"> 
+              <span style="width:150px; float:left"><input type="radio" name="iswrite" value="1" 
+                <if condition="$data['description']['iswrite'] eq 1"> checked="checked" </if>
+                >默认
+                </input></span>
+                <textarea name="description" rows="5" cols="57" disabled="disabled">{$list_desc_mo}</textarea>
+                例：***,Manufacturer China in many factory,***,*** </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" style="width: 166px;"></label>
+              <div class="controls"> <span style="width:150px; float:left"><input type="radio" name="iswrite" value="0" 
+                <if condition="$data['description']['iswrite'] eq 0"> checked="checked" </if>
+                >自定义
+                </input></span>
+                <textarea name="description" rows="5" cols="57">{$data['description']['description_j']}</textarea>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+        <!--  --> 
+      </div>
+    </div>
+    <div class="form-actions">
+      <input name="is_tdk_list" type="hidden" value="{$is_tdk_list}">
+      <input name="setting[catid]" type="hidden" value="{$catid}">
+      <input name="id" type="hidden" value="{$data.id}">
+      <button class="btn btn-primary js-ajax-submit" type="submit">{:L('SAVE')}</button>
+      <if condition="$is_tdk_list eq 1"> <a class="btn" href="{:U('Category/listtdk')}">{:L('BACK')}</a>
+        <else />
+        <a class="btn" href="{:U('Category/index')}">{:L('BACK')}</a> </if>
+    </div>
+  </form>
+</div>
+<script type="text/javascript" src="__PUBLIC__/js/common.js"></script> 
+<script type="text/javascript" src="__PUBLIC__/js/content_addtop.js"></script>
+</body>
+<script>
+
+function checknode(obj) {
+    var chk = $("input[type='checkbox']");
+    var count = chk.length;
+    var num = chk.index(obj);
+    var level_top = level_bottom = chk.eq(num).attr('level');
+    for (var i = num; i >= 0; i--) {
+        var le = chk.eq(i).attr('level');
+        if (eval(le) < eval(level_top)) {
+            chk.eq(i).attr("checked", true);
+            var level_top = level_top - 1;
+        }
+    }
+    for (var j = num + 1; j < count; j++) {
+        var le = chk.eq(j).attr('level');
+        if (chk.eq(num).attr("checked") == "checked") {
+            if (eval(le) > eval(level_bottom)){
+            	chk.eq(j).attr("checked", true);
+            }
+            else if (eval(le) == eval(level_bottom)){
+            	break;
+            }
+        } else {
+            if (eval(le) > eval(level_bottom)){
+            	chk.eq(j).attr("checked", false);
+            }else if(eval(le) == eval(level_bottom)){
+            	break;
+            }
+        }
+    }
+}
+//随机seo TDK
+function auto_seo(catid){
+	$.getJSON("__ROOT__/index.php?g=Content&m=Contentshow&a=seo_random&catid=" + catid, function (json) {
+        if (json.status == null) {
+            isalert('没有可匹配的关键词！');
+            return false;
+        }else{
+        	$('#seotitle').val(json.title);
+        	$('#seokeywords').html(json.keywords);
+        	$('#seodescription').html(json.description);
+        }
+        
+
+        
+    });
+}
+
+
+
+</script>
+</html>

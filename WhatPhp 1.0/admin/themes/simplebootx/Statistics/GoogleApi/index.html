@@ -1,0 +1,43 @@
+<admintpl file="header" />
+</head>
+<body>
+	<script src="__PUBLIC__/js/echarts.common.min.js"></script>
+    <script src="__PUBLIC__/js/jquery.js"></script>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="{:U('GoogleApi/index')}">谷歌API</a></li>
+			<li><a href="{:U('GoogleApi/add')}">添加API</a></li>
+		</ul>
+		<form class="js-ajax-form" action="" method="post">
+			<table class="table table-hover table-bordered table-list">
+				<thead>
+					<tr>
+						<th width="100" align="center">ID</th>
+						<th width="150" align="center">KEY</th>
+						<th width="150" align="center">CX</th>
+						<th width="150" align="center">操作</th>
+					</tr>
+				</thead>
+				
+				<volist name="info" id="vo">
+				<tr>
+					<td>{$vo.id}</td>
+					<td>{$vo.key}</td>
+					<td>{$vo.cx}</td>
+					<td>
+					<if condition="$vo['id'] eq 1">
+						<a style="color: #ddd;">删除</a>
+					<else />
+						<a href="{:u('GoogleApi/del',array('id'=>$vo['id']))}">删除</a>
+					</if>
+					</td>
+				</tr>
+				</volist>
+			</table>
+			<div class="pagination">{$Page}</div>
+		</form>
+		
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

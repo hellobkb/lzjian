@@ -1,0 +1,26 @@
+<!--  hot  -->
+<php>$relations = show_relation($catid,$id,5);</php>
+<if condition="$relations">
+  <div class="hotmain zong">
+  <div class="img-scroll3"> 
+  <div class="chanxbiao"><a href="__ROOT__/products/">{:L('RNRELATED_PRODUCTS')}</a></div>
+  <div class="hotnav">
+  <span class="prev3"></span> <span class="next3"></span>
+  </div>
+    <div class="img-list3">
+      <ul>
+          <volist name="relations" id="vo">
+              <li>
+              <div class="hotlie">
+              <a href="{:zcurl($vo['url'],$vo['moveurl'])}" class="hottu" title="{$vo.title}"><img src="{$vo.thumb}" title="{$vo.title}" alt="{$vo.title}" /></a>
+              <a href="{:zcurl($vo['url'],$vo['moveurl'])}" class="hotzi" title="{$vo.title}"><php>echo str_replace(substr($vo['title'],20),"...",$vo['title']);</php></a>
+              </div>
+              </li>
+          </volist>
+        </ul>
+    </div>
+  </div>
+  </div>
+  <script type="text/javascript" src="__TMPL__zhbeifan/js/qiehuan.js"></script> 
+  <script type="text/javascript" src="__TMPL__zhbeifan/js/shousuo.js"></script>
+</if>

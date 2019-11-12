@@ -1,0 +1,89 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li><a href="{:U('Urlrule/index')}">URL规则管理</a></li>
+			<li class="active"><a href="{:U('Urlrule/edit')}">修改规则</a></li>
+		</ul>
+		<div>
+			<font color="red">*</font>要添加URL规则，需要将模板文件放入 themes\simplebootx\Portal 下的文件夹内.
+		
+		</div>
+		<form action="{:U('Urlrule/edit_post')}" method="post" class="form-horizontal js-ajax-forms" >
+			<div class="row-fluid">
+				<div class="span9">
+					<table class="table table-bordered">
+						<tr>
+							<th>URL规则名称(模板文件存放的文件夹)：</th>
+							<td>
+								<input type="text" name="file" id="file"  value="{$info.file}" />
+							</td>
+						</tr>
+						<tr>
+							<th>模块名称</th>
+							<td>
+								<select name="module" id="module">
+									<foreach name="Module" item="vo">
+										<option value="{$vo['module']}" <if condition="$info['module'] eq $vo['module']"> selected </if> >{$vo.name}</option>
+									</foreach>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<th>是否生成静态？：</th>
+							<td>
+								<input type="radio" name="ishtml" value="1" <if condition="$info['ishtml'] eq '1'">checked</if> />生成静态
+								<input type="radio" name="ishtml" value="0" <if condition="$info['ishtml'] eq '0'">checked</if> />不生成静态
+							</td>
+						</tr>
+						<tr>
+							<th>URL示例：</th>
+							<td><input type="text" name="example" id="example" value="{$info.example}"  ></td>
+						</tr>
+						<tr>
+							<th>URL规则：</th>
+							<td><input type="text" name="urlrule" id="urlrule" value="{$info.urlrule}"  ></td>
+						</tr>
+						<tr>
+							<th>可用变量：</th>
+							<td>	 
+								<font color="red">*</font> 以下只是列出规则中可填写参数，无需修改！<br/>
+								<span class="wid100">父栏目路径：</span><input type="text" name="f1" class="xinput" value="<literal>{$categorydir}</literal>"  >
+								<span class="wid100">栏目路径：</span><input type="text" name="f1" class="xinput" value="<literal>{$catdir}</literal>" >	 <br/><br/>
+								<span class="wid100">年：</span><input type="text" name="f1" class="xinput" value="<literal>{$year}</literal>"  >
+								<span class="wid100">月：</span><input type="text" name="f1" class="xinput" value="<literal>{$month}</literal>"  >
+								<span class="wid100">日：</span><input type="text" name="f1" class="xinput" value="<literal>{$day}</literal>" ><br/><br/>
+								<span class="wid100">ID：</span><input type="text" name="f1" class="xinput" value="<literal>{$id}</literal>" >
+								<span class="wid100">分页：</span><input type="text" name="f1" class="xinput" value="<literal>{$page}</literal>" >
+								
+							</td>
+						</tr>
+					</table>
+				</div>
+				<div class="span3">
+					
+				</div>
+			</div>
+			<div class="form-actions">
+			<input type="hidden" name="urlruleid" id="urlruleid" value="{$info.urlruleid}">
+				<button class="btn btn-primary js-ajax-submit mright" type="submit">提交</button>
+				<a class="btn" href="{:U('Urlrule/index')}">返回</a>
+			</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+	<script>
+		setCookie('refersh_time', 0);
+		function refersh_window() {
+			var refersh_time = getCookie('refersh_time');
+			if (refersh_time == 1) {
+				window.location.reload();
+			}
+		}
+		setInterval(function() {
+			refersh_window()
+		}, 2000);
+	</script>
+</body>
+</html>

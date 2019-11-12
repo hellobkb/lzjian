@@ -1,0 +1,55 @@
+<admintpl file="header" />
+</head>
+<body>
+    <div class="wrap js-check-wrap">
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="javascript:;">IP地址查询</a></li>
+        </ul>
+      
+            <div class="row-fluid">
+				<div class="span9">
+					<table class="table table-bordered">
+						<tr>
+							<th>IP:</th>
+							<td>
+                                <input type="text" name="ip" id="ip">
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+            <div class="form-actions">
+                <span class="btn btn-primary"  onclick="submit();" id="search">查询</span>
+                <span id="errorMsg"></span>
+            </div>
+       
+    </div>
+    <script src="__PUBLIC__/js/common.js"></script>
+    <script src="__PUBLIC__/js/content_addtop.js"></script>
+    <script>
+        setCookie('refersh_time', 0);
+        function refersh_window() {
+            var refersh_time = getCookie('refersh_time');
+            if (refersh_time == 1) {
+                window.location.reload();
+            }
+        }
+        setInterval(function() {
+            refersh_window()
+        }, 2000);
+
+        function submit(){
+            var ip = $('#ip').val();
+            	$.post("{:U('Ip/chaxun')}",{'ip':ip},function(str){
+                    if(str.status == 1){
+                        var info = eval('('+str.info+')');
+                        var country = 'country：'+info['country']+'<br />';
+                        var province = 'province：'+info['province']+'<br />';
+                        var city = 'city：'+info['city'];
+                        isalert(country+province+city,'succeed');
+                    }
+            	});
+        }
+    </script>
+</body>
+</html>

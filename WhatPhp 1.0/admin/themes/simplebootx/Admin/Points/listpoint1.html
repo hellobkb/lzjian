@@ -1,0 +1,50 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li><a href="{:U('Points/index')}">我的积分</a></li>
+	
+			<li><a href="{:U('Points/add')}">添加积分</a></li>
+			<li class="active"><a href="{:U('Points/listpoint1')}">积分审核</a></li>
+		</ul>
+		<table class="table table-hover table-bordered">
+			<thead>
+				<tr>
+					<th>日期</th>
+					
+					<th>资料类型</th>
+					<th>发送数量</th>
+					<th>审核数量</th>
+					<th>积分</th>
+					<th>操作</th>
+					
+				</tr>
+			</thead>
+			<tbody>
+			
+				<foreach name="points" item="vo">
+				<tr>
+					<td>{$vo.addtime}</td>
+					<td>{$qx_points[$vo['contentid']]}</td>
+					<td><if condition="$vo['sendnum']">{$vo.sendnum}</if></td>
+					<td><if condition="$vo['authnum']">{$vo.authnum}</if></td>
+					<td><if condition="$vo['points']">{$vo.points}</if></td>
+					<td>
+					<if condition="$vo['points'] eq 0">
+					<a href="{:U('Points/edit',array('id'=>$vo['id']))}">审核</a>
+					<else />
+					<a href="javascript:;" style="color: #cdcdcd;">已审核</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+					<a href="{:U('Points/edit',array('id'=>$vo['id']))}">审核详情</a>
+					</if>
+					</td>
+					
+				</tr>
+				</foreach>
+			</tbody>
+		</table>
+		<div class="pagination">{$page}</div>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

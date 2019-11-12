@@ -1,0 +1,177 @@
+    <div class="sylunbo">
+     
+           <div class="synews1">	
+              <div class="synews_title"><img src="__ROOT__/images/sy-ntitle1.png" alt="" title="" /></div>                
+              <div class="sy_tabnr">			
+
+                  <div id="amain2">
+                  <php>
+                  		$temp =array();
+                  		foreach($qlist as $qkey=>$qvalue){
+                  			if($qkey<2){
+                  				$temp[0][] = $qvalue; 
+                  			}elseif($qkey<4 ){
+                  				$temp[1][] = $qvalue;
+                  			}elseif($qkey<6){
+                  				$temp[2][] = $qvalue;
+                  			}
+                  		}
+                  		$qklist = $temp;
+                  </php>
+                  	<foreach name="qklist" item="qvo" key="qk">
+                  		<if condition="$qk eq 0 ">
+                  			<ul class="block" >
+                  				<foreach name="qvo" item="qvc">
+                  					<li><a href="{$qvc.url}" title="{$qvc.post_title}" target="_blank">{$qvc.post_title}</a></li>
+                  				</foreach>
+                  			</ul>
+                  		<elseif condition="$qk eq 1 " />
+                  			<ul>
+                  				<foreach name="qvo" item="qvc">
+                  					<li><a href="{$qvc.url}" title="{$qvc.post_title}" target="_blank" >{$qvc.post_title}</a></li>
+                  				</foreach>
+                      		</ul>
+                  		<elseif condition="$qk eq 2 " />
+                  			<ul>
+                  				<foreach name="qvo" item="qvc">
+                  					<li><a href="{$qvc.url}" title="{$qvc.post_title}" target="_blank" >{$qvc.post_title}</a></li>
+                  				</foreach> 
+                      		</ul>
+                  		</if>
+                  	</foreach>
+                      <div class="clear"></div>
+                  </div>
+                  
+                  <ul id="amenu2" class="sy_menu1 sy_tabbg1">
+                      <li onMouseOver="asetTab(2,0)" class="hovers"></li>
+                      <li onMouseOver="asetTab(2,1)"></li>
+                      <li onMouseOver="asetTab(2,2)"></li>
+                    <div class="clear"></div>
+                  </ul>
+                  
+              </div>
+           </div>
+           
+           
+           <div class="synews2">	
+              <div class="synews_title"><img src="__ROOT__/images/sy-ntitle2.png" alt="" title="" /></div>                
+              <div class="sy_tabnr">			
+
+                  <div id="bmain2">
+                  
+                  <php>
+                  	$temp = array();
+                  	
+                  	foreach($tlist as $tkey=>$tvalue ){
+                  		if($tkey<2){
+                  			$temp[0][] = $tvalue;
+                  		}elseif ($tkey<4){
+                  			$temp[1][] =$tvalue;
+                  		}elseif ($tkey<6){
+                  			$temp[2][] = $tvalue;
+                  		}
+                  	
+                  	}
+                  
+                  
+                  $tklist = $temp;
+
+                  </php>
+                   <foreach name="tklist" item="tvo" key="tk">
+                   		<if condition="$tk eq 0 ">
+                   			<ul class="block" >
+                   				<foreach name="tvo" item="tcv">
+                   					<li><a href="{$tcv.url}" title="{$tcv.post_title}" target="_blank" >{$tcv.post_title}</a></li>
+                   				</foreach>
+                   			</ul>
+                   		<elseif condition="$tk eq 1 " />
+                   			<ul>
+                   				<foreach name="tvo" item="tcv">
+                   					<li><a href="{$tcv.url}" title="{$tcv.post_title}" target="_blank" >{$tcv.post_title}</a></li>
+                   				</foreach>
+                   			</ul>
+                   		<elseif condition="$tk eq 2 " />
+                   			<ul>
+                   			<foreach name="tvo" item="tcv">
+                   					<li><a href="{$tcv.url}" title="{$tcv.post_title}" target="_blank" >{$tcv.post_title}</a></li>
+                   			</foreach>
+                   			</ul>
+                   		</if>
+                   </foreach>          
+                      <div class="clear"></div>
+                  </div>
+                  
+                  <ul id="bmenu2" class="sy_menu1 sy_tabbg2">
+                      <li onMouseOver="bsetTab(2,0)" class="hovers"></li>
+                      <li onMouseOver="bsetTab(2,1)"></li>
+                      <li onMouseOver="bsetTab(2,2)"></li>
+                    <div class="clear"></div>
+                  </ul>
+                  
+              </div>
+           </div>
+           
+           <div class="synews3">	
+              <div class="synews_title"><img src="__ROOT__/images/sy-ntitle3.png" alt="" title="" /></div>                
+              <div class="sy_tabnr">			
+
+                  <div id="cmain2">
+                  
+                  <php>
+                  $temp = array();
+                  	
+                  	foreach($plist as $pkey=>$pvalue ){
+                  		if($pkey<2){
+                  			$temp[0][] = $pvalue;
+                  		}elseif ($pkey<4){
+                  			$temp[1][] =$pvalue;
+                  		}elseif ($tkey<6){
+                  			$temp[2][] = $pvalue;
+                  		}
+                  	
+                  	}
+                  
+                  $pklist = $temp;
+                  
+                  
+                   
+                  </php>
+                  	<foreach name="pklist" item="pvo" key="pk">
+                  		<if condition="$pk eq 0 ">
+                  			<ul class="block" >
+                  				<foreach name="pvo" item="pcv">
+                  					 <li><a href="{$pcv.url}" title="{$pcv.post_title}" target="_blank" >{$pcv.post_title}</a></li>
+                  				</foreach>
+                  			</ul>
+                  		<elseif condition="$pk eq 1 " />
+                  			<ul>
+                  				<foreach name="pvo" item="pcv">
+                  					 <li><a href="{$pcv.url}" title="{$pcv.post_title}" target="_blank" >{$pcv.post_title}</a></li>
+                  				</foreach>
+                  			</ul>
+                  		<elseif condition="$pk eq 2 " />
+                  			<ul>
+                  				<foreach name="pvo" item="pcv">
+                  					 <li><a href="{$pcv.url}" title="{$pcv.post_title}" target="_blank" >{$pcv.post_title}</a></li>
+                  				</foreach>
+                  			</ul>
+                  		</if>
+                  	</foreach>
+                   
+                      <div class="clear"></div>
+                  </div>
+                  
+                  <ul id="cmenu2" class="sy_menu1 sy_tabbg3">
+                      <li onMouseOver="csetTab(2,0)" class="hovers"></li>
+                      <li onMouseOver="csetTab(2,1)"></li>
+                      <li onMouseOver="csetTab(2,2)"></li>
+                    <div class="clear"></div>
+                  </ul>
+                  
+              </div>
+           </div>
+
+           <div class="clear"> </div>
+
+    </div>
+    <script type="text/javascript" src="__PUBLIC__/js/qiehuan.js"></script>

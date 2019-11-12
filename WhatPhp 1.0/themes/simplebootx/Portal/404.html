@@ -1,0 +1,143 @@
+<php>$site_seo = get_site_options(); 
+  if(empty($SEO)){
+  $SEO = array();
+  $SEO['title'] = $site_seo['site_seo_title'];
+  $SEO['keyword'] = $site_seo['site_seo_keywords'];
+  $SEO['description'] = $site_seo['site_seo_description'];
+  }</php>
+<tc_include file="Public:head" />
+<style>
+a {
+	text-decoration: none;
+	color: #333;
+	outline: none;
+	transition: 0.3s;
+	-moz-transition: 0.3s;
+	-o-transition: 0.3s;
+	-webkit-transition: 0.3s;
+}
+.errorzong {
+	width: 1100px;
+	margin: 0 auto;
+    margin-top: 91px;
+}
+@media screen and (max-width:1200px) {
+.errorzong {
+	width: 100%;
+}
+}
+.error img {
+	max-width: 100%;
+	margin: 0 auto;
+	display: block;
+}
+.error p {
+	font-weight: bold;
+	font-size: 30px;
+	max-width: 100%;
+	margin: 0 auto;
+	display: block;
+	margin-top: 45px;
+}
+.error .inpu {
+	margin-bottom: 24px;
+	margin-top: 25px;
+}
+.error .inpu a {
+	display: inline-block;
+	width: 230px;
+	height: 38px;
+	line-height: 36px;
+	text-align: center;
+	margin-right: 25px;
+	font-size: 14px;
+	font-size: 1.4rem;
+	border-radius: 50px;
+	border: 1px solid #231815;
+	background: #231815;
+	color: #fff;
+}
+.error .inpu a:hover {
+	border: 1px solid #231815;
+	color: #231815;
+	background: #fff
+}
+.about_left {
+	width: 529px
+}
+.about_left .dan_wrap {
+	position: relative;
+	overflow: hidden;
+	max-width: 529px;
+}
+.about_left .dan_wrap img {
+	display: block;
+	max-width: 100%;
+	margin: 0 auto;
+}
+.l {
+	float: left;
+}
+.r {
+	float: right;
+}
+.about_right {
+	width: 533px
+}
+.about_right .title {
+	margin-bottom: 20px;
+}
+.about_right .title span {
+	display: block;
+	font-family: Verdana, Geneva, sans-serif;
+	font-weight: bold;
+	font-size: 24px;
+	font-size: 2.4rem;
+	line-height: 30px;
+}
+.about_right .title span.span3 {
+	font-size: 40px;
+	font-size: 4rem;
+	margin-top: 50px;
+	line-height: 48px;
+	color: #231815;
+}
+.about_right p {
+	font-size: 14px;
+	font-size: 1.4rem;
+	color: #333;
+	line-height: 30px;
+}
+@media screen and (max-width:1100px) {
+.about_left .dan_wrap {
+	width: 100%;
+	margin: 0 auto
+}
+.about_left {
+	width: 100%;
+}
+.about_left .dan_wrap img {
+	max-width: 100%;
+	margin: 0 auto;
+	display: block;
+}
+.about_right {
+	width: 100%;
+	text-align: center;
+	margin: 0 auto;
+}
+}
+</style>
+<body>
+<tc_include file="Public:nav" />
+<div class="errorzong error fix">
+  <div class="about_left l">
+    <div class="dan_wrap"><img src="__TMPL__style/images/jpg404.jpg"></div>
+  </div>
+  <div class="about_right r">
+    <div class="title"><span class="span3">{:L('RN404_ERROR')}</span></div>
+    <p>{:L('RNSORRY_CAN_T_FIND_THE_PAGE_YOU_WANT…')}</p>
+    <div class="inpu"><a href="__ROOT__/" >{:L('RNBACK_TO_HOME')}</a></div>
+  </div>
+</div>
+<tc_include file="Public:footer" />

@@ -1,0 +1,93 @@
+<admintpl file="header" />
+</head>
+<body class="J_scroll_fixed">
+	<div class="wrap J_check_wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="{:U('User/Indexadmin/salesman')}">业务员</a></li>
+			<li><a href="{:U('User/Indexadmin/add')}">添加业务员</a></li>
+		</ul>
+		<form class="J_ajaxForm" action="" method="post">
+			<table class="table table-hover table-bordered table-list">
+				<thead>
+					<tr>
+						<th width="50">ID</th>
+						<th width="50">业务员</th>
+						<th width="50">备注</th>
+						<!-- <th width="50">状态</th> -->
+						<th width="60">操作</th>
+					</tr>
+				</thead>
+				<php>
+				$status=array("1"=>"启用","0"=>"未启用");
+				</php>
+				<foreach name="salesman" item="vo">
+				<tr>
+					<td>{$vo.id}</td>
+					<td>{$vo.uname}</td>
+					<td>{$vo.content}</td>
+					<!-- <td>{$status[$vo['status']]}</td> -->
+					<td>
+						<a href="{:U('User/Indexadmin/edit',array('id'=>$vo['id']))}">修改</a> | 
+						<a href="{:U('User/Indexadmin/del',array('id'=>$vo['id']))}" class="J_ajax_del">删除</a>
+					</td>
+				</tr>
+				</foreach>
+				<tfoot>
+					<tr>
+						<th width="50">ID</th>
+						<th width="50">业务员</th>
+						<th width="50">备注</th>
+						<!-- <th width="50">状态</th> -->
+						<th width="60">操作</th>
+					</tr>
+				</tfoot>
+			</table>
+			<div class="pagination">{$Page}</div>
+		</form>
+	</div>
+	<script src="__ROOT__/statics/js/common.js"></script>
+	<script>
+$(function(){
+	if ($('a.J_ajax_pay').length){
+        Wind.use('artDialog', function (){
+            $('.J_ajax_pay').on('click', function (e){
+                e.preventDefault();
+                var $_this = this,
+                    $this = $($_this),
+                    href = $this.prop('href'),
+                    msg = $this.data('msg');
+                art.dialog({
+                    title: false,
+                    icon: 'question',
+                    content: '确定用户已经支付了吗？',
+                    follow: $_this,
+                    close: function () {
+                        $_this.focus(); //关闭时让触发弹窗的元素获取焦点
+                        return true;
+                    },
+                    ok: function () {
+                        $.getJSON(href).done(function (data) {
+                            if (data.state === 'success') {
+                                if (data.referer) {
+                                    location.href = data.referer;
+                                } else {
+                                    reloadPage(window);
+                                }
+                            } else if (data.state === 'fail') {
+                                //art.dialog.alert(data.info);
+                            	alert(data.info);//暂时处理方案
+                            }
+                        });
+                    },
+                    cancelVal: '关闭',
+                    cancel: true
+                });
+            });
+
+        });
+    }
+})
+    
+	</script>
+</body>
+</html>

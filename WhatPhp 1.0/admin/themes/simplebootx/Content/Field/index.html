@@ -1,0 +1,103 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li><a href="{:U('Models/index')}">{:L('MODELS_MANAGE')}</a></li>
+			<li class="active"><a href="{:U('Field/index',array('modelid'=>$modelid))}">{:L('FIELDMANE')}</a></li>
+			<li><a href="{:U('Field/add',array('modelid'=>$modelid))}">{:L('ADD_FIELD')}</a></li>
+			<li><a href="{:U('Field/priview',array('modelid'=>$modelid))}" target="_blank">{:L('YU_MODEL')}</a></li>
+		</ul>
+		
+		<form class="js-ajax-form" method="post" action="{:U('Field/listorder')}">
+			
+			<table class="table table-hover table-bordered table-list" >
+				<thead>
+					<tr>
+						
+						<th width="28" align='center'>{:L('P_ORDER')}</th>
+						<th width="58" align='center'>{:L('Z_FIELDNAME')}</th>
+						
+						<th width="67" align='center'>{:L('B_ALISE')}</th>
+						<th width="104" align='center'>{:L('Z_FTYPE')}</th>
+						<th width="19" align='center'>{:L('ZH_TABLE')}</th>
+						<th width="19" align='center'>{:L('B_TIAN')}</th>
+
+						<th width="19" align='center'>{:L('S_SEARCH')}</th>
+						<th width="19" align='center'>{:L('P_ORDER')}</th>
+						<th width="19" align='center'>{:L('T_GAO')}</th>
+						<th width="119" align='center'>{:L('MANAGE')}</th>
+					</tr>
+				</thead>
+				<foreach name="data" item="vo">
+				<tr>
+					<td><input name='listorders[{$vo.fieldid}]' type='text' size='3' value='{$vo.listorder}' class='input'></td>
+					<td align='center'><a>{$vo.field}</a></td>
+
+					<td align='center'>{$vo.name}</td>
+					<td align='center'>{$vo.formtype}</td>
+					<td align='center'><if condition="$vo['issystem'] eq 1"><font color="blue">√</font><else /> <font color="red">╳</font></if></td>
+					<td align='center'><if condition="$vo['minlength'] eq 1"><font color="blue">√</font><else /> <font color="red">╳</font></if></td>
+
+					<td align='center'><if condition="$vo['issearch'] eq 1"><font color="blue">√</font><else /> <font color="red">╳</font></if></td>
+					<td align='center'><if condition="$vo['isorder'] eq 1"><font color="blue">√</font><else /> <font color="red">╳</font></if></td>
+					<td align='center'><if condition="$vo['isadd'] eq 1"><font color="blue">√</font><else /> <font color="red">╳</font></if></td>
+					<td>
+						<a href="{:U('Field/edit',array('fieldid'=>$vo['fieldid'],'modelid'=>$vo['modelid']))}">{:L('X_CHANGE')}</a>|
+						<php> if(in_array($vo['field'],$forbid_fields)){ </php>
+							<a  style="color: gray;">{:L('Y_HIDDEN')}</a>|
+						<php> }else{  
+									if($vo['disabled'] == 0){ </php>
+										<a href="{:U('Field/disabled',array('fieldid'=>$vo['fieldid'],'modelid'=>$vo['modelid'],'disabled'=>0))}">{:L('Y_HIDDEN')}</a>|
+									<php> }else{ </php>
+										<a href="{:U('Field/disabled',array('fieldid'=>$vo['fieldid'],'modelid'=>$vo['modelid'],'disabled'=>1))}">{:L('DISPLAY')}</a>|
+									<php> } </php>
+						<php> } </php>
+						<php> if(in_array($vo['field'],$forbid_delete)){ </php>
+							<a style="color: gray;">{:L('DELETE')}</a>
+						<php> }else{ </php>
+							<a class="js-ajax-delete" href="{:U('Field/delete',array('fieldid'=>$vo['fieldid'],'modelid'=>$vo['modelid']))}" >{:L('DELETE')}</a>
+						<php> } </php>
+						
+					</td>
+				</tr>
+				</foreach>
+				<tfoot>
+					<tr>
+						
+						<th width="28" align='center'>{:L('P_ORDER')}</th>
+						<th width="58" align='center'>{:L('Z_FIELDNAME')}</th>
+						
+						<th width="67" align='center'>{:L('B_ALISE')}</th>
+						<th width="104" align='center'>{:L('Z_FTYPE')}</th>
+						<th width="19" align='center'>{:L('ZH_TABLE')}</th>
+						<th width="19" align='center'>{:L('B_TIAN')}</th>
+
+						<th width="19" align='center'>{:L('S_SEARCH')}</th>
+						<th width="19" align='center'>{:L('P_ORDER')}</th>
+						<th width="19" align='center'>{:L('T_GAO')}</th>
+						<th width="119" align='center'>{:L('MANAGE')}</th>
+					</tr>
+				</tfoot>
+			</table>
+			<div class="table-actions">
+				<button type="submit" class="btn btn-primary btn-small js-ajax-submit">{:L('SORT')}</button>
+			</div>
+			<div class="pagination">{$Page}</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+	<script>
+		setCookie('refersh_time', 0);
+		function refersh_window() {
+			var refersh_time = getCookie('refersh_time');
+			if (refersh_time == 1) {
+				window.location.reload();
+			}
+		}
+		setInterval(function() {
+			refersh_window()
+		}, 2000);
+	</script>
+</body>
+</html>

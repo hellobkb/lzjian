@@ -1,0 +1,678 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="#A" data-toggle="tab">基本设置</a></li>
+			<li><a href="#B" data-toggle="tab">选项设置</a></li>
+			<li><a href="#C" data-toggle="tab">模板设置</a></li>
+			<li><a href="#D" data-toggle="tab">生成设置</a></li>
+			<li><a href="#E" data-toggle="tab">权限设置</a></li>
+		</ul>
+		<form class="form-horizontal js-ajax-form" action="{:U('Category/edit_post')}" method="post">
+			 
+			<div class="tabbable">
+				<div class="tab-content">
+					<div class="tab-pane active" id="A">
+						<fieldset>
+							<div class="control-group">
+								<label class="control-label">栏目模型</label>
+								<div class="controls">
+								<input type="hidden" name="info[modelid]" value="{$data.modelid}" />
+									<select name="info[modelid]" id="modelid" disabled>
+										<option value="" selected >请选择模型</option>
+										<foreach name="models" item="vo">
+											<option value="{$vo.modelid}" <if condition="$vo['modelid'] eq $data['modelid']"> selected </if> >{$vo.name}</option>
+										</foreach>
+									</select>
+									<span class="form-required">*</span>
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label">上级栏目</label>
+								<div class="controls">
+									<select name="info[parentid]" id="parentid">
+										<option value="0">≡ 作为一级栏目 ≡</option>
+											{$category}
+									</select>
+									<span class="form-required">*</span>
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label">栏目名称</label>
+								<div class="controls">
+									 <input type="text" name="info[catname]" id="catname" class="input" value="{$data.catname}">
+									 <span class="form-required">*</span>
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label">栏目目录</label>
+								<div class="controls">
+									 <input type="hidden" name="old_catdir" id="old_catdir" class="input-text" value="{$data.catdir}">
+             						 <input type="hidden" name="old_parentdir" id="old_parentdir" class="input-text" value="{$data.parentdir}">
+              						 <input type="text" name="info[catdir]" id="catdir" class="input" value="{$data.catdir}">
+              						 <span class="form-required">*</span>
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label">栏目缩略图</label>
+								<div class="controls">
+									  <input type="text" name="info[image]" id="thumb" value="{$data['image']}">
+										<a href="javascript:void(0);" onclick="flashupload('thumb_images', '附件上传','thumb',thumb_images,'1,jpg|jpeg|gif|png|bmp,1,,,1','','','');return false;">
+											 <span>&nbsp;点击上传</span>
+										</a>
+										<input type="button" class="btn btn-small" onclick="$('#thumb_preview').attr('src','__TMPL__Public/assets/images/default-thumbnail.png');$('#thumb').val('');return false;" value="取消图片">
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label">栏目简介</label>
+								<div class="controls">
+								
+									<script type="text/plain" id="container" name="info[description]" >{$data.description}</script>
+									<!-- <textarea name="info[description]" rows="5" cols="57">{$data.description}</textarea> -->
+								</div>
+							</div>
+<!-- 							<div class="control-group">
+								<label class="control-label">关闭列表动态访问：</label>
+								<div class="controls">
+									 <input type="checkbox" name="setting[listoffmoving]" value="1" class="input" <if condition="$data['setting']['listoffmoving']"> checked</if> />关闭前台动态地址访问栏目列表
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label">关闭内容页动态访问：</label>
+								<div class="controls">
+									 <input type="checkbox" name="setting[showoffmoving]" value="1" class="input" <if condition="$data['setting']['showoffmoving']"> checked </if> />关闭前台内容页动态访问
+								</div>
+							</div> -->
+							 <div class="control-group">
+								<label class="control-label">指定栏目地址</label>
+								<div class="controls">
+									 <input type="text" name="setting[seturl]" value="{$data['setting']['seturl']}" class="input" />&nbsp;指定地址后，栏目url将变成这个！
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label">缩略图大小</label>
+								<div class="controls">
+									 <input type="text" name="setting[width]" value="{$data['setting']['width']}" style="width: 70px;" class="input" />
+									 X
+									 <input type="text" name="setting[height]" value="{$data['setting']['height']}" style="width: 70px;" class="input" />px
+								</div>
+							</div>
+						</fieldset>
+					</div>
+					<div class="tab-pane" id="B">
+						<fieldset>
+							<div class="control-group">
+								<label class="control-label">是否在导航栏显示</label>
+								<div class="controls">
+									 <label><input type="radio" name="info[ismenu]" value="1" class="input" <if condition="$data['ismenu'] eq '1'"> checked </if> />在导航显示</label>
+									 <label><input type="radio" name="info[ismenu]" value="0" class="input" <if condition="$data['ismenu'] eq '0'"> checked </if> />不在导航显示</label>
+								</div>
+							</div>
+							 
+							<div class="control-group">
+								<label class="control-label">显示排序</label>
+								<div class="controls">
+									 <input type="text" name="info[listorder]" id="listorder" value="{$data.listorder}" class="input"  />
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label">后台增加/编辑信息</label>
+								<div class="controls">
+									 <input type="checkbox" name="setting[generatehtml]"  value="1" class="input" <if condition="$data['setting']['generatehtml'] eq '1'"> checked</if>  />生成内容页；
+									 <select name="setting[generatelish]">
+									 	 <option value="0" <if condition="$data['setting']['generatelish'] eq '0' ">selected</if>>不生成</option>
+						                  <option value="1" <if condition="$data['setting']['generatelish'] eq '1' ">selected</if>>生成当前栏目</option>
+						                  <option value="2" <if condition="$data['setting']['generatelish'] eq '2' ">selected</if>>生成首页</option>
+						                  <option value="3" <if condition="$data['setting']['generatelish'] eq '3' ">selected</if>>生成父栏目</option>
+						                  <option value="4" <if condition="$data['setting']['generatelish'] eq '4' ">selected</if>>生成当前栏目与父栏目</option>
+						                  <option value="5" <if condition="$data['setting']['generatelish'] eq '5' ">selected</if>>生成父栏目与首页</option>
+						                  <option value="6" <if condition="$data['setting']['generatelish'] eq '6' ">selected</if>>生成当前栏目、父栏目与首页</option>					 
+									 </select>
+								</div>
+							</div>
+							
+							<!-- <div class="control-group">
+								<label class="control-label">前台投稿审核：</label>
+								<div class="controls">
+									 <input type="radio" name="setting[member_check]" <if condition="$data['setting']['member_check'] eq '1' ">checked</if> value='1' class="input"  />需要审核
+									 <input type='radio' name="setting[member_check]" <if condition="$data['setting']['member_check'] eq '0' ">checked</if> value='0' class="input" /> 不需要审核
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label">管理投稿：</label>
+								<div class="controls">
+									 <select name="setting[member_admin]">
+                  						<option value="0" <if condition="$data['setting']['member_admin'] eq '0' ">selected</if>>不能管理信息</option>
+						                <option value="1" <if condition="$data['setting']['member_admin'] eq '1' ">selected</if>>可管理未审核信息</option>
+						                <option value="2" <if condition="$data['setting']['member_admin'] eq '2' ">selected</if>>只可编辑未审核信息</option>
+						                <option value="3" <if condition="$data['setting']['member_admin'] eq '3' ">selected</if>>只可删除未审核信息</option>
+						                <option value="4" <if condition="$data['setting']['member_admin'] eq '4' ">selected</if>>可管理所有信息</option>
+						                <option value="5" <if condition="$data['setting']['member_admin'] eq '5' ">selected</if>>只可编辑所有信息</option>
+						                <option value="6" <if condition="$data['setting']['member_admin'] eq '6' ">selected</if>>只可删除所有信息</option>
+                					</select>
+                					<input type="checkbox"  value="1" <if condition="$data['setting']['member_editcheck'] eq '1' ">checked</if> name="setting[member_editcheck]" class="input" /> 编辑信息需要审核
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label">投稿生成列表：</label>
+								<div class="controls">
+									 <select name="setting[member_generatelish]">
+						                  <option value="0" <if condition="$data['setting']['member_generatelish'] eq '0' ">selected</if>>不生成</option>
+						                  <option value="1" <if condition="$data['setting']['member_generatelish'] eq '1' ">selected</if>>生成当前栏目</option>
+						                  <option value="2" <if condition="$data['setting']['member_generatelish'] eq '2' ">selected</if>>生成首页</option>
+						                  <option value="3" <if condition="$data['setting']['member_generatelish'] eq '3' ">selected</if>>生成父栏目</option>
+						                  <option value="4" <if condition="$data['setting']['member_generatelish'] eq '4' ">selected</if>>生成当前栏目与父栏目</option>
+						                  <option value="5" <if condition="$data['setting']['member_generatelish'] eq '5' ">selected</if>>生成父栏目与首页</option>
+						                  <option value="6" <if condition="$data['setting']['member_generatelish'] eq '6' ">selected</if>>生成当前栏目、父栏目与首页</option>
+                					</select>
+                					
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label">投稿增加点数：</label>
+								<div class="controls">
+									 <input type="text" name="setting[member_addpoint]"  value="{$data['setting']['member_addpoint']}" class="input"  />(不增加请设为0,扣点请设为负数)
+								</div>
+							</div> -->
+							
+							<div class="control-group">
+								<label class="control-label">META Title（栏目标题，最多输入110字符）</label>
+								<div class="controls">
+									<textarea name="setting[meta_title]" maxlength="110">{$data['setting']['meta_title']}</textarea>
+							 
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label">META Keywords（栏目关键词，最多输入200字符）</label>
+								<div class="controls">
+									<textarea type="text" name="setting[meta_keywords]" maxlength="200" >{$data['setting']['meta_keywords']}</textarea>
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label">META Description（栏目描述，最多输入300字符）</label>
+								<div class="controls">
+									<textarea name="setting[meta_description]" rows="5" cols="57" maxlength="300">{$data['setting']['meta_description']}</textarea>
+								</div>
+							</div>
+						</fieldset>
+					</div>
+					<div class="tab-pane" id="C">
+						<fieldset>
+						
+						
+							<div class="control-group">
+								<label class="control-label">栏目首页模板</label>
+								<div class="controls">
+									<select name="setting[category_template]" id="category_template">
+										<option value="category{:C('TMPL_TEMPLATE_SUFFIX')}" selected>默认栏目首页：category{:C('TMPL_TEMPLATE_SUFFIX')}</option>
+										 <foreach name="tp_category" item="vo">
+										 	<option value="{$vo}" <if condition="$data['setting']['category_template'] eq $vo"> selected</if> >{$vo}</option>
+										 </foreach>
+							 			 新增模板以category_x{:C("TMPL_TEMPLATE_SUFFIX")}形式
+									</select>
+								</div>
+							</div>
+						
+						
+							<div class="control-group">
+									<label class="control-label">栏目列表</label>
+									<div class="controls">
+										<select name="setting[list_template]" id="list_template">
+											<option value="list{:C('TMPL_TEMPLATE_SUFFIX')}" selected>默认列表页：list{:C('TMPL_TEMPLATE_SUFFIX')}</option>
+											 <foreach name="tp_list" item="vo">
+											 	<option value="{$vo}" <if condition="$data['setting']['list_template'] eq $vo"> selected</if> >{$vo}</option>
+											 </foreach>
+								 			 新增模板以list_x{:C("TMPL_TEMPLATE_SUFFIX")}形式
+										</select>
+									</div>
+								</div>
+								<div class="control-group">
+									<label class="control-label">栏目内容页</label>
+									<div class="controls">
+										<select name="setting[show_template]" id="show_template">
+											<option value="show{:C('TMPL_TEMPLATE_SUFFIX')}" selected>默认列表页：show{:C('TMPL_TEMPLATE_SUFFIX')}</option>
+											 <foreach name="tp_show" item="vo">
+											 	<option value="{$vo}" <if condition="$data['setting']['show_template'] eq $vo"> selected</if> >{$vo}</option>
+											 </foreach>
+								 			 新增模板以show_x{:C("TMPL_TEMPLATE_SUFFIX")}形式
+										</select>
+									</div>
+								</div>
+								
+								
+					
+						
+						<!-- <div class="control-group">
+								<label class="control-label">后台信息列表模板</label>
+								<div class="controls">
+									<input type="text" name="setting[list_customtemplate]"  class="input" value="{$data['setting']['list_customtemplate']}">模板名称不带后缀，不设置为使用默认列表，增加列表模板可在Contents/Tpl/Listtemplate/里增加文件
+								</div>
+						</div> -->
+						  
+						</fieldset>
+					</div>
+						<div class="tab-pane" id="D">
+						<fieldset>
+							<div class="control-group">
+								<label class="control-label">栏目生成Html</label>
+								<div class="controls">
+									<label><input type="radio" onClick="category_html();" value="1" name="setting[ishtml]" <if condition="$setting['ishtml'] eq '1' ">checked</if>>栏目生成静态</label>
+									<label><input type="radio" onClick="category_php();"  value="0" name="setting[ishtml]" <if condition="$setting['ishtml'] eq '0' ">checked</if>>栏目不生成静态</label> 
+								</div>
+							</div>
+							<div class="control-group" <if condition="$setting['ishtml'] eq '0' "> style="display:none" </if> id="repagenum" >
+								<label class="control-label">栏目生成静态页数</label>
+								<div class="controls">
+									<input type="text"  value="{$setting.repagenum}" name="setting[repagenum]"  >(超过分页采用动态链接，0为不限)			
+								</div>
+							</div>
+							<if condition="$data['child'] eq 0">
+							 	<div class="control-group" >
+									<label class="control-label">内容页生成Html</label>
+									<div class="controls">
+										<label><input type="radio"  value="1" name="setting[content_ishtml]" onClick="show_html();"  <if condition="$setting['content_ishtml'] eq '1' ">checked</if>  >内容页生成静态</label>	
+										<label><input type="radio" onClick="show_php();"  value="0" name="setting[content_ishtml]" <if condition="$setting['content_ishtml'] eq '0' ">checked</if>>内容页不生成静态</label>
+									</div>
+								</div>
+							</if>
+							
+						<div class="control-group">
+								<label class="control-label">栏目页URL规则</label>
+								<div class="controls" id="category_php_ruleid" <if condition="$setting['ishtml'] eq '1'"> style="display:none" </if> >
+									{$category_php_ruleid} 
+								</div>
+								<div class="controls" id="category_html_ruleid" <if condition="$setting['ishtml'] eq '0' "  >style="display:none"</if>>
+									{$category_html_ruleid} 
+								</div>
+
+						</div>
+						 <if condition="$data['child'] eq 0">
+							 <div class="control-group">
+									<label class="control-label">内容页URL规则</label>
+									<div class="controls" id="show_php_ruleid"  <if  condition="$setting['content_ishtml'] eq '1' " >style="display:none"</if>   >
+										{$show_php_ruleid} 
+									</div>
+									<div class="controls" id="show_html_ruleid" <if condition="$setting['content_ishtml'] eq '0'">style="display:none"</if> >
+										{$show_html_ruleid} 
+									</div>
+							</div>
+						 <else />
+						 	<input type="hidden" name="setting[content_ishtml]" value="{$setting.content_ishtml}" />
+						 </if>
+						 <div class="control-group" <if condition="$setting['ishtml'] eq '0' " > style="display:none"</if> id="tr_domain" >
+								<label class="control-label">绑定域名</label>
+								<div class="controls">
+									<input type="text" value="{$data.domain}"  class="input" id="url" name="info[url]" />&nbsp;域名可为空，格式应该为http://www.reanod.com/
+								</div>
+						</div>
+						</fieldset>
+					</div>
+					 <div class="tab-pane" id="E">
+						<fieldset>
+							<div class="control-group">
+								<label class="control-label">角色权限</label>
+								<div class="controls">
+				              		 <table>
+					              		 <foreach name="Role_group" item="vo">
+					              		 <tr>
+					              		 	<td width="30%">
+					              		 		<label class="checkbox inline" for="check_all"><input type="checkbox" onclick="checknode(this);" level="0"  id="check_all" <if condition=" $vo['id'] eq 1 "> disabled</if>  >{$vo.name}</label> 
+					              		 	</td>
+					              		 	<td>
+							              		  <!-- <input  type="checkbox"  level="1"  name="priv_roleid[]" <if condition=" $vo['id'] eq 1 "> disabled</if> {$vo.init}  value="init,{$vo.id}" ><span>查看</span> -->
+							                      <input  type="checkbox"  level="1"  name="priv_roleid[]" <if condition=" $vo['id'] eq 1 "> disabled</if> {$vo.add}  value="add,{$vo.id}" ><span>添加</span>
+							                      <input  type="checkbox"  level="1"  name="priv_roleid[]" <if condition=" $vo['id'] eq 1 "> disabled</if> {$vo.edit}  value="edit,{$vo.id}" ><span>修改</span>
+							                      <input  type="checkbox"  level="1"  name="priv_roleid[]" <if condition=" $vo['id'] eq 1 "> disabled</if> {$vo.delete}  value="delete,{$vo.id}" ><span>删除</span>
+							                      <input  type="checkbox"  level="1"  name="priv_roleid[]" <if condition=" $vo['id'] eq 1 "> disabled</if> {$vo.listorder}  value="listorder,{$vo.id}" ><span>排序</span>
+							                      <input  type="checkbox"  level="1"  name="priv_roleid[]" <if condition=" $vo['id'] eq 1 "> disabled</if> {$vo.push}  value="push,{$vo.id}" ><span>推荐</span>
+							                      <input  type="checkbox"  level="1"  name="priv_roleid[]" <if condition=" $vo['id'] eq 1 "> disabled</if> {$vo.auth}  value="auth,{$vo.id}" ><span>审核</span>
+							                      <input  type="checkbox"  level="1"  name="priv_roleid[]" <if condition=" $vo['id'] eq 1 "> disabled</if> {$vo.remove}  value="remove,{$vo.id}" ><span>移动</span>
+					              		 	</td>
+					              		 </tr>
+					              		 </foreach>
+				              		 </table>
+								</div>
+							</div>
+						 	<div class="control-group">
+								<label class="control-label">是否应用到子栏目</label>
+								<div class="controls">
+				              		<input type="radio" name="priv_child" value="1" />应用到子栏目
+				              		<input type="radio" name="priv_child" value="0" checked />不应用到子栏目
+				              		<div style="color: red;">&nbsp;&nbsp;选择 &nbsp;是，缩略图大小，模板设置，权限设置 &nbsp;将设置到子栏目</div>
+								</div>
+							</div>
+						 
+						</fieldset>
+		          </div>
+		          
+				</div>
+			</div>
+			<div class="form-actions">
+			 	<input name="catid" type="hidden" value="{$data.catid}">
+				<button class="btn btn-primary js-ajax-submit" type="submit">{:L('SAVE')}</button>
+				<a class="btn" href="{:U('Category/index')}">{:L('BACK')}</a>
+			</div>
+		</form>
+	</div>
+	<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/js/content_addtop.js"></script>
+	<script type="text/javascript">
+		//编辑器路径定义
+		var editorURL = GV.DIMAUB;
+	</script>
+	<script type="text/javascript" src="__PUBLIC__/js/ueditor/ueditor.config.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/js/ueditor/ueditor.all.min.js"></script>
+</body>
+
+<script>
+
+function checknode(obj) {
+    var chk = $("input[type='checkbox']");
+    var count = chk.length;
+    var num = chk.index(obj);
+    var level_top = level_bottom = chk.eq(num).attr('level');
+    for (var i = num; i >= 0; i--) {
+        var le = chk.eq(i).attr('level');
+        if (eval(le) < eval(level_top)) {
+            chk.eq(i).attr("checked", true);
+            var level_top = level_top - 1;
+        }
+    }
+    for (var j = num + 1; j < count; j++) {
+        var le = chk.eq(j).attr('level');
+        if (chk.eq(num).attr("checked") == "checked") {
+            if (eval(le) > eval(level_bottom)){
+            	chk.eq(j).attr("checked", true);
+            }
+            else if (eval(le) == eval(level_bottom)){
+            	break;
+            }
+        } else {
+            if (eval(le) > eval(level_bottom)){
+            	chk.eq(j).attr("checked", false);
+            }else if(eval(le) == eval(level_bottom)){
+            	break;
+            }
+        }
+    }
+}
+
+//栏目生成静态
+function category_html(){
+	
+	$('#category_php_ruleid').css('display','none');
+	$('#category_html_ruleid').css('display','');
+	$('#tr_domain').css('display','');
+	$('#repagenum').css('display','');
+	
+	var modelid = getmodelid();
+	
+	 
+	 var lm = new Array();
+	 lm[1] =27;     //静态文章
+	 lm[2] =25;		//静态下载
+	 lm[3] =28;		//静态图片
+	 lm[5] =26;		//静态产品
+	 lm[31] = 35;
+	 
+	 $("#category_html_ruleid option").each(function(){
+		
+		 if($(this).val() == lm[modelid]){
+				$(this).attr("selected","selected");
+			}else{
+				$(this).removeAttr("selected");
+			}
+		 
+	 });
+
+}
+
+
+//栏目生成动态
+function category_php(){
+	$('#category_php_ruleid').css('display','');
+	$('#category_html_ruleid').css('display','none');
+	$('#tr_domain').css('display','none');
+	$('#repagenum').css('display','none');
+	
+	var modelid = getmodelid();
+	
+	var lm = new Array();
+	 lm[1] =18;		//动态文章
+	 lm[2] =20;		//动态下载
+	 lm[3] =17;		//动态图片
+	 lm[5] =19;		//动态产品
+	 lm[31] =33;
+	
+	 $("#category_php_ruleid option").each(function(){
+		 
+			if($(this).val() == lm[modelid]){
+				$(this).attr("selected","selected");
+			}else{
+				$(this).removeAttr("selected");
+			}
+
+		});
+	 
+}
+
+//内容生成动态
+
+function show_php(){
+	$('#show_php_ruleid').css('display','');
+	$('#show_html_ruleid').css('display','none');
+	
+	var modelid = getmodelid();
+	
+	var nr = new Array();
+	 nr[1] =22;		//动态文章
+	 nr[2] =24;		//动态下载
+	 nr[3] =21;		//动态图片
+	 nr[5] =23;		//动态产品
+	 nr[31] =34;    //动态faq
+	 
+	 $("#show_php_ruleid option").each(function(){
+			if($(this).val() == nr[modelid]){
+				$(this).attr("selected", "selected");
+			}else{
+				$(this).removeAttr("selected");
+			}
+			 
+		});
+	
+}
+
+//内容生成静态
+
+function show_html(){
+	$('#show_php_ruleid').css('display','none');
+	$('#show_html_ruleid').css('display','');
+	
+	var modelid = getmodelid();
+	
+	var nr = new Array();
+	 nr[1] =30;		//静态文章
+	 nr[2] =32;		//静态下载
+	 nr[3] =29;		//静态图片
+	 nr[5] =31;		//静态产品
+	 nr[31]=36;     //静态faq
+	 
+	 $("#show_html_ruleid option").each(function(){
+		 
+		 if($(this).val() == nr[modelid]){
+			 $(this).attr("selected" ,"selected");
+		 }else{
+			 $(this).removeAttr("selected");
+		 }
+		 
+	 });
+	
+}
+
+
+//得到modelid 
+function getmodelid(){
+	var modelid;
+	
+	$("#modelid option").each(function(){
+		
+		if($(this).attr("selected") =="selected"){
+			modelid =$(this).val();
+		}
+		
+	});
+ 
+	return modelid;
+}
+
+
+
+$(function(){
+	
+	//ueditor 初始化
+ 	editorcontent = new baidu.editor.ui.Editor();
+	editorcontent.render('container');
+	
+	$("#modelid").change(function(){
+		
+		var modelid = $("#modelid").val();
+		
+		 var arr = new Array();
+		 arr[1] ='category_new.html';       //文章
+		 arr[2] ='category_down.html';		//下载
+		 arr[3] ='category_pic.html';		//图片
+		 arr[5] ='category_pro.html';		//产品
+		 arr[31] ='category_faq.html';      //faq
+		 
+		 $("#category_template option").each(function(){
+			
+			 if($(this).val() == arr[modelid]){
+				 $(this).attr("selected", "selected");
+			 }else{
+				 $(this).removeAttr('selected');
+			 }
+			 
+		 });
+		 
+		 
+		 //选取模型后，改变栏目页URL规则
+		 
+		 var lm = new Array();
+		 lm[1] =18;
+		 lm[2] =20;
+		 lm[3] =17;
+		 lm[5] =19;
+		 lm[31]= 33;
+		 
+		 $("#category_php_ruleid option").each(function(){
+			 
+			if($(this).val() == lm[modelid]){
+				$(this).attr("selected","selected");
+			}else{
+				$(this).removeAttr("selected");
+			}
+
+		 });
+		 
+		 var lm_html = new Array();
+		 lm_html[1] =27;     	//静态文章
+		 lm_html[2] =25;		//静态下载
+		 lm_html[3] =28;		//静态图片
+		 lm_html[5] =26;		//静态产品
+		 lm_html[31]= 35;       //静态faq
+		 
+		$("#category_html_ruleid option").each(function(){
+			 
+			 if($(this).val() == lm_html[modelid]){
+					$(this).attr("selected","selected");
+				}else{
+					$(this).removeAttr("selected");
+				}
+			 
+		 });
+		 
+		 
+		 
+		 // 选取模型后，改变内容页URL规则
+		 
+		 var nr = new Array();
+		 nr[1] =22;
+		 nr[2] =24;
+		 nr[3] =21;
+		 nr[5] =23;
+		 nr[31] =34; 
+		 
+		 $("#show_php_ruleid option").each(function(){
+			if($(this).val() == nr[modelid]){
+				$(this).attr("selected", "selected");
+			}else{
+				$(this).removeAttr("selected");
+			}
+			 
+		 });
+		  
+		 
+		 var nr_html = new Array();
+		 nr_html[1] =30;		//静态文章
+		 nr_html[2] =32;		//静态下载
+		 nr_html[3] =29;		//静态图片
+		 nr_html[5] =31;		//静态产品
+		 nr_html[31] =36;
+		 
+		$("#show_html_ruleid option").each(function(){
+			 
+			 if($(this).val() == nr_html[modelid]){
+				 $(this).attr("selected" ,"selected");
+			 }else{
+				 $(this).removeAttr("selected");
+			 }
+			 
+		 });
+		 
+		 
+		 
+		 //修改模板设置中栏目列表，栏目内容页
+		 
+		 var lm_list = new Array();
+		 lm_list[1] ="list_new.html";		//文章
+		 lm_list[2] ="list_down.html";		//下载
+		 lm_list[3] ="list_pic.html";		//图片
+		 lm_list[5] ="list_pro.html";		//产品
+		 lm_list[31] ="list_faq.html";
+		 
+		 $("#list_template option").each(function(){
+			 
+			 if($(this).val() == lm_list[modelid]){
+				 $(this).attr("selected" ,"selected");
+			 }else{
+				 $(this).removeAttr("selected");
+			 }
+			 
+		 });
+		 
+		 
+		 var nr_list = new Array();
+		 nr_list[1] ="show_new.html";
+		 nr_list[2] ="show_down.html";
+		 nr_list[3] ="show_pic.html";
+		 nr_list[5] ="show_pro.html";
+		 nr_list[31] ="show_faq.html";
+		 $("#show_template option").each(function(){
+			 
+			 if($(this).val() == nr_list[modelid]){
+				 $(this).attr("selected" , "selected");
+			 }else{
+				 $(this).removeAttr("selected");
+			 }
+			 
+		 });
+		
+	});
+	
+	
+})
+
+</script>
+
+</html>

@@ -1,0 +1,61 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li><a href="{:U('AdsPosition/index')}">广告位列表</a></li>
+			<li class="active"><a href="javascript:;">广告图</a></li>
+		</ul>
+		<form method="post" class="js-ajax-form">
+			<table class="table table-hover table-bordered table-list">
+				<thead>
+					<tr>
+						<th width="40">ID</th>
+						<th width="100">广告图</th>
+						<th width="100">alt</th>
+						<th width="100">连接</th>
+						<th width="100">排序</th>
+						<th width="100">状态</th>
+						<th width="300">{:L('ACTIONS')}</th>
+					</tr>
+				</thead>
+				<tbody>
+				<php>$status = array('0'=>'显示','1'=>'隐藏');</php>
+					<foreach name="ads" item="vo">
+					<tr>
+						<td>{$vo.id}</td>
+						<td><img src="{$vo.image}"></td>
+						<td>{$vo.alt}</td>
+						<td>{$vo.url1}</td>
+						<td>{$vo.sort}</td>
+						<td>{$status[$vo['status']]}</td>
+						<td>
+							<a href="{:U('Ads/edit',array('id'=>$vo['id'],'position_id'=>$position_id))}">{:L('EDIT')}</a> |
+							<a href="{:U('Ads/delete',array('id'=>$vo['id'],'position_id'=>$position_id))}" class="js-ajax-delete">{:L('DELETE')}</a>
+						</td>
+					</tr>
+					</foreach>
+				</tbody>
+				<tfoot>
+					<tr>
+						<th width="40">ID</th>
+						<th width="100">广告图</th>
+						<th width="100">alt</th>
+						<th width="100">连接</th>
+						<th width="100">排序</th>
+						<th width="100">状态</th>
+						<th width="300">{:L('ACTIONS')}</th>
+					</tr>
+				</tfoot>
+			</table>
+			<div class="table-actions"></div>
+			<div class="pagination">
+				<div class="pager">
+					{$Page}
+				</div>
+			</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

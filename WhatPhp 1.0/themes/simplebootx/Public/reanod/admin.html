@@ -1,0 +1,208 @@
+<script src="__TMPL__Public/js/jquery-ui.js"></script>
+<script type="text/javascript" src="__TMPL__Public/js/zDrag.js"></script>
+<script type="text/javascript" src="__TMPL__Public/js/zDialog.js"></script>
+
+<style type="text/css">
+    .reanod_sortable{background: red;height:30px;}
+</style>
+<style>
+#zctjmk{ position:absolute;top:0;background:#FFC}
+#zctjmk>li{ position:relative; margin-left:18px; z-index:9999}
+#zctjmk>li>a{ display:block; font-size:16px; color:#1f1a17; text-transform:uppercase; line-height:53px; padding:0 24px;}
+
+.yiji{ width:170px; background:#ffd600; position:absolute; z-index:99999; left:0px; top:-9999px;}
+.yiji li{ position:relative;}
+.yiji li a{ display:block; padding:10px 20px; line-height:24px; font-size:16px; font-size:1.6rem;}
+.yiji li:hover>a{ background:#fff; }
+
+.erji{ width:210px; background:#ffd600;  position:absolute; z-index:99999; left:170px; top:-9999px;}
+#zctjmk>li:hover .yiji{ top:53px;}
+.yiji li:hover .erji{ top:0px;}
+</style>
+<script>
+$(window).scroll(function(){
+    var targetTop = $(this).scrollTop();
+    $('#zctjmk').css({'top':targetTop+'px'})
+})
+$(function (){
+    $('#zctjmk').css({'top':$(this).scrollTop()+'px'});
+})
+
+</script>
+<php>$zctjmk = S("Model");</php>
+<ul id="zctjmk">
+  <li><a href="javascript:void(0);">添加模块</a>
+    <ul class="yiji">
+<php>$zktjmk=array('kopqt');</php>
+<foreach name="zctjmk" item="v" >
+<php>$zktjmk[]='kop'.$v[tablename];</php>
+      <li><a href="javascript:void(0);">{$v.name}</a>
+        <ul class="erji" id="kop{$v.tablename}">
+          <li id="zc_{$v.tablename}list" modelid="{$v.modelid}" zcsign="{$v.tablename}_list" class="zcmoflag" zc_pnum="1"><a title="拖拽到添加位置">列表</a></li>
+          <li id="zc_{$v.tablename}category" modelid="{$v.modelid}" zcsign="{$v.tablename}_category" class="zcmoflag" zc_pnum="2"><a title="拖拽到添加位置">分类</a></li>
+          <li id="zc_{$v.tablename}new" modelid="{$v.modelid}" zcsign="{$v.tablename}_new" class="zcmoflag" zc_pnum="3"><a title="拖拽到添加位置">最新</a></li>
+          <li id="zc_{$v.tablename}hot" modelid="{$v.modelid}" zcsign="{$v.tablename}_hot" class="zcmoflag" zc_pnum="4"><a title="拖拽到添加位置">最热</a></li>
+        </ul>
+      </li>
+</foreach>
+      <li><a href="javascript:void(0);">其它</a>
+        <ul class="erji" id="kopqt">
+          <li id="zc_singlepage" zcsign="single_page" class="zcmoflag" zc_pnum="1"><a title="拖拽到添加位置">单页</a></li>
+          <li id="zc_html" zcsign="html" class="zcmoflag" zc_pnum="2"><a title="拖拽到添加位置">html</a></li>
+          <li id="zc_contactinformation" zcsign="contact_information" class="zcmoflag" zc_pnum="3"><a title="拖拽到添加位置">联系方式</a></li>
+          <li id="zc_friendlylinks" zcsign="friendly_links" class="zcmoflag" zc_pnum="4"><a title="拖拽到添加位置">友情连接</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+<php>$zktjmk2 = ',#'.implode(',#',$zktjmk);</php>
+<php>
+$mvc = MODULE_NAME.'/'.CONTROLLER_NAME.'/'.ACTION_NAME;
+switch ($mvc) {
+    case 'Content/Pagedis/lists':
+        $zc_controller = new \Common\Controller\HomebaseController();
+        $hash = md5('Content/Pagedis/lists'.$zc_controller->catid);
+        break;
+    case 'Content/Createhtml/category':
+    case 'Content/Createhtml/update_post':
+    case 'Content/Createhtml/update_show':
+        $parse = parse_url($zc_controller->moveurl);
+        parse_str($parse['query'],$zcparse);
+        $hash = md5($zcparse['g'].'/'.$zcparse['m'].'/'.$zcparse['a']);
+        break;
+
+    default:
+        $hash = md5($mvc);
+        break;
+}
+</php>
+<script>
+    var zchash="{$hash}";
+    var zcont1 = '#center,#left,#right';
+    var zcont2 = '#nav,#navs,#logo';
+    $(function() {
+        function tojson(val){
+            var json="";
+            var str=val.split("&");
+            for(var i=0;i<str.length;i++){
+                var arr = str[i].split("=");
+                json+=","+arr[1];
+            }
+            return json.substring(1);
+        }
+        $( zcont1+"{$zktjmk2}").sortable({
+            connectWith: zcont1,
+            dropOnEmpty: true,
+            helper: "clone",
+            placeholder: "reanod_sortable",
+            cursor: "move",
+            tolerance: "pointer",
+            start: function(event, ui) {
+                if(
+<foreach name="zktjmk" item="v" >
+                    ui.item.parent().attr('id') == '{$v}' || 
+</foreach>
+                true) {
+                    tmp_data = ui.item.parent();
+                    tmp_data_ = ui.item;
+                    ui.item.show();
+                }
+            },
+            stop: function(event, ui) {
+                if(ui.item.attr('class') == 'zcmoflag'){
+
+                    tmp_data.find('.zcmoflag').each(function(index,domEle){
+                        if(parseInt($(domEle).attr('zc_pnum')) > parseInt(tmp_data_.attr('zc_pnum')))
+                        {
+                            $(domEle).before(tmp_data_);
+                            flag = true;
+                            return false;
+                        }
+                    });
+                    if(typeof flag === 'undefined')
+                    {
+                        tmp_data.append(tmp_data_);
+                    }
+
+                }
+            },
+            update:function (){
+                var reanod = $(this).sortable("serialize");
+                if($(this).attr('id').indexOf('kop') == -1){
+                    $.ajax({
+                        url:'index.php/index/zc',
+                        type:'post',
+                        data:'sign='+ $(this).attr('id')+"&"+reanod,
+                        success:function (e){
+                            if(e != 'ok'){
+                                alert('保存失败');
+                            }
+                        }
+                    })
+                }
+            },
+            receive: function(event, ui) {
+                if(ui.item.attr("class")=="zcmoflag"){
+                    var zczjd = tojson($('#'+this.id).sortable("serialize"));
+                    var zcurl = "{:U('Portal/Index/kop','','',true)}"+'&zcsign='+ui.item.attr("zcsign")+'&modelid='+ui.item.attr("modelid")+'&currpos='+this.id+'&zczjd='+zczjd+'&hash='+'{:md5(MODULE_NAME.'/'.CONTROLLER_NAME.'/'.ACTION_NAME)}';
+                    zctan(zcurl);
+                }
+            }
+
+        }).disableSelection();
+
+        $(zcont1).children().hover(function (){
+            $(this).css({'border':'2px dashed red'});
+            $('#rn_'+$(this).attr('id')).show();
+        },function (){
+            $(this).css("border",'none');
+            $('#rn_'+$(this).attr('id')).hide();
+        })
+
+        $(zcont2).sortable({
+            connectWith: [zcont2],
+            dropOnEmpty: false,
+            placeholder: "reanod_sortable",
+            cursor: "move",
+            tolerance: "pointer",
+
+            update:function (){
+                var reanod = $(this).sortable("serialize");
+                $.ajax({
+                    url:'index.php/index/zc',
+                    type:'post',
+                    data:'sign='+ $(this).attr('id')+"&"+reanod,
+                    success:function (e){
+                        if(e != 'ok'){
+                            alert('保存失败');
+                        }
+                    }
+                })
+            }
+
+        }).disableSelection();
+        $(zcont2).children().hover(function (){
+            $(this).css({'border':'2px dashed red'});
+            $('#rn_'+$(this).attr('id')).show();
+        },function (){
+            $(this).css("border",'none');
+            $('#rn_'+$(this).attr('id')).hide();
+        })
+
+
+
+    });
+    function zctan(url,title,width,height){
+        var title = title?title:'修改设置';
+        var width = width?width:800;
+        var height = height?height:500;
+        var diag = new Dialog();
+        diag.Width = parseInt(width);
+        diag.Height = parseInt(height);
+        diag.Modal = false;
+        diag.Title = title;
+        diag.URL = url;
+        diag.show();
+    }
+</script>

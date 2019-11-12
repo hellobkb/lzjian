@@ -1,0 +1,332 @@
+<admintpl file="header" />
+<style>
+.home_info li em {
+  float: left;
+  width: 120px;
+  font-style: normal;
+}
+li {
+  list-style: none;
+}
+</style>
+</head><body>
+<div class="wrap" style="margin-left:0; padding-left:0;padding-bottom:100px;">
+  <div class="px">
+    <div class="px_title">新顾问课程——您身边的外贸顾问，让您做外贸更简单！</div>
+        <div class="px_top">
+          <div class="px_top_title">提升自己从新顾问开始！欢迎进入新顾问试听平台</div>
+            <if condition="$ifhave eq 1 ">
+	            <div class="px_tpro">
+		            <foreach name="out_list" item="vo" key="key">
+			            <div <if condition="$key eq 2 "> class="px_tnr px_tnrlast"  <else />  class="px_tnr" </if> >
+			            	<a href="<php> echo $vo['sitehost'].'/index/show/id/'.$vo['vrid'].'.html'</php>" target="_blank"><img src="{$vo.imgurl}" /></a>
+			            </div>
+		            </foreach>
+	                <div class="clear"></div>
+	            </div>
+	        <else />
+	        		<div style="margin: 0 auto;">暂无视频~</div>
+            </if>
+        </div>
+        <div class="px_center">
+            <div class="px_ctitle">更多精品课程，等你来学习</div>
+            <div>
+        	<script type="text/javascript" src="__PUBLIC__/js/qiehuan.js"></script>
+            <div class="px_cnr fl">
+                 <ul id="dmenu2" class="px_menu">
+                 	  <volist name="shipin['0']" id="vo">
+                     	<li onClick="dsetTab(2,{$key})" <if condition="$key eq 0">class="hovers"</if>>{$vo.cname}</li>
+                     </volist>
+                   <div class="clear"></div>
+                 </ul>
+                 <div class="clear"></div>
+                 <div id="dmain2">
+   						<volist name="shipin['0']" key="k" id="vo">
+   	                        <ul <if condition="$k eq 1">class="block"</if> >
+   								<volist name="vo['free_courses']" key="k" id="v">
+	   		                        <div class="px_cli px_clifirst">
+	   		                            <a href="{$v.url}" title="{$v.vname}" target="_blank">{$v.vname}</a>
+	   		                        </div>
+   		                        </volist>
+   	                        </ul>
+                        </volist>
+                 </div>
+            </div>
+          
+            <div class="px_cnr fr">     
+                  <ul id="emenu2" class="px_menu">
+                  	  <volist name="shipin['1']" id="vo">
+                      	<li onClick="esetTab(2,{$key})" <if condition="$key eq 0">class="hovers"</if>>{$vo.cname}</li>
+                      </volist>
+                    <div class="clear"></div>
+                  </ul>
+                  <div class="clear"></div>
+                  <div id="emain2">
+                  		<volist name="shipin['1']" key="k" id="vo">
+		                      <ul <if condition="$k eq 1">class="block"</if> >
+		                      		<volist name="vo['free_courses']" key="k" id="v">
+				                          <div class="px_cli px_clifirst">
+				                            <a href="{$v.url}" title="{$v.vname}" target="_blank">{$v.vname}</a>
+				                          </div>
+			                       </volist>
+		                      </ul>
+		                </volist>
+                  </div>
+            </div>
+              
+              <div class="clear"></div>
+          </div>
+
+        </div>
+        
+        
+        <div class="px_bottom">
+          <div class="px_bnr1">
+              <div class="px_bnr1_wz1">新顾问视频教程咨询热线</div>
+                <div class="px_bnr1_wz2">400-6685-885</div>
+            </div>
+            
+            <div class="px_bnr2">
+              <div class="px_bnr2_title">外贸培训APP</div>
+                <div class="px_bnr2_ewm"><img src="__ROOT__/images/ewm-xinguwen.jpg" alt="" title="" /></div>
+                <div class="px_bnr2_wz"><img src="__ROOT__/images/px-wz1.jpg" alt="" title="" /></div>
+            </div>
+            
+            <div class="px_bnr3">
+              <div class="px_bnr3_title">瑞诺国际（官方公众号）</div>
+                <div class="px_bnr3_ewm"><img src="__ROOT__/images/ewm-reanod.jpg" alt="" title="" /></div>
+                <div class="px_bnr3_wz"><img src="__ROOT__/images/px-wz2.jpg" alt="" title="" /></div>
+            
+            </div>
+            
+          <div class="clear"></div>
+        </div>
+        
+  
+  </div>
+</div>
+<script src="__PUBLIC__/js/common.js"></script> 
+<script src="__PUBLIC__/js/echarts.common.min.js"></script>
+<script>
+    //获取官方通知
+    
+ /*   $.get("{:U('Main/getVersion')}", {} ,function(str){
+    	 if(str.status ==1){
+    		 if(window.confirm(str.msg)){
+    			 window.open('http://www.xinguwen.com/thinkcmf_update.html');
+    		 } 
+    		
+    	 } 
+    },'json');*/
+ /*    $.getJSON("{:U('Main/getVersion')}",
+    function(data) {
+    	
+    	 
+    	
+      var tpl = '<li><em class="title"></em><span class="content"></span></li>';
+      var $thinkcmf_notices = $("#thinkcmf_notices");
+      $thinkcmf_notices.empty();
+      alert(data);
+      if (data.length > 0) {
+        $.each(data, function(i, n) {
+          var $tpl = $(tpl);
+          $(".title", $tpl).html(n.title);
+          $(".content", $tpl).html(n.content);
+          $thinkcmf_notices.append($tpl);
+        });
+      } else {
+        $thinkcmf_notices.append("<li>^_^,{:L('NO_NOTICE')}~~</li>");
+      }  
+
+    });
+    
+     */
+    
+	$(function(){
+		
+		//本财年目标总情况
+		var myChart1 = echarts.init(document.getElementById('main11'));
+		var option1 ={
+			    title : {
+			        text: '本财年目标总情况',
+			        
+			    },
+			    tooltip : {
+			        trigger: 'axis',
+			        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+			            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+			        }
+			    },
+			    legend: {
+			        data:['预测金额','成交金额','目标金额','业绩走势']
+			    },
+			    toolbox: {
+			        show : true,
+			        feature : {
+			            dataView : {show: true, readOnly: false},
+			            magicType : {show: true, type: ['line', 'bar']},
+			            restore : {show: true},
+			            saveAsImage : {}
+			        }
+			    },
+			    calculable : true,
+			    xAxis : [
+			        {
+			            type : 'category',
+			            data : {$yearList},
+			        }
+			    ],
+			    yAxis : [
+			         {
+            			type: 'value',
+            			axisLabel: {
+                            formatter: '{value} 美元'
+                        }
+        			},
+        			 
+			    ],
+			    series : [
+			        {
+			        	name:'预测金额',
+			        	type:'bar',
+			        	data:{$foreList}
+			            
+			          
+			        },
+			        {
+			        	name:'成交金额',
+			            type:'bar',
+			            data:{$currentList},
+			          
+			        },
+			        {
+			        	name:'目标金额',
+			            type:'bar',
+			            data:{$targetList},
+			        	
+			        },
+			        {
+			            name:'业绩走势',
+			            type:'line',
+			            data:{$currentList}
+			        }
+			         
+			    ]
+			};
+		
+		 myChart1.setOption(option1);
+		
+		
+		 //各部门完成情况
+		 var myChart2 = echarts.init(document.getElementById('main21'));
+		 
+		 var option2 = {
+				 title : {
+				        text: '各分公司完成情况',  
+				    },
+				    tooltip : {
+				        trigger: 'axis',
+				        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+				            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+				        }
+				    },
+				    legend: {
+				        data:['预测金额','成交金额','目标金额']
+				    },
+				    toolbox: {
+				        show : true,
+				        feature : {
+				            dataView : {show: true, readOnly: false},
+				            magicType : {show: true, type: ['line', 'bar']},
+				            restore : {show: true},
+				            saveAsImage : {}
+				        }
+				    },
+				    calculable : true,
+				    xAxis : [
+				        {
+				            type : 'category',
+				            data : {$company},
+				            
+				        }
+				    ],
+				    yAxis : [
+				        {
+				            type : 'value',
+				            axisLabel: {
+	                            formatter: '{value} 美元'
+	                        }
+				        }
+				    ],
+				    series : [
+				        {
+				        	name:'预测金额',
+				        	type:'bar',
+				        	data:{$fList}
+				            
+				          
+				        },
+				        {
+				        	name:'成交金额',
+				            type:'bar',
+				            data:{$cList},
+				          
+				        },
+				        {
+				        	name:'目标金额',
+				            type:'bar',
+				            data:{$tList},
+				        	
+				        }
+				    ]
+		 };
+		 
+		 myChart2.setOption(option2);
+		 
+		 myChart2.on('click', eConsole);
+		 function eConsole(param){
+			 window.location.href="{:U('Crm/Cdata/department')}&name=" + param.name;
+		 }
+		 
+		 
+		//各部门完成业绩占比
+			
+		var myChart3 = echarts.init(document.getElementById('main31'));
+		var option3 = {
+				 title : {
+		                text: '各分公司完成占比',
+		                x:'left'
+		            },
+		            tooltip : {
+		                trigger: 'item',
+		                formatter: "{a} <br/>{b} : {c} ({d}%)"
+		            },
+		            legend: {
+		                data: {$company2}
+		            },
+		            series : [
+		                {
+		                    name: '各分公司完成占比',
+		                    type: 'pie',
+		                    radius : '55%',
+		                    center: ['50%', '60%'],
+		                    data:{$cList2},
+		                    itemStyle: {
+		                        emphasis: {
+		                            shadowBlur: 10,
+		                            shadowOffsetX: 0,
+		                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+		                        }
+		                    }
+		                }
+		            ]
+		}
+			
+		myChart3.setOption(option3);
+		myChart3.on('click', eConsole);
+		 
+	});
+    
+  </script>
+</body>
+</html>

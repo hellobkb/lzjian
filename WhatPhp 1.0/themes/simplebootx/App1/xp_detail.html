@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>询盘详情</title>
+		
+		<tc_include file="App:header" />
+		 
+		<link rel="stylesheet" type="text/css" href="__TMPL__App/css/inquiryDetails.css">
+	</head>
+
+	<body>
+		<header id="header" class="mui-bar mui-bar-nav">
+			<button class="mui-action-back mui-btn mui-btn-blue mui-btn-link mui-btn-nav mui-pull-left">
+				<span class="mui-icon mui-icon-left-nav"></span>
+				返回
+			</button>
+			<h1 class="mui-title">询盘详情</h1>
+			<button class="mui-btn mui-btn-blue mui-btn-link mui-pull-right" id="reanod_del">删除</button>
+		</header>
+		<div id="content" class="mui-content">
+			<!--数据-->
+			<div class="reanod-data">
+				<if condition="$shifoufenpei neq 0 ">
+					<div class ="reanod-result">
+						<div class="result-title-left"><span>询盘信息</span></div>
+						<div class="result-title-right"> <span class="iconfont icon-people"></span> {$shifoufenpei} </div>
+						<div class="result-content">
+							<div>公司：<span> {$gongsi} </span></div>
+							<div>联系人：<span> {$lianxiren} </span></div>
+							<div>电话：<span> {$dianhua} </span></div>
+							<div>国家：<span> {$guojia} </span></div>
+							<div>传真：<span> {$chuanzhen}</span></div>
+							<div>邮箱：<span> {$email} </span></div>
+							<div>询盘商品：<span> {$shangpin} </span></div>
+							<div>发送时间：<span> {$sendDate} </span></div>
+							<div>地址：<span> {$address} </span></div>
+							<div><span class="cont_span1">内容：</span><span class="cont_span2"> {$neirong} </span></div>
+						</div>
+					</div>
+					<div class="reanod-result">
+						<div class="result-title-left"><span>分配操作</span></div>
+						<div class="result-content">
+							<div class="result-give">业务经理/业务员：</div>
+							<div class="result-select"> <span> {$shifoufenpei} </span> </div>
+							<div class="result-remark">备注：</div>
+							<div class="result-textarea">
+								<textarea disabled="disabled" placeholder="" style="border:0;background:#F9F9F9">{$content}</textarea>
+							</div>;
+						</div>
+					</div>
+
+				<else />
+					<div class ="reanod-result">
+						<div class="result-title-left"><span>询盘信息</span></div>
+						<div class="result-title-right">
+							<span class="iconfont icon-people" style="color:red;"></span>未分配
+						</div>
+						<div class="result-content">
+							<div>公司：<span> {$gongsi} </span></div>
+							<div>联系人：<span> {$lianxiren} </span></div>
+							<div>电话：<span> {$dianhua} </span></div>
+							<div>国家：<span> {$guojia} </span></div>
+							<div>传真：<span> {$chuanzhen} </span></div>
+							<div>邮箱：<span> {$email} </span></div>
+							<div>询盘商品：<span> {$shangpin} </span></div>
+							<div>发送时间：<span> {$sendDate} </span></div>
+							<div>地址：<span> {$address} </span></div>
+							<div>
+								<span class="cont_span1">内容：</span><span class="cont_span2"> {$neirong} </span>
+							</div>
+						</div>
+					</div>
+					<div class="reanod-result">
+						<div class="result-title-left"><span>分配操作</span></div>
+						<div class="result-content">
+							<div class="result-give">业务经理/业务员：</div>
+							<div class="result-select"> 
+								<select class="mui-btn mui-btn-block" id="reanod_select">
+									<option value="0" >请选择</option>
+									<foreach name="sale" item="vo">
+									 	<option value="{$vo.ywid}">{$vo.name}</option>
+									</foreach>
+								</select>
+							</div>
+							<div class="result-remark">备注：</div>
+							<div class="result-textarea"><textarea id="reanod_textarea" placeholder="请填写摘要"></textarea></div>
+						</div>
+					</div>
+					<div class="reanod-submit">
+					<button class="mui-btn-yellow" id="reanod_submit">提交</button>
+					<button class="mui-btn-grey" id="reanod_back">返回</button>
+					</div>
+				</if>
+			</div>
+		</div>
+		<div style="clear:both;height: 65px;"></div>
+
+		<tc_include file="App:footer" />
+
+	</body>
+	<script>
+		mui.init({});
+
+		mui.ready(function(){
+
+			var website = localStorage.getItem('keyUrl');
+
+				//提交按钮事件
+				var reanod_submit = document.getElementById("reanod_submit");
+
+				reanod_submit && reanod_submit.addEventListener("tap", function(event) {
+					//显示等待
+					showLoading();
+					 
+					//初始化
+					var reanod_select = document.getElementById('reanod_select').value;
+					var reanod_textarea = document.getElementById('reanod_textarea').value;
+
+
+
+					if(!reanod_select || reanod_select == 0 ) {
+						mui.os.plus && plus.nativeUI.closeWaiting();
+						mui.toast("请选择业务经理/业务员")
+						return;
+					}
+
+					//TODO 完善请求
+					mui.ajax(website+'/index.php?g=App&m=Mobile&a=xp_post', {
+						data: {
+							id:"{$id}",
+							type:2,
+							sale:reanod_select,
+							content:reanod_textarea,
+							token : '{$token}',
+						},
+						dataType: 'json', //服务器返回json格式数据
+						type: 'post', //HTTP请求类型
+						timeout: 10000, //超时时间设置为10秒；
+						success: function(data) {
+							//返回的状态
+							var state = data.status;
+							if(state == '1' || state == 1) {
+								mui.toast('提交成功！');
+								if(mui.os.plus) {
+									plus.nativeUI.closeWaiting();
+									plus.webview.currentWebview().reload(true); //重新加载页面
+								} else {
+									location.reload(true); //F5刷新
+								}
+							} else {
+								mui.os.plus && plus.nativeUI.closeWaiting();
+								mui.toast('提交失败！');
+							}
+						},
+						error: function(xhr, type, errorThrown) {
+							mui.os.plus && plus.nativeUI.closeWaiting();
+							mui.toast('网络异常,请稍后重试！');
+						}
+					});
+
+				});
+
+				//返回按钮事件
+				var reanod_back = document.getElementById("reanod_back");
+				reanod_back && reanod_back.addEventListener("tap", function(event) {
+					mui.back();
+				});
+
+
+				//设置内容格式
+				var outDiv = document.querySelector('.reanod-result');
+				var cont_spans = document.querySelectorAll('.cont_span1');
+				for(var i = 0; i < cont_spans.length; i++) {
+					var span1 = cont_spans[i];
+					var span2 = span1.nextSibling;
+
+					span2.style.width = (outDiv.offsetWidth - span1.offsetWidth - 26) + 'px';
+				}
+
+
+				//删除按钮事件
+				document.getElementById("reanod_del").addEventListener("tap", function(event) {
+					var btnArray = ['确定', '取消'];
+					mui.confirm('确定要删除吗？', '提示', btnArray, function(e) {
+						if(e.index == 0) {
+							//显示等待
+							showLoading();
+
+							//TODO 完善请求
+							mui.ajax(website+'/index.php?g=App&m=Mobile&a=xp_post', {
+								data: {
+									id:"{$id}",
+									type:1,
+									token:"{$token}",
+								},
+								dataType: 'json', //服务器返回json格式数据
+								type: 'post', //HTTP请求类型
+								timeout: 10000, //超时时间设置为10秒；
+								success: function(data) {
+									//返回的状态
+									var state = data.status;
+
+									if(state == '1' || state == 1) {
+										mui.alert('删除成功！','提示','确定',function(){mui.openWindow(data.info);});
+										
+									} else {
+										mui.os.plus && plus.nativeUI.closeWaiting();
+										mui.toast('删除失败！');
+									}
+								},
+								error: function(xhr, type, errorThrown) {
+									mui.os.plus && plus.nativeUI.closeWaiting();
+									//异常处理
+									mui.toast('网络异常,请稍后重试！');
+								}
+							});
+						}
+					})
+				});
+
+		});
+
+	</script>
+
+</html>

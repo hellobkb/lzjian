@@ -1,0 +1,80 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="{:U('Tkslibrary/index')}">词库列表</a></li>
+			<li><a href="{:U('Tkslibrary/add')}">添加</a></li>
+		</ul>
+		<form class="well form-search" >
+			<a>温馨提示：该关键词库可用于：
+			<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;（1）匹配栏目关键词。
+			<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;（2）匹配内容页关键词，'*'是通配符，用于替换内容页所匹配关键词的产品/文章名！</a>
+		</form>
+		<form class="js-ajax-form" method="post">
+			<table class="table table-hover table-bordered table-list">
+				<thead>
+					<tr>
+						<th width="15"><label><input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x"></label></th>
+						<th width="55">ID</th>
+						<th width="150">关键词</th>
+						<!-- <th width="120">是否使用</th> -->
+						<!-- <th width="120">栏目页使用次数</th> -->
+						<th width="100">{:L('MANAGE')}</th>
+					</tr>
+				</thead>
+				<foreach name="info" item="vo">
+				<tr>
+					<td><input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="ids[]" value="{$vo.id}" title="ID:{$vo.id}"></td>
+					<td>{$vo.id}</td>
+					<td><a>{$vo.keywords}</a></td>
+					<!-- <td><a  onclick="used_j({$vo.id},{$vo['is_use']})"><if condition="$vo['is_use'] eq 1"><font color="blue" style="cursor: pointer;" > √ </font><else /><font color="red" style="cursor: pointer;"> ×</font> </if></a></td> -->
+					<!-- <td>{$vo.c_num}</td> -->
+					<td>
+						<a href="{:U('Tkslibrary/edit',array('id'=>$vo['id']))}">{:L('X_EDIT')}</a>|
+						<a href="{:U('Tkslibrary/delete',array('id'=>$vo['id']))}" class="js-ajax-delete">{:L('DEL')}</a>
+					</td>
+				</tr>
+				</foreach>
+				<tfoot>
+					<tr>
+						<th width="15"><label><input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x"></label></th>
+						<th width="55">ID</th>
+						<th width="150">关键词</th>
+						<!-- <th width="120">是否使用</th> -->
+						<!-- <th width="120">栏目页使用次数</th> -->
+						<th width="100">{:L('MANAGE')}</th>
+					</tr>
+				</tfoot>
+			</table>
+			<div class="pagination">{$Page}</div>
+			<div class="table-actions">
+				<button class="btn btn-primary btn-small js-ajax-submit" type="submit" data-action="{:U('Tkslibrary/delete')}" data-subcheck="true" data-msg="你确定删除吗？">{:L('DELETE')}</button>
+			</div>
+			
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+	<script>
+		setCookie('refersh_time', 0);
+		function refersh_window() {
+			var refersh_time = getCookie('refersh_time');
+			if (refersh_time == 1) {
+				window.location.reload();
+			}
+		}
+		setInterval(function() {
+			refersh_window()
+		}, 2000);
+		function used_j(id,is_use){
+			$.getJSON("__ROOT__/index.php?g=Content&m=Tkslibrary&a=used&id=" + id+"&is_use="+is_use, function (json) {
+		        	if(json.status){
+		        		window.location = "__ROOT__/index.php?g=Content&m=Tkslibrary&a=index";
+		        	}
+		    });
+		}
+		
+	</script>
+</body>
+</html>

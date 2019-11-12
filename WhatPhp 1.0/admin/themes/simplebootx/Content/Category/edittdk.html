@@ -1,0 +1,84 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="#A" data-toggle="tab">{$data['catname']}-编辑</a></li>
+		</ul>
+		<form class="form-horizontal js-ajax-form" action="{:U('Category/edittdk')}" method="post">
+			 
+			<div class="tabbable">
+				<div class="tab-content">
+					<div class="tab-pane active" id="A">
+						<fieldset>
+							<div class="control-group">
+								<label class="control-label">META Title（栏目标题，最多输入110字符）</label>
+								<div class="controls">
+									 
+									<textarea name="setting[meta_title]" maxlength="110" >{$data['setting']['meta_title']}</textarea>
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label">META Keywords（栏目关键词，最多输入200字符）</label>
+								<div class="controls">
+									<textarea type="text" name="setting[meta_keywords]" maxlength="200" >{$data['setting']['meta_keywords']}</textarea>
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label">META Description（栏目描述，最多输入300字符）</label>
+								<div class="controls">
+									<textarea name="setting[meta_description]" rows="10" cols="80" maxlength="300" >{$data['setting']['meta_description']}</textarea>
+								</div>
+							</div>
+						</fieldset>
+					</div>
+				</div>
+			</div>
+			<div class="form-actions">
+			 	<input name="catid" type="hidden" value="{$data.catid}">
+				<button class="btn btn-primary js-ajax-submit" type="submit">{:L('SAVE')}</button>
+				<a class="btn" href="{:U('Category/listtdk')}">{:L('BACK')}</a>
+			</div>
+		</form>
+	</div>
+	<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/js/content_addtop.js"></script>
+</body>
+
+<script>
+
+function checknode(obj) {
+    var chk = $("input[type='checkbox']");
+    var count = chk.length;
+    var num = chk.index(obj);
+    var level_top = level_bottom = chk.eq(num).attr('level');
+    for (var i = num; i >= 0; i--) {
+        var le = chk.eq(i).attr('level');
+        if (eval(le) < eval(level_top)) {
+            chk.eq(i).attr("checked", true);
+            var level_top = level_top - 1;
+        }
+    }
+    for (var j = num + 1; j < count; j++) {
+        var le = chk.eq(j).attr('level');
+        if (chk.eq(num).attr("checked") == "checked") {
+            if (eval(le) > eval(level_bottom)){
+            	chk.eq(j).attr("checked", true);
+            }
+            else if (eval(le) == eval(level_bottom)){
+            	break;
+            }
+        } else {
+            if (eval(le) > eval(level_bottom)){
+            	chk.eq(j).attr("checked", false);
+            }else if(eval(le) == eval(level_bottom)){
+            	break;
+            }
+        }
+    }
+}
+
+
+</script>
+
+</html>

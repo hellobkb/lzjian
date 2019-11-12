@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>
+    <if condition=" isset($SEO['title']) && !empty($SEO['title']) ">{$SEO['title']}</if></title>
+    <meta name="keywords" content="{$SEO['keyword']}" />
+    <meta name="description" content="{$SEO['description']}" />
+    <script src="__PUBLIC__/js/jquery.js"></script>
+    <style>
+        #left,#right{float: left;width: 140px;}
+        .foot{clear:both}
+    </style>
+    <tc_include file="Public:head" />
+</head>
+<body>
+<tc_include file="reanod:Zckop/nav" />
+<!--  lun bo   --> 
+<tc_include file="reanod:Zckop/lunbo2" />
+<!--  mian bao xie  -->
+<div class="mianbao zong">
+  <a href="__ROOT__/" title="{:L('RNHOME')}">{:L('RNHOME')}</a>
+  <php>$str = " / "</php> /  <navigate catid="$catid" space="$str" mmc="co0e" />
+  <div class="clear"></div>
+</div>
+<!--  main1  -->
+<div class="abmain zong">
+<SCRIPT type=text/javascript src="__TMPL__zhbeifan/js/baguettebox.min.js"></SCRIPT>
+    <a class="abbiao">{$title}</a>
+   {$content}
+    <div class="abmain3 zong baguetteBoxOne">
+    <php>$a41 = getContactValue(41);
+$a42 = getContactValue(42);</php>
+      <a>{$a41.v}</a>
+      <p>{$a42.v}</p>
+        <content action="lists" catid="252" order="listorder ASC,id DESC" num="6">
+        <php>$cer = 0;</php>
+        <volist name="data" id="vo">
+          <div <if condition="$cer eq 0"> class="ab3lie maln"<else />class="ab3lie"</if>>
+          <div class="ab3tu">
+          <a title="{$vo.title}" class="ab3tun"><img src="{$vo.thumb}" title="{$vo.title}" alt="{$vo.title}" /></a>
+          <a href="{$vo.thumb}" title="{$vo.title}" class="ab3fu"><img src="__TMPL__zhbeifan/images/fangda.png" title="{$vo.title}" alt="{$vo.title}" /></a>
+          </div>
+          <a class="ab3zi">{$vo.title}</a>
+          </div>
+        <php>$cer++;</php>
+        </volist>
+        </content>
+
+      <div class="clear"></div>
+    </div>
+</div>
+    <script>
+    baguetteBox.run('.baguetteBoxOne', {
+        animation: 'fadeIn',
+    });
+    </script> 
+
+<!--  foot  -->
+<tc_include file="reanod:Zckop/footer" />
+<tc_include file="reanod:Zckop:script" />
+
+</body>
+</html>

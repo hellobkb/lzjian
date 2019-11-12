@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>数据看板</title>
+		
+		<tc_include file="App:header" />
+		<link rel="stylesheet" type="text/css" href="__TMPL__App/css/dataLook.css" />
+
+	</head>
+
+	<body>
+		<header id="header" class="mui-bar mui-bar-nav">
+			<button class="mui-action-back mui-btn mui-btn-blue mui-btn-link mui-btn-nav mui-pull-left">
+				<span class="mui-icon mui-icon-left-nav"></span>
+				返回
+			</button>
+			<h1 class="mui-title">数据看板</h1>
+		</header>
+
+		<div id="content" class="mui-content">
+			<div>
+				<div class="reanod-echarts">
+					<div class="reanod-echarts-head">
+						<span class="iconfont icon-gongzuojianbao"></span>
+						<span>本月销售简报</span>
+					</div>
+					<div class="reanod-bulletin">
+						<div>
+							<span class="iconfont icon-renqun"></span>
+							<span>新增线索阶段客户数：</span><span id="monthxz">{$monthxz}</span>位
+						</div>
+						<div>
+							<span class="iconfont icon-hezuo-copy"></span>
+							<span>新增已成单客户数：</span><span id="orderxz">{$orderxz}</span>位
+						</div>
+						<div>
+							<span class="iconfont icon-dingdan"></span>
+							<span>新增订单数：</span><span id="orderIncrease">{$orderIncrease}</span>单
+						</div>
+						<div>
+							<span class="iconfont icon-kehu"></span>
+							<span>3个月未返单客户：</span><span id="noOrder">{$noOrder}</span>位
+						</div>
+						<div>
+							<span class="iconfont icon-ticket"></span>
+							<span>出运提醒：</span><span id="orderShip">{$orderShip}</span>条
+						</div>
+						<div>
+							<span class="iconfont icon-tixing"></span>
+							<span>今日沟通提醒：</span><span id="nextContactNum">{$nextContactNum}</span>条
+						</div>
+					</div>
+				</div>
+				<div class="reanod-echarts">
+					<div class="reanod-echarts-head">
+						<span class="iconfont icon-mubiao"></span>
+						<span>本月目标完成情况</span>
+					</div>
+					<div class="barLegend" id="barLegend">
+					</div>
+					<div class="reanod-chart" id="barChart">
+					</div>
+				</div>
+				<div class="reanod-echarts">
+					<div class="reanod-echarts-head">
+						<span class="mui-icon iconfont icon-line"></span>
+						<span>近30天询盘总量变化</span>
+						<a href="inquiries.html">详情</a>
+					</div>
+					<div class="reanod-chart" id="lineChart"></div>
+				</div>
+				<div style="clear:both;height: 50px;"></div>
+			</div>
+
+			<tc_include file="App:footer" />
+
+		</div>
+	 
+		<!--图表-->
+		<script type="text/javascript" src="__TMPL__App/js/echarts-all.js"></script>
+		 
+	</body>
+	<script type="text/javascript">
+		
+
+mui.init({
+	pullRefresh: {
+		container: '#content', //待刷新区域标识，querySelector能定位的css选择器均可，比如:id、.class等
+		down :{
+			callback: pulldownRefresh //必选，刷新函数
+		}
+	}
+});
+
+//下拉刷新
+function pulldownRefresh(){
+	setTimeout(function() {
+		initData();
+		mui("#content").pullRefresh().endPulldownToRefresh();
+	}, 1500) 
+}
+
+//Dom 加载完成
+mui.ready(function(){
+	initData();
+});
+
+function initData(){
+
+
+
+	var getOption = function(chartType) {
+		var chartOption = chartType == 'line' ? {
+			tooltip: {
+				trigger: 'axis',
+				formatter: '日期：{b}<br>数量：{c}'
+			},
+			legend: {
+				data: ['']
+			},
+			grid: {
+				x: 35,
+				x2: 10,
+				y: 30,
+				y2: 25
+			},
+			toolbox: {
+
+			},
+			calculable: false,
+			xAxis: [{
+				axisLabel: {},
+				type: 'category',
+				data: {$line_data_x}
+			}],
+			yAxis: [{
+				type: 'value',
+				splitArea: {
+					show: true
+				}
+			}],
+			series: [{
+				name: '',
+				type: chartType,
+				data: {$line_data_y}
+			}]
+		} : {
+			tooltip: {
+				trigger: 'axis',
+				formatter: '{b}：${c}'
+			},
+			 
+			legend: {
+				show: false,
+				data: '0'
+
+			},
+			grid: {
+				x: 25,
+				x2: 10,
+				y: 20,
+				y2: 25,
+				borderWidth: 0
+			},
+			toolbox: {
+
+			},
+			calculable: false,
+			xAxis: [{
+				splitLine: {
+					show: false //辅助线
+				},
+				type: 'category',
+				data: {$bar_data_x},
+				axisLabel: {
+					interval: 0, //时间轴间隔
+				},
+				axisLine: {
+					lineStyle: {
+						color: '#cccccc'
+					}
+				}
+			}],
+			yAxis: [{
+				show: false,
+				type: 'value'
+			}],
+			series: [{
+				type: chartType,
+				clipOverflow: false,
+				barWidth: '30',
+				itemStyle: {
+					normal: {
+						label: {
+							show: false, // 上方显示
+							textStyle: {}
+						}
+					}
+				},
+				data: {$bar_data_y},
+				itemStyle: {
+					normal: {
+						color: function(params) {
+							 
+						}
+					}
+				}
+
+			}]
+		};
+		return chartOption;
+	};
+
+
+	var lineChart = echarts.init(document.getElementById('lineChart'));
+	lineChart.setOption(getOption('line'));
+	var barChart = echarts.init(document.getElementById('barChart'));
+	barChart.setOption(getOption('bar'));
+
+
+}
+
+ 
+
+
+	</script>
+</html>

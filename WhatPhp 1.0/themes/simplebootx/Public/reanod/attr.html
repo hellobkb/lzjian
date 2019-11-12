@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <script src="http://apps.bdimg.com/libs/jquery/1.6.4/jquery.js"></script>
+    <title>属性</title>
+</head>
+<body>
+<form action="{$action}" method="post" enctype="multipart/form-data" onsubmit="return sub(this);">
+
+<php>//print_r($ModuleBlocks);</php>
+
+<table>
+    <tr>
+        <td>标题：</td>
+        <td><input type="text" name="title" value="{$ModuleBlocks['title']}" /></td>
+    </tr>
+
+
+
+    <tr>
+        <td>显示设置：</td>
+        <td>
+            <label><input type="checkbox" name="show_title" value="1" <if condition="$ModuleBlocks['show_title']">checked="checked"</if>>显示标题</label>
+            <label><input type="checkbox" name="dispallpg" value="1" <if condition="$ModuleBlocks['hash'] eq '_ALL'">checked="checked"</if>>在所有页面上显示</label>
+        </td>
+    </tr>
+
+
+
+<if condition="$argu['catid']">
+    <tr>
+        <td>分类：</td>
+        <td><input type="text" name="title" value="{$ModuleBlocks['title']}" /></td>
+    </tr>
+</if>
+{$str}
+<tr>
+    <td colspan="2">
+        <input type="hidden" id="hash" name="hash" />
+        <input type="submit" value="提交" />
+    </td>
+</tr>
+</table>
+</form>
+<script>
+function sub(obj){
+	$.ajax({
+		url:$(obj).attr('action'),
+		data:$(obj).serializeJson(),
+		type:'post',
+        dataType:'json',
+		success:function (e){
+			if(e.status == 1){
+				alert(e.msg);
+				window.parent.location.reload();
+				parentDialog.close();
+			}else{
+                alert('修改失败！');
+            }
+		}
+	})
+
+	return false;
+}
+
+if(parent.zchash){
+    $('#hash').val(parent.zchash);
+}
+
+(function($){
+        $.fn.serializeJson=function(){
+            var serializeObj={};
+            var array=this.serializeArray();
+            var str=this.serialize();
+            $(array).each(function(){
+                if(serializeObj[this.name]){
+                    if($.isArray(serializeObj[this.name])){
+                        serializeObj[this.name].push(this.value);
+                    }else{
+                        serializeObj[this.name]=[serializeObj[this.name],this.value];
+                    }
+                }else{
+                    serializeObj[this.name]=this.value;
+                }
+            });
+            return serializeObj;
+        };
+    })(jQuery);
+</script>
+</body>
+</html>

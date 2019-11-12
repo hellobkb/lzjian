@@ -1,0 +1,50 @@
+<php> $modelid = 5;
+  if(!($result = S('modelid'.$modelid))){
+  $where['modelid'] = $modelid;
+  $resultarr = M("Category")->where($where)->select();
+  $result =array();
+  foreach($resultarr as $k=>$v){
+  $result[$v['catid']] =$v;
+  }
+  S('modelid'.$modelid,$result);
+  }
+  
+  $result = zc_children_more($result); </php>
+<div class="chanp_z f14 top30">
+  <div class="cp_biaot f20"><a href="__ROOT__/products/">Product Categories</a></div>
+  <div class="subNavBox">
+    <volist name="result" id="v">
+    <volist name="v['child']" id="t">
+    <div 
+    <if condition="$key eq 0"> class="subNav f14 top0 currentDd currentDt"
+      <else />
+      class="subNav"</if>
+    ><a href="{:zcurl($t['url'],$t['moveurl'])}" title="{$t.catname}" >{$t.catname}</a></div>
+  <if condition="count($t['child'])">
+    <ul class="navContent f14" >
+      <volist name="t['child']" id="g">
+        <li><a 
+          <if condition="in_array($catid,explode(',',$g['arrchildid']))">style="text-decoration: underline;"</if>
+          href="{:zcurl($g['url'],$g['moveurl'])}" title="{$g.catname}">{$g.catname}</a></li>
+      </volist>
+      <div class="clear"></div>
+    </ul>
+  </if>
+  </volist>
+  </volist>
+</div>
+<script type="text/javascript">
+$(function(){
+$(".subNav").click(function(){
+$(this).toggleClass("currentDd").siblings(".subNav").removeClass("currentDd")
+$(this).toggleClass("currentDt").siblings(".subNav").removeClass("currentDt")
+
+$(this).next(".navContent").slideToggle(500).siblings(".navContent").slideUp(500);
+})  
+})
+</script>
+<div class="rela_new f20 top40"><a href="" class="colcla">Related News</a></div>
+<div class="rala_list rala_list_n f14 hg14152"><a href="" class="hui4d">To reduce the customers’ purchasing cost and provide the unified plans</a></div>
+<div class="rala_list  f14 hg14152"><a href="" class="hui4d">To reduce the customers’ purchasing cost and provide the unified plans</a></div>
+<div class="rala_list  f14 hg14152"><a href="" class="hui4d">To reduce the customers’ purchasing cost and provide the unified plans</a></div>
+</div>

@@ -1,0 +1,86 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="{:U('contentshow/hot_product')}">热销产品</a></li>
+		</ul>
+		
+		<form class="js-ajax-form" method="post">
+			<div class="table-actions" >
+				<button class="btn btn-primary btn-small js-ajax-submit" type="submit" data-action="{:U('Contentshow/new_listorder')}">{:L('SORT')}</button>
+			</div>
+			<table class="table table-hover table-bordered table-list">
+				<thead>
+					<tr>
+						<th width="50">{:L('SORT')}</th>
+						<th width="55">ID</th>
+						<th width="150">标题</th>
+						<th width="150">图片</th>
+						<th width="150">更新时间</th>
+						
+						<th width="100">{:L('MANAGE')}</th>
+					</tr>
+				</thead>
+				<if condition="$info">
+				<foreach name="info" item="vo">
+				<tr>
+					<td>
+						<input name="listorders[{$vo.id}]" class="input input-order" type="text" size="5" value="{$vo.listorder}" title="ID:{$vo.tid}" />
+					</td>
+					<td>{$vo.id}</td>
+					<td><a>{$vo.title}</a></td>
+					<td><img src="{$vo['thumb']}" style="width:200px; height:118px;"></td>
+					<td>{$vo.updatetime|date="Y-m-d",###}</a></td>
+				
+					<td>
+						<a href="{:U('Contentshow/edit',array('catid'=>$vo['catid'],'id'=>$vo['id']))}" target="_blank">{:L('EDIT')}</a> | 
+						<a href="{:U('Contentshow/istopajax',array('catid'=>$vo['catid'],'id'=>$vo['id'],'istop'=>1))}" class="js-ajax-delete">取消热销</a>
+					</td>
+				</tr>
+				</foreach>
+				<else />
+					<tr><td colspan="5">暂无产品</td></tr>
+				</if>
+				<tfoot>
+					<tr>
+						<th width="50">{:L('SORT')}</th>
+						<th width="55">ID</th>
+						<th width="150">标题</th>
+						<th width="150">图片</th>
+						<th width="150">更新时间</th>
+						
+						<th width="100">{:L('MANAGE')}</th>
+					</tr>
+				</tfoot>
+			</table>
+			<div class="pagination">{$Page}</div>
+			<div class="table-actions">
+				<button class="btn btn-primary btn-small js-ajax-submit" type="submit" data-action="{:U('Contentshow/new_listorder')}">{:L('SORT')}</button>
+			</div>
+			
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+	<script>
+		setCookie('refersh_time', 0);
+		function refersh_window() {
+			var refersh_time = getCookie('refersh_time');
+			if (refersh_time == 1) {
+				window.location.reload();
+			}
+		}
+		setInterval(function() {
+			refersh_window()
+		}, 2000);
+		function used_j(id,is_use){
+			$.getJSON("__ROOT__/index.php?g=Content&m=Tkslibrary&a=used&id=" + id+"&is_use="+is_use, function (json) {
+		        	if(json.status){
+		        		window.location = "__ROOT__/index.php?g=Content&m=Tkslibrary&a=index";
+		        	}
+		    });
+		}
+		
+	</script>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>询盘</title>
+		<tc_include file="App:header" />
+		<!--选择器样式-->
+		<link rel="stylesheet" type="text/css" href="__TMPL__/App/css/mui.picker.min.css" />
+		<link rel="stylesheet" type="text/css" href="__TMPL__/App/css/inquiries.css">
+	</head>
+
+	<body>
+		<header id="header" class="mui-bar mui-bar-nav">
+			<button class="mui-action-back mui-btn mui-btn-blue mui-btn-link mui-btn-nav mui-pull-left">
+				<span class="mui-icon mui-icon-left-nav"></span>
+				返回
+			</button>
+			<h1 class="mui-title">询盘</h1>
+			<button class="mui-btn mui-btn-blue mui-btn-link mui-pull-right" id="reanod_filtrate">筛选</button>
+		</header>
+		<div id="content" class="mui-content">
+			<!--下拉刷新容器-->
+			<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+				<div class="mui-scroll">
+					<ul class="mui-table-view">
+						<li class="mui-table-view-cell mui-collapse" id="reanod_fold">
+							<!--<a class="mui-navigate-right" href="#">筛选</a>-->
+								<div class="mui-collapse-content">
+									<div class="reanod-head">
+										<div>
+											<b>选择日期</b>
+											<div>
+												<button class="date_select" id="startDate">开始时间</button>
+												<span>&nbsp;&nbsp;&nbsp;</span>
+												<button class="date_select" id="endDate">结束时间</button>
+											</div>
+										</div>
+										<div>
+											<b>国家</b>
+											<select class="mui-btn mui-btn-block" id="select_country" name="from_country">
+												<option value="0">全部</option>
+												<foreach name="country" item="c_v">
+													<option value="{$c_v}">{$c_v}</option>
+												</foreach>
+											</select>
+										</div>
+										<div>
+											<b>业务员</b>
+											<select class="mui-btn mui-btn-block" id="select_salesman" name="salesman">
+												<option value="0">全部</option>
+												<foreach name="sale" item="s_v">
+												 	<option value="{$s_v.ywid}">{$s_v.name}</option>
+												</foreach>
+											</select>
+										</div>
+										<div>
+											<b>关键词</b>
+											<input class="mui-input-clear" name="keyword" id="keyword" type="text" placeholder="请输入联系人/公司/邮箱等" />
+										</div>
+									</div>
+									<div class="reanod-submit">
+										<input type="hidden" name="start_time" value="" />
+										<input type="hidden" name="end_time" value="" />
+										<input type="hidden" name="token" value="{$token}"/>
+
+										<button class="mui-btn-yellow" id="reanod_select">确定</button>
+										<button class="mui-btn-grey" id="reanod_cancel">取消</button>
+									</div>
+								</div>
+							 
+						</li>
+					</ul>
+					<!--数据-->
+					<div class="reanod-data">
+					 
+					</div>
+				</div>
+			</div>
+		</div>
+		<div style="clear:both;height: 50px;"></div>
+
+		<tc_include file="App:footer" />
+		 
+		 <!--选择器插件-->
+		<script type="text/javascript" src="__TMPL__/App/js/mui.picker.min.js"></script>
+		<!--日期选择-->
+		<script type="text/javascript" src="__TMPL__/App/js/dateCheck.js"></script>
+		<script type="text/javascript" src="__TMPL__/App/js/inquiries.js"></script>
+	</body>
+
+</html>

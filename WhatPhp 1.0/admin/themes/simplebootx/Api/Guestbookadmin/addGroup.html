@@ -1,0 +1,129 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li><a href="{:U('Guestbookadmin/guestBookGroup')}">询盘显示类别</a></li>
+			<li class="active"><a href="{:U('Guestbookadmin/addGroup')}">添加类别</a></li>
+		</ul>
+		<div><font color="red">*</font>请填写类别名称，选择显示的字段</div>
+		<form action="{:U('Guestbookadmin/add_post')}" method="post" class="form-horizontal js-ajax-forms" onSubmit=" return check();" >
+			<div class="row-fluid">
+				<div class="span9">
+				类别名称：<input type="text" name="title"  value=""  />
+					<table class="table table-bordered">
+						<tr>
+							<th>字段名</th>
+							<th>是否显示</th>
+							<th>是否必填</th> 
+						</tr>
+						<foreach name="list" item="vo">
+						<tr>
+							<td>{$vo.name}({$vo.desc})</td>
+							<td><input type="checkbox" name="ifshow_{$vo.id}" checked id="ifshow_{$vo.id}" onclick="changeifshow(this);" /></td>
+							<td><input type="checkbox" name="ifr_{$vo.id}" checked id="ifr_{$vo.id}" onclick="changeifr(this);" /></td>
+						</tr>
+						</foreach>
+					</table>
+				</div>
+			</div>
+			<div class="form-actions">
+				 <input type="hidden" name="ifshow" value="" />
+				 <input type="hidden" name="ifr" value="" />
+				<button class="btn btn-primary js-ajax-submit mright" type="submit">提交</button>
+				<a class="btn" href="{:U('Guestbookadmin/guestBookGroup')}">返回</a>
+				<span ><font id="errMsg" color="red"></font></span>
+			</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+	<script>
+		setCookie('refersh_time', 0);
+		function refersh_window() {
+			var refersh_time = getCookie('refersh_time');
+			if (refersh_time == 1) {
+				window.location.reload();
+			}
+		}
+		setInterval(function() {
+			refersh_window()
+		}, 2000);
+		
+		
+		function changeifshow(obj){
+			 
+			var id = obj.id;
+			var ifrid = id.replace("ifshow","ifr");
+			  
+			if(obj.value == "on"){  //之前是选中状态 
+				$("#"+ifrid).attr("checked",false);
+				$("#"+ifrid).val("");
+				obj.value='';
+			}else {
+				obj.value='on';
+			}
+		}
+		
+		function changeifr(obj){
+			
+			var ifrid = obj.id;
+			var id = ifrid.replace("ifr", "ifshow");
+			 
+			 
+			if(obj.value=="on"){  //之前是选中状态
+				
+				obj.value="";
+			}else {
+				$("#"+id).attr("checked",true);
+				$("#"+id).val("on");
+				
+				obj.value="on";
+			}
+			
+		}
+		
+		
+ 		function check(){
+			
+			var checkbox = $("input[type=checkbox]");
+			var ifshow = "";
+			var ifr = "";
+			$("#errMsg").html("");
+			
+			if(!$("input[name=title]").val()){
+				$("#errMsg").html("请填写类别名称！");
+				return false;
+			}
+			
+			for(var i=0;i<checkbox.length;i++){
+				
+				if(checkbox[i].name.indexOf("ifshow_") >=0){  //判断是否包含 
+					if(checkbox[i].value =='on'){		//判断是否选中
+						
+						ifshow += ","+checkbox[i].name.replace("ifshow_","");
+						var ifrid = checkbox[i].name.replace("ifshow","ifr");
+						
+						if($("#"+ifrid).val()=="on"){  //判断是否选中
+							
+							ifr += ","+checkbox[i].name.replace("ifshow_","");
+							 
+						}
+					}
+				}
+			
+			}
+			 
+			if(ifshow.length <=1){
+				$("#errMsg").html("请选择要显示的字段！");
+				return false;
+			}else {
+				$("input[name=ifshow]").val(ifshow.substr(1));
+				$("input[name=ifr]").val(ifr.substr(1));
+				return true;
+			}
+
+		} 
+
+	</script>
+</body>
+</html>

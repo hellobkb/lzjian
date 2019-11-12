@@ -1,0 +1,201 @@
+<admintpl file="header" />
+<style>
+.home_info li em {
+  float: left;
+  width: 120px;
+  font-style: normal;
+}
+li {
+  list-style: none;
+}
+</style>
+</head><body>
+<div class="wrap" style="margin-left:0; padding-left:0">
+
+    <admintpl file="main_lunbo" />
+
+   <div class="yx">
+        <div class="yx_top">
+            <div class="yx_tnr yx_tnr1">
+                <div class="yx_tdiv">
+                	<div class="yx_tnr_div1">{$sDayNum}</div>
+                	<div class="yx_tnr_div2">最近7天访问量</div>
+                </div>
+                <div class="yx_tdiv yx_txian">
+                	<div class="yx_tnr_div1"></div>
+                	<div class="yx_tnr_div2">|</div>
+                </div>
+                <div class="yx_tdiv">
+                	<div class="yx_tnr_div1">{$tDayNum}</div>
+                	<div class="yx_tnr_div2">累计访问量</div>
+                </div>
+            	<div class="clear"></div>
+            </div>
+            
+            <div class="yx_tnr yx_tnr2">
+                <div class="yx_tdiv">
+                	<div class="yx_tnr_div1">{$article_sDayNum}</div>
+                	<div class="yx_tnr_div2">最近7天文章发布数量</div>
+                </div>
+                <div class="yx_tdiv yx_txian">
+                	<div class="yx_tnr_div1"></div>
+                	<div class="yx_tnr_div2">|</div>
+                </div>
+                <div class="yx_tdiv">
+                	<div class="yx_tnr_div1">{$article_tDayNum}</div>
+                	<div class="yx_tnr_div2">累计文章数量</div>
+                </div>
+            	<div class="clear"></div>
+            </div>
+            
+            <div class="yx_tnr yx_tnr3">
+                <div class="yx_tdiv">
+                	<div class="yx_tnr_div1">{$pro_sDayNum}</div>
+                	<div class="yx_tnr_div2">最近7天产品发布数量</div>
+                </div>
+                <div class="yx_tdiv yx_txian">
+                	<div class="yx_tnr_div1"></div>
+                	<div class="yx_tnr_div2">|</div>
+                </div>
+                <div class="yx_tdiv">
+                	<div class="yx_tnr_div1">{$pro_tDayNum}</div>
+                	<div class="yx_tnr_div2">累计产品数量</div>
+                </div>
+            	<div class="clear"></div>
+            </div>
+        	<div class="clear"></div>
+        </div>
+    
+    
+    	<div class="yx_center">
+        	
+            <div class="yx_cnr yx_cnr1">
+            	<div class="yx_tdiv">
+                	<div class="yx_tnr_div1">{$link_sDayNum}</div>
+                	<div class="yx_tnr_div2">最近7天链接发布数量</div>
+                </div>
+                <div class="yx_tdiv yx_txian">
+                	<div class="yx_tnr_div1"></div>
+                	<div class="yx_tnr_div2">|</div>
+                </div>
+                <div class="yx_tdiv">
+                	<div class="yx_tnr_div1">{$link_tDayNum}</div>
+                	<div class="yx_tnr_div2">累计链接数量</div>
+                </div>
+            	<div class="clear"></div>
+            </div>
+            
+            <div class="yx_cnr yx_cnr2">
+            	<div class="yx_tdiv">
+                	<div class="yx_tnr_div1">0</div>
+                	<div class="yx_tnr_div2">最近7天社交媒体分享数量</div>
+                </div>
+                <div class="yx_tdiv yx_txian">
+                	<div class="yx_tnr_div1"></div>
+                	<div class="yx_tnr_div2">|</div>
+                </div>
+                <div class="yx_tdiv">
+                	<div class="yx_tnr_div1">0</div>
+                	<div class="yx_tnr_div2">累计分享数量</div>
+                </div>
+            	<div class="clear"></div>
+            </div>
+        	
+        	<div class="clear"></div>
+        </div>
+    
+    	<div class="yx_bottom">
+        
+        	<div class="yx_bnr1">
+            	<div class="yx_btitle"><span>外商浏览量统计</span>（{$stime}-至{$etime}）</div>
+            	
+                <table cellspacing="0" cellpadding="0">
+                	<th class="yx_lbg1 yx_tr1">时间</th>
+                    <th class="yx_lbg2 yx_tr1">会话次数</th>
+                    <th class="yx_lbg3 yx_tr1">网页浏览次数</th>
+                    <foreach name="visit_list" item="visit" key="key">
+                    	 <tr 
+                    		<php>if($key%2 !=0 && $key!=0){</php>class="yx_tr1"<php>}</php>
+                    	>
+	                    	<td class="yx_lbg1">{$visit.time}</td>
+	                        <td class="yx_lbg2">{$visit.ip}</td>
+	                        <td class="yx_lbg3">{$visit.numclick}</td>
+                    	</tr>
+                    </foreach>
+                    
+                </table>
+
+            </div>
+            
+            <div class="yx_bnr2">
+            	<div class="yx_btitle"><span>询盘统计</span>（{$stime}-至{$etime}）</div>
+                
+                <table cellspacing="0" cellpadding="0">
+                	<th class="yx_rbg1 yx_tr1">公司</th>
+                    <th class="yx_rbg2 yx_tr1">联系人</th>
+                    <th class="yx_rbg3 yx_tr1">邮箱</th>
+                    <th class="yx_rbg4 yx_tr1">国家</th>
+                    <th class="yx_rbg5 yx_tr1">发送时间</th>
+                    <foreach name="gb_list" item="gb" key="k">
+                    	<tr 
+                    		<php>if($k%2 !=0 && $k!=0){</php>class="yx_tr1"<php>}</php>
+                    	>
+	                    	<td class="yx_rbg1">{$gb.company_name}</td>
+	                        <td class="yx_rbg2">{$gb.full_name}</td>
+	                        <td class="yx_rbg3"><a href="mailto:{$gb.email}" title="">{$gb.email}</a></td>
+	                        <td class="yx_rbg4">{$gb.from_country}</td>
+	                        <td class="yx_rbg5">{$gb.createtime}</td>
+                    	</tr>
+                    </foreach>
+                    
+                </table>
+           	</div>
+        	<div class="clear"></div>
+        </div>
+   </div>
+   
+ <!-- <div class="sy_f">
+  	 <span>技术咨询电话： 15633081023 </span>
+    <span class="sy_f_span1">QQ: <a href="" title="">2839921604</a></span> 
+  </div>-->
+   
+</div>
+<script src="__PUBLIC__/js/common.js"></script> 
+<script>
+    //获取官方通知
+    
+ /*   $.get("{:U('Main/getVersion')}", {} ,function(str){
+    	 if(str.status ==1){
+    		 if(window.confirm(str.msg)){
+    			 window.open('http://www.xinguwen.com/thinkcmf_update.html');
+    		 } 
+    		
+    	 } 
+    },'json');*/
+ /*    $.getJSON("{:U('Main/getVersion')}",
+    function(data) {
+    	
+    	 
+    	
+      var tpl = '<li><em class="title"></em><span class="content"></span></li>';
+      var $thinkcmf_notices = $("#thinkcmf_notices");
+      $thinkcmf_notices.empty();
+      alert(data);
+      if (data.length > 0) {
+        $.each(data, function(i, n) {
+          var $tpl = $(tpl);
+          $(".title", $tpl).html(n.title);
+          $(".content", $tpl).html(n.content);
+          $thinkcmf_notices.append($tpl);
+        });
+      } else {
+        $thinkcmf_notices.append("<li>^_^,{:L('NO_NOTICE')}~~</li>");
+      }  
+
+    });
+    
+     */
+    
+  </script>
+</body>
+</html>

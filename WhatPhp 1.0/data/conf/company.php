@@ -1,0 +1,27 @@
+<?php	return array (
+  'corame' => 'reasldkgjdksd',
+  'type' => 'institutions or social groups',
+  'truename' => 'zhangsi',
+  'gender' => '1',
+  'telephone' => '1551111111423',
+  'email' => '121254@qq.com',
+  'business' => 'shui chan',
+  'regyear' => '2016',
+  'describe' => 'hen qiang',
+  'cates' => '1196',
+  'address1' => '404',
+  'address2' => 'shijiazhuang',
+  'title' => 'Welding Turning-rolls',
+  'catid' => '1187',
+  'content' => '&lt;p&gt;welding-urning-rolls&lt;/p&gt;',
+  'image' => 
+  array (
+    0 => '/thinkcmf/data/upload/20160816/57b2b8ca819d4.jpg',
+  ),
+  'prodter' => '',
+  'unit' => '',
+  'price' => '0.00',
+  'minamount' => '1',
+  'amount' => '99999',
+  'days' => '7',
+);

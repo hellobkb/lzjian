@@ -1,0 +1,26 @@
+<div class="list l">   
+    <div class="title1 titlems"><a href="{:get_c_url(1)}">PRODUCT CATEGORY</a></div> 
+    <p class="dan_p">
+        <span class="one"></span>
+        <span class="two"></span>
+        <span class="three"></span>
+    </p>  
+
+    <div class="subNavBox">
+        <content action="category" catid="1"  order="listorder ASC" >
+          <volist name="data" id="r">
+            <div <if condition="in_array($catid,explode(',',$r['arrchildid']))">class="subNav currentDd currentDt"<else/>class="subNav"</if>><a href="{:zcurl($r['url'],$r['moveurl'])}" title="{$r.catname}" >{$r.catname}</a></div>
+            <content action="category" catid="$r[catid]"  order="listorder ASC" >
+            <if condition="$data">
+            	 <ul class="navContent" <if condition="in_array($catid,explode(',',$r['arrchildid']))">style="display:block;"<else/>style="display:none;"</if>>
+            	 		<volist name="data" id="r">
+                        <li><a href="{:zcurl($r['url'],$r['moveurl'])}" title="{$r.catname}" >{$r.catname}</a></li>
+                        </volist>
+                 </ul>
+            </if>
+            </content>
+
+          </volist>
+        </content>
+    </div>
+</div>

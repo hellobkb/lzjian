@@ -1,0 +1,14 @@
+html {font-size:62.5%;}
+body {margin:0 auto;font-family:Arial, Helvetica, sans-serif; font-size:1.2rem;font-size:12px;background:url(../images/beijing.jpg) center}
+img {border:none;}
+ul li {list-style-type:none;}
+ul, form, p, a, img, table, tr, td, li,dd,dt,dl {margin:0;padding:0;list-style:none;color:#333;}
+a {text-decoration:none;color:#333;outline:none;}
+h1 {margin:0;padding:0;font-weight:normal;color:#333;}
+
+
+
+.navhovers{background: red}
+.categoryhovers1{background: red}
+.categoryhovers2{background: blue}
+.categoryhovers3{background: green}

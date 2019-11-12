@@ -1,0 +1,301 @@
+<admintpl file="header"/>
+<style type="text/css">
+.col-auto { overflow: auto; _zoom: 1;_float: left;}
+.col-right { float: right; width: 210px; overflow: hidden; margin-left: 6px; }
+.table th, .table td {vertical-align: middle;}
+.picList li{margin-bottom: 5px;}
+.Validform_checktip{margin-left:0;}
+.info{
+    border:1px solid #ccc; 
+    padding:2px 20px 2px 5px; 
+    color:#666; 
+    position:absolute;
+    display:none;
+    line-height:20px;
+    background-color:#fff;
+}
+.dec {
+    bottom: -8px;
+    display: block;
+    height: 8px;
+    overflow: hidden;
+    position: absolute;
+    left: 10px;
+    width: 17px;
+}
+.dec s {
+    font-family: simsun;
+    font-size: 16px;
+    height: 19px;
+    left: 0;
+    line-height: 21px;
+    position: absolute;
+    text-decoration: none;
+    top: -9px;
+    width: 17px;
+}
+.dec .dec1 {
+    color: #ccc;
+}
+.dec .dec2 {
+    color: #fff;
+    top: -10px;
+}
+
+.zcr{text-align: center;}
+table tr td{border: 1px solid #ccc;padding: 5px}
+</style>
+</head>
+<body class="J_scroll_fixed">
+<div class="wrap J_check_wrap">
+	<ul class="nav nav-tabs">
+		<li>
+      <if condition="$guestmsgs['salesman']">
+      <a>所有留言</a>
+        <else />
+      <a href="{:U('Api/guestbookadmin/index')}">所有留言</a>
+      </if>
+    </li>
+	</ul>
+  <form name="myform" id="myform" action="{:U('Api/guestbookadmin/distribution')}" method="post" class="form-horizontal J_ajaxForms" enctype="multipart/form-data">
+  <span style="color:#2baab1;font-size:16px;display: block;height: 50px;line-height: 50px;">询盘信息</span>
+  <table>
+    <tr>
+      <td width="100" class="zcr">姓名：</td>
+      <td width="900" colspan="3">
+        {$guestmsgs.full_name}
+        <input type="hidden" name="post[full_name]" value="{$guestmsgs.full_name}"/>
+      </td>
+    <!--  <td width="100" class="zcr">公司：</td>
+      <td width="400">
+        {$guestmsgs.company_name}
+        <input type="hidden" name="post[company_name]" value="{$guestmsgs.company_name}"/>
+      </td>-->
+    </tr>
+    <tr>
+      <td class="zcr">邮箱：</td>
+      <td>
+        {$guestmsgs.email}
+        <input type="hidden" name="post[email]" value="{$guestmsgs.email}"/>
+      </td>
+      <td class="zcr">电话：</td>
+      <td>
+        {$guestmsgs.tel}
+        <input type="hidden" name="post[tel]" value="{$guestmsgs.tel}"/>
+      </td>
+    </tr>
+    <!--<tr>
+      <td class="zcr">传真：</td>
+      <td>
+        {$guestmsgs.fax}
+        <input type="hidden" name="post[fax]" value="{$guestmsgs.fax}"/>
+      </td>
+      <td class="zcr">地址：</td>
+      <td>
+        {$guestmsgs.address}
+        <input type="hidden" name="post[address]" value="{$guestmsgs.address}"/>
+      </td>
+    </tr>-->
+    <tr>
+      <td class="zcr">国家（用户）：</td>
+      <td>
+        {$guestmsgs.from_country}
+        <input type="hidden" name="post[from_country]" value="{$guestmsgs.from_country}"/>
+      </td>
+      <td class="zcr">国家（IP）：</td>
+      <td>
+        {$guestmsgs.from_country_ip}
+      </td>
+    </tr>
+   <!-- <tr>
+      <td class="zcr">附件：</td>
+      <td colspan="3">
+        <if condition="$guestmsgs['file']">
+          <a href="__ROOT__/{$guestmsgs.file}" target="_blank">下载</a>
+        </if>
+      </td>
+    </tr>-->
+    <tr>
+      <td class="zcr">内容：</td>
+      <td colspan="3">
+        {$guestmsgs.msg}<input type="hidden" name="post[msg]" value="{$guestmsgs.msg}">
+      </td>
+    </tr>
+    <tr>
+      <td class="zcr">询盘商品：</td>
+      <php>$prof=str_replace("\'","",$guestmsgs['pid']); </php>
+     <td colspan="3">
+        {$prof|htmlspecialchars_decode}
+      </td>
+    </tr>
+  </table>
+  </table>
+ <!-- <span style="color:#2baab1;font-size:16px;display: block;height: 50px;line-height: 50px;">分配操作</span>
+  <table>
+    <tr>
+      <td class="zcr" width="200">业务经理/业务员：</td>
+      <td width="500">
+
+<php>
+  if(!empty($guestmsgs['company_name']) && !empty($guestmsgs['email'])){
+    $zccount = M('Client')->field('id')->where('cname="'.$guestmsgs['company_name'].'" or email="'.$guestmsgs['email'].'"')->find();
+    $url = U('Crm/Cindex/editClient',array('id'=>$zccount['id'],'status'=>2));
+  }else{
+    $zccount = '';
+  }
+</php>
+<php>if(!empty($zccount)):</php>
+<span style="color:red"><a href="javascript:open_iframe_dialog('{$url}','存在客户详情')">客户信息已经存在</a>
+<php>else:</php>
+<if condition="$gs['yangshi'] eq 1">
+
+
+
+<select datatype="*" nullmsg="业务不能为空" errormsg="业务不能为空" name="post[salesman]" id="suggest_ul">
+<option value ="">请选择</option>
+<foreach name="ywjlyuy" item="v">
+<option value ="{$v.user_id}">
+  {$v.user_login}（{$v.user_nicename}）
+</option>
+<php>if(count($v['child']) && ($gs['fenpei'] == 2)):</php>
+<foreach name="v['child']" item="t">
+<option value ="{$t.uid}">
+  &nbsp;&nbsp;&nbsp;&nbsp;{$t.user_login}（{$t.user_nicename}）
+</option>
+</foreach>
+<php>endif;</php>
+</foreach>
+</select>
+
+
+
+<else />
+
+
+
+<select datatype="*" nullmsg="业务不能为空" errormsg="业务不能为空" name="post[salesman]" id="suggest_ul">
+<option value ="">请选择</option>
+<foreach name="ywjlyuy" item="v">
+<option value ="{$v.user_id}">{$v.user_login}（{$v.user_nicename}）</option>
+</foreach>
+</select>
+<php>if($gs['fenpei'] == 2):</php>
+<select name="post[salesman2]" id="suggest_ul2" style="display:none;">
+</select>
+<script>
+var zcywjl = {:json_encode($ywjlyuy)};
+$('#suggest_ul').change(function (){
+  var jingli = $(this).val();
+  if(jingli){
+    $(zcywjl).each(function (k,v){
+      if(v['user_id'] == jingli){
+        if(v['child'].length>0){
+          $('#suggest_ul2').html('<option value="">分配给经理</option>');
+          $(v['child']).each(function (k,v){
+            var str = '<option value ="'+v['uid']+'">'+v['user_login']+'（'+v['user_nicename']+'）</option>';
+            $('#suggest_ul2').append(str);
+          })
+          $('#suggest_ul2').show();
+        }else{
+          $('#suggest_ul2').hide();
+        }
+      }
+    })
+  }else{
+    $('#suggest_ul2').hide();
+  }
+
+})
+</script>
+<php>endif;</php>
+</if>
+<php>endif;</php>
+<div class="info"><span class="Validform_checktip"></span><span class="dec"><s class="dec1">◆</s><s class="dec2">◆</s></span></div></div>
+                <span class="must_red">*</span>
+
+
+
+      </td>
+    </tr>
+    <if condition="empty($zccount)">
+    <tr>
+      <td class="zcr">备注：</td>
+      <td>
+          <textarea name='post[content]' id='description' style='width:80%;height:50px;' placeholder='请填写摘要'>{$guestmsgs.content}</textarea>
+      </td>
+    </tr>
+    </if>
+  </table>-->
+  <div class="form-actions">
+  		<!--<input type="hidden" name="post[id]" value="{$guestmsgs.id}">
+  		<if condition="!$guestmsgs['salesman'] && !$zccount">
+        <button class="btn btn-primary btn_submit J_ajax_submit_btn mright"type="submit">提交</button>
+    	</if>-->
+    	<if condition="!$guestmsgs['salesman']">
+        <a class="btn" href="{:U('Api/guestbookadmin/index')}">返回</a>
+        <else />
+        <a class="btn" href="javascript:backtoTop();">关闭</a>
+      </if>
+        <a href="{:U('guestbookadmin/delete',array('id'=>$id))}" class="js-ajax-delete">{:L('DELETE')}</a>
+  </div>
+ </form>
+</div>
+<script src="__PUBLIC__/js/common.js"></script>
+<script src="__PUBLIC__/js/Validform_v5.3.2_min.js"></script>
+<script type="text/javascript">
+function sel_val(value){
+		$("#suggest_input").val(value);
+}
+function backtoTop(){
+	parent.location.reload();
+	window.close();
+}
+$(function () {
+	//setInterval(function(){public_lock_renewal();}, 10000);
+	$(".J_ajax_close_btn").on('click', function (e) {
+	    e.preventDefault();
+	    Wind.use("artDialog", function () {
+	        art.dialog({
+	            id: "question",
+	            icon: "question",
+	            fixed: true,
+	            lock: true,
+	            background: "#CCCCCC",
+	            opacity: 0,
+	            content: "您确定需要关闭当前页面嘛？",
+	            ok:function(){
+					setCookie("refersh_time",1);
+					window.close();
+					return true;
+				}
+	        });
+	    });
+	});
+    $("#myform").Validform({
+        tiptype:function(msg,o,cssctl){
+            if(!o.obj.is("#myform")){
+                var objtip=o.obj.parents("td").find(".Validform_checktip");
+                cssctl(objtip,o.type);
+                objtip.text(msg);
+                var infoObj=o.obj.parents("td").find(".info");
+                if(o.type==2){
+                    infoObj.fadeOut(200);
+                }else{
+                    if(infoObj.is(":visible")){return;}
+                    var left=o.obj.offset().left,
+                        top=o.obj.offset().top;
+                    infoObj.css({
+                        left:left+170,
+                        top:top-45
+                    }).show().animate({
+                        top:top-35
+                    },200);
+                }
+            }
+        }
+
+    });
+});
+</script>
+</body>
+</html>

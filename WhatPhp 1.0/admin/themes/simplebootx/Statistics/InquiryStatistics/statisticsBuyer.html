@@ -1,0 +1,70 @@
+<admintpl file="header"/>
+</head>
+<body>
+    <div class="wrap js-check-wrap">
+        <ul class="nav nav-tabs">
+            <li><a href="{:U('InquiryStatistics/statisticsInquiry')}">询盘地域统计</a></li>
+            <li class="active"><a href="{:U('InquiryStatistics/statisticsBuyer')}">询盘买家统计</a></li>
+        </ul>
+        <form action="{:U('InquiryStatistics/statisticsBuyer')}" method="post">
+            日期：<input type="text" name="stime" value="{$stime}" class="js-date-now" style="width:80px" />-<input type="text" name="etime" value="{$etime}" class="js-date-now" style="width:80px" />
+            <input class="btn btn-primary" type="submit" value="搜索" />
+        </form>
+     <if condition="$json_createtime neq 'null'">
+        <div id="main" style="width: 800px;height:400px;"></div>
+     <else />
+        <div>没有数据!</div>
+     </if>
+    </div>
+    <script src="__PUBLIC__/js/common.js"></script>
+    <script src="__PUBLIC__/js/echarts.common.min.js"></script>
+    <script type="text/javascript">
+        if({$json_createtime}){
+             var myChart = echarts.init(document.getElementById('main'));
+             var option = {
+                 title: {
+                     text: '询盘买家统计'
+                 },
+                 tooltip: {
+                     trigger: 'axis'
+                 },
+                 legend: {
+                     data:[]
+                 },
+                 grid: {
+                     left: '3%',
+                     right: '4%',
+                     bottom: '3%',
+                     containLabel: true
+                 },
+                 toolbox: {
+                     feature: {
+                         saveAsImage: {}
+                     }
+                 },
+                 xAxis: {
+                     type: 'category',
+                     boundaryGap: false,
+                     data: {$json_createtime}
+                 },
+                 yAxis: {
+                     type: 'value'
+                 },
+                 series: [
+                     {
+                         name:'询盘买家统计',
+                         type:'line',
+                         stack: '总量',
+                         data:{$json_number}
+                     }
+                 ]
+             };
+
+ 
+             myChart.setOption(option);
+
+        }
+    </script>
+
+</body>
+</html>

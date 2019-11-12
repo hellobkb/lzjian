@@ -1,0 +1,132 @@
+select {
+	position: absolute;
+	padding-left: 1rem !important;
+}
+
+option {
+	color: #2D3E50;
+	background: white;
+}
+
+textarea {
+	min-height: 10rem;
+	margin: 0;
+	padding: .1rem;
+	font-size: 1.2rem;
+}
+
+.attachment a {
+	color: #000;
+	text-decoration: underline;
+}
+
+.mui-content {
+	margin: 0;
+	background: white;
+}
+
+.reanod-result {
+	background: white;
+	margin: 1.5rem 1rem;
+	box-shadow: 0 .1rem rgba(0, 0, 0, .1)
+}
+
+.result-title-left {
+	float: left;
+	font-size: 1.2rem;
+	padding: .1rem 1rem;
+}
+
+.result-title-right {
+	float: right;
+	padding: .1rem;
+	font-size: 1.2rem;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.result-title-right span {
+	font-size: 1.2rem;
+	color: #2D3E50;
+}
+
+.result-content {
+	clear: both;
+	overflow: auto;
+	font-size: 1.2rem;
+	padding: 10px;
+	border: 1px solid #CCCCCC;
+	background: #F9F9F9;
+}
+
+.result-content.float div {
+	float: left;
+	min-width: 50%;
+	padding: 2px;
+}
+
+.result-content.attachment {
+	margin-top: .5rem;
+}
+
+.result-state {
+	height: 4rem;
+}
+
+.result-state>div {
+	float: left;
+}
+
+.content-right {
+	width: calc(100% - 4.5rem);
+}
+
+.content-right div {
+	float: left;
+}
+
+.content-right div input {
+	width: 20px;
+	height: 20px;
+}
+
+.content-right div label {
+	position: absolute;
+	padding: 0 1rem .5rem .5rem; 
+}
+
+.result-remark {
+	clear: both;
+}
+
+.result-remark>div {
+	float: left;
+}
+
+.result-state div:first-child,
+.result-remark div:first-child {
+	min-width: 0 !important;
+	width: 4.5rem;
+}
+
+.result-textarea {
+	min-width: 0 !important;
+	width: calc(100% - 4.5rem);
+	padding: 0 !important;
+}
+
+
+/*提交按钮*/
+
+.reanod-submit {
+	margin: 1rem;
+}
+
+.reanod-submit button {
+	padding: .5rem 3rem;
+}
+
+.reanod-submit button:first-child {
+	float: right;
+}

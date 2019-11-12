@@ -1,0 +1,90 @@
+<!-- 部分4轮播开始 -->
+
+<php>
+$content = json_decode($zcmod['content'],true);
+$image = $content['image'];
+$yangshi = $content['yangshi'];
+
+</php>
+ 
+<if condition="$yangshi eq 1">
+
+
+<elseif condition="$yangshi eq 2" /> 
+
+<div class="ipart4">
+	<div class="zong">   
+        <div class="ifac">
+        	<div class="ifac_title">
+            	<a href="" title=""><img src="__TMPL__xinyu/images/factory-tour.png" alt=""  title="" /></a>
+            </div>
+            <div  class="ifac_top">
+            	<div class="ifac_hx"></div>
+            </div>
+            
+            <script type="text/javascript" src="__TMPL__xinyu/js/bofang.js"></script>
+            <!-- 大屏轮播开始 -->
+            <div class="carouseli"> 
+            <a href="javascript:void(0);" class="next" id="next-02">&nbsp; </a>
+            <a href="javascript:void(0);" class="prev" id="prev-02">&nbsp; </a>
+              <div class="jCarouselLitei" id="demo-02">
+                <ul>
+                <foreach name="image" item="ad_image">
+                	<li>
+	                  	<a href="{$ad_image.tar}" title="{$ad_image.alt}"> 
+	                        <div class="ifac_nr">
+	                            <img src="{$ad_image.url}" alt="{$ad_image.alt}" title="{$ad_image.alt}"/> 						
+	                            <div class="main1fd"> 
+	                                <div class="ifac_ncontent">
+	                                	<div class="ifac_ntitle">{$ad_image.alt}</div>
+	                                    <div class="ifac_nhx"></div>
+	                                    <div class="ifac_nwz">{$ad_image.seq}</div>
+	                                </div>
+	                            </div>
+	                        </div>
+	                        <div class="ifac_font">{$ad_image.alt}</div>
+	                    </a>
+                  </li>
+                </foreach>
+            
+                </ul>
+              </div>
+              
+              <div class="clear"></div>
+            </div>
+           <!-- 大屏轮播结束 -->
+            <script type="text/javascript">
+			        $(document).ready(function(){
+				        $('#demo-02').jCarouselLite({
+					        btnPrev: '#next-02',
+					        btnNext: '#prev-02',
+					        auto: null,
+					        speed: 1000
+				        });		
+			        });
+           </script>
+         
+         <!-- 小屏轮播开始 -->
+            <div class="ifac_nr2">
+            <php>$i=0</php>
+            	<foreach name="image" item="lt_image">
+            		<if condition="$i lt 4">
+	            		<div class="ifac_nr2_nr">
+		                	<a href="{$lt_image.tar}" title="{$lt_image.alt}">
+		                    	<div class="ifac_nr2_pic"><img src="{$lt_image.url}" alt="{$lt_image.alt}" title="{$lt_image.alt}" /></div>
+		                        <div class="ifac_nr2_font">{$lt_image.alt}</div>
+		                    </a>
+	                	</div>
+	                	<php>$i++;</php>
+                	</if>
+            	</foreach>
+            </div>
+           <!-- 小屏轮播结束 -->
+        </div>
+    </div>
+ </div>
+ <!-- 部分4轮播结束 -->
+
+
+</if>
+

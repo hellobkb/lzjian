@@ -1,0 +1,77 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<form action="{:U('Contacttype/add_post')}" method="post" class="form-horizontal js-ajax-forms" name="myform" >
+			<div class="tab-pane" id="B">
+						<fieldset>
+							<div class="control-group">
+								<div class="control-group">
+									<label class="control-label">点击添加字段名和值</label>
+									<div class="controls">
+										 <button type="button" onclick="Badd();" class="btn btn-primary">添加</button>
+									</div>
+								</div>
+							</div>
+						</fieldset>
+			</div>
+			 <div class="form-actions">
+		    	  
+		     	<button class="btn btn-primary js-ajax-submit mright"type="submit">提交</button>
+		      	<a class="btn" href="{:U('Contacttype/index')}">返回</a>
+		    </div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+	<script>
+		setCookie('refersh_time', 0);
+		function refersh_window() {
+			var refersh_time = getCookie('refersh_time');
+			if (refersh_time == 1) {
+				window.location.reload();
+			}
+		}
+		setInterval(function() {
+			refersh_window()
+		}, 2000);
+		 
+		 //是否显示发布页面网址 1-显示 0- 不显示
+		function showpost(type){
+			
+			if(type ==1){
+				$("#showprepost").show();
+				 
+			}else if(type ==0){
+				$("#showprepost").hide();
+			}
+			
+		}
+		
+		
+		function Badd(){
+			
+			var num = $("#B").find("fieldset").length-1;
+			  
+			var str = "<fieldset>";
+			str += "<div class='control-group'>";
+			str +="<div class='control-group'>";
+			str += "<label class='control-label'>请填写字段名和值</label>";
+			str += "<div class='controls'>";
+			str +="字段名：<input type='text' name='Bname"+num+"' />";
+			str +="&nbsp;&nbsp;&nbsp;值：<input type='text' name='Bvalue"+num+"' />";
+			str +="<span onclick='removep(this);' style='cursor:pointer;color:red'>&nbsp;移除</span>";
+			str +="</div></div></div></fieldset>";
+			 
+			$("#B").append(str);
+		}
+		
+		function removep(obj){
+		  
+			var parent = $(obj).parents().parents().parents().parents();
+			parent[0].remove();
+		}
+		
+		
+	</script>
+</body>
+</html>

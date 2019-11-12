@@ -1,0 +1,80 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="{:U('Search/Search/index')}">{:L('SOUSUOSHEHZI')}</a></li>
+			<li><a href="{:U('Search/Search/create')}">{:L('CHONGJIANSUOYIN')}</a></li>
+			<li><a href="{:U('Search/Search/searchot')}">{:L('REMENSOUSUO')}</a></li>
+		</ul>
+		<form class="form-horizontal js-ajax-forms" action="{:U('Search/index')}" method="post">
+			<fieldset>
+				<div class="tabbable">
+					<div class="tab-content">
+						<div class="tab-pane active">
+								<div class="control-group">
+									<label class="control-label">{:L('SHUJUYUANSHEZHI')}</label>
+									<div class="controls">
+										<volist name="model_list" id="vo">
+										<label>
+											<input name="setting[modelid][]" class="js_check" type="checkbox" <if condition=" in_array($vo['modelid'],$config['modelid']) ">checked</if> value="{$vo.modelid}" >
+											<span>{$vo.name}</span>
+										</label>
+										</volist>
+									</div>
+								</div>
+								<div class="control-group">
+									<label class="control-label">{:L('SFQYXGSS')}</label>
+									<div class="controls">
+										<label>
+										 是<input type="radio" name="setting[relationenble]"  class="input-radio" <if condition=" $config['relationenble'] eq 1 ">checked</if> value='1'>
+										</label>
+										<label>
+							            否<input type="radio" name="setting[relationenble]"  class="input-radio" <if condition=" $config['relationenble'] eq 0 ">checked</if> value='0'> <span class="gray">（提示：此项功能会增大数据库压力！）</span>
+							        	</label>
+									</div>
+								</div>
+								<div class="control-group">
+									<label class="control-label">{:L('SFQYPHPJYFC')}</label>
+									<div class="controls">
+										<label>
+										是<input type="radio" name="setting[segment]"  class="input-radio" <if condition=" $config['segment'] eq 1 ">checked</if> value='1'>
+										</label>
+										<label>
+							            否<input type="radio" name="setting[segment]"  class="input-radio" <if condition=" $config['segment'] eq 0 ">checked</if> value='0'> <span class="gray">（提示：只有在关闭Sphinx全文索引有效！<b>关闭</b>此项后将无法使用MySQL全文索引！）</span>
+							        	</label>
+									</div>
+								</div>
+								<div class="control-group">
+									<label class="control-label">{:L('FCJK')}</label>
+									<div class="controls">
+										<select name="setting[dzsegment]">
+											<option value='0' <if condition=" !$config['dzsegment'] ">selected</if>>使用内置简单分词接口</option>
+											<option value="1" <if condition=" $config['dzsegment'] ">selected</if>>使用Discuz在线分词接口</option>
+											</select>
+											<span class="gray">（提示：Discuz在线分词接口速度可能受网络影响！）</span>
+									</div>
+								</div>
+								<div class="control-group">
+									<label class="control-label">{:L('SSJJMYXSTS')}</label>
+									<div class="controls">
+										<input type="text" class="input" name="setting[pagesize]" id="uc_api" value="{$config.pagesize}" />
+									</div>
+								</div>
+								<div class="control-group">
+									<label class="control-label">{:L('SSJGHCSJ')}</label>
+									<div class="controls">
+										<input type="text" class="input" name="setting[cachetime]" id="uc_api" value="{$config.cachetime}" /> 秒
+									</div>
+								</div>
+						</div>
+					</div>
+				</div>
+				<div class="form-actions">
+					<button type="submit" class="btn btn-primary  js-ajax-submit">{:L("SAVE")}</button>
+				</div>
+			</fieldset>
+		</form>
+	</div>
+</body>
+</html>

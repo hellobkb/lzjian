@@ -1,0 +1,144 @@
+<div class="xuanzes">
+<if condition="$source"> Select Type:
+  <select id="searchCat">
+    <foreach name="source" item="svalue"> <option value="{$svalue.modelid}" 
+      <if condition="$modelid eq $svalue['modelid']"> selected </if>>
+			{$svalue.name}
+      </option>
+    </foreach>
+  </select>
+</if>
+            
+            </div>
+<script>
+	$("#searchCat").change(function(){
+		window.location.href="{:U('Index/index')}&q={$keyword}&modelid="+$("#searchCat").val();
+	});
+</script>
+<php> $siteOption = sp_get_site_options(); </php>
+
+<if condition="$modelid eq 5">
+  <if condition="$result">
+    <form action="{:U('Content/Pagedis/Inquiry')}"  method="post">
+      <foreach name="result" item="value" key="mykey">
+          <php> $value['formate_title'] = str_replace($vo,'<font color="red">'.$vo.'</font>',$value["title"]);
+            $value['formate_description'] = str_replace($vo,'<font color="red">'.$vo.'</font>',$value["description"]); </php>
+          <if condition="($mykey)%3 eq 0">
+            <div class="chanp_list juzuo02" style="margin-bottom: 0px"> <a href="{:zcurl($value['url'],$value['moveurl'])}" title="{$value.title}"><img src="<php>echo $siteOption['site_host'] . $value['thumb']</php>" alt="{$value.title}" title="{$value.title}" /></a> <a href="{:zcurl($value['url'],$value['moveurl'])}" title="{$value.title}" class="biaoti f14 hg1415 juzhong hui4d top5">{$value.formate_title}</a>
+              <div class="input f12 juzhong top10">
+                <input type="checkbox" name="pro[]" value="{$value.id}" />
+                <a href="{:U('Content/Pagedis/lists',array('id'=>$value['id'],'catid'=>101,'hcatid'=>$value['id']))}">Inquire Now </a> </div>
+            </div>
+            <else />
+             <div class="chanp_list juzuo30" style=" margin-bottom: 0px"> <a href="{:zcurl($value['url'],$value['moveurl'])}" title="{$value.title}"><img src="<php>echo $siteOption['site_host'] . $value['thumb']</php>" alt="{$value.title}" title="{$value.title}" /></a> <a href="{:zcurl($value['url'],$value['moveurl'])}" title="{$value.title}" class="biaoti f14 hg1415 juzhong hui4d top5">{$value.formate_title}</a>
+              <div class="input f12 juzhong top10">
+                <input type="checkbox" name="pro[]" value="{$value.id}" />
+                <a href="{:U('Content/Pagedis/lists',array('id'=>$value['id'],'catid'=>101,'hcatid'=>$value['id']))}">Inquire Now </a> </div>
+            </div>
+          </if>
+      </foreach>
+      <div class="clear"></div>
+      <div class=" page_fy2 juzhong top20"> {$pages} <span >
+        <input  type="submit" value="Add to Inquiry List" class="f14 zitia addto juzhong"/>
+        </span> </div>
+    </form>
+    <else />
+    <h3>We're sorry, we could not find any matches about "<em>{$keyword}</em>" Please try another keywords or click our product categories.</h3>
+  </if>
+  <elseif condition="$modelid eq 1 " />
+  <!-- 文章列表 -->
+  <if condition="$result">
+    <div class="article_lanmu">
+      <foreach name="result" item="value">
+        <foreach name="words" item="vo">
+          <php> $value['formate_title'] = str_replace($vo,'<font color="red">'.$vo.'</font>',$value["title"]);
+            $value['formate_description'] = str_replace($vo,'<font color="red">'.$vo.'</font>',$value["description"]); </php>
+     <div class="zong news_ls">
+    <div class="news_lsy f14" style=" float:left;">
+      <div class="news_ybt f16"> <a href="{:zcurl($value['url'],$vo['moveurl'])}" title="{$value.title}" class="hui3"> {$value.formate_title}</a></div>
+      <p class="f14 hg1419 top15"><a href="{:zcurl($value['url'],$vo['moveurl'])}" title="{$value.description}" class="hui6"> {$value.formate_description}</a></p>
+      <php> $time = date("M. d, Y",$value['updatetime']);</php>
+      <div class="top20"><span class="news_rl hui9">{$time}</span> <a href="{:zcurl($value['url'],$vo['moveurl'])}" title="{$value.title}"  class="hui9 read_mr f12 xieti" style="margin-right: 50px;">Read More ></a>
+        <div class="clear"></div>
+      </div>
+    </div>
+    <div class="clear"></div>
+    </div>
+    
+        </foreach>
+      </foreach>
+    </div>
+    <else />
+    <h3>We're sorry, we could not find any matches about "<em>{$keyword}</em>" Please try another keywords or click our product categories.</h3>
+  </if>
+  
+  <!-- factory tour列表结束 -->
+  <elseif condition="$modelid eq 2 " />
+  <!-- factory tour列表 -->
+  <if condition="$result">
+    <div class="cer_pro baguetteBoxOne">
+      <volist name="result" id="value">
+       <div  <if condition="($key+1)%3 eq 0"> class="p1_nr p1_nrlast"<else /> class="p1_nr"</if>>
+      <volist name="words" id="vo">
+        <php> $value['formate_title'] = str_replace($vo,'<font color="red">'.$vo.'</font>',$value["title"]);
+          $value['formate_description'] = str_replace($vo,'<font color="red">'.$vo.'</font>',$value["description"]); </php>
+        <div class="p1_ntop"> <a href="{:zcurl($value['url'],$value['moveurl'])}" title="{$value.title}">
+          <div class="p1_pic"> <img src="<php>echo $siteOption['site_host'] . $value['thumb']</php>" alt="{$value.title}" title="{$value.title}" width="397" height="397" /> </div>
+          <div class="p1_font">{$value.formate_title}</div>
+          </a> </div>
+        <div class="p1_nbottom">
+          <div class="p1_in"> </div>
+          <div class="clear"></div>
+        </div>
+      </volist>
+    </div>
+    
+     </volist>
+    </div>
+    <else />
+    <h3>We're sorry, we could not find any matches about "<em>{$keyword}</em>" Please try another keywords or click our product categories.</h3>
+  </if>
+  
+  <elseif condition="$modelid eq 3 " />
+  <if condition="$result">
+   <php>$z=0;</php>
+  <SCRIPT type=text/javascript src="__TMPL__xinyu/js/baguettebox.min.js"></SCRIPT>
+  <div class=" baguetteBoxOne">
+ 
+     <volist name="result" id="value">
+    <div <if condition="($z)%3 eq 0"> class="celie juzuo0"<else /> class="celie"</if>>
+     <volist name="words" id="vo">
+      <php> $value['formate_title'] = str_replace($vo,'<font color="red">'.$vo.'</font>',$value["title"]);
+          $value['formate_description'] = str_replace($vo,'<font color="red">'.$vo.'</font>',$value["description"]); </php>
+      <div class="cetu">
+        <div class="cetun"><img src="<php>echo $siteOption['site_host'] . $value['thumb']</php>" title="{$value.title}" alt="{$value.title}" /><a href="<php>echo $siteOption['site_host'] . $value['thumb']</php>" title="{$value.title}" class="cefu"><img src="__TMPL__xinyu/img/cefangda.png" title="{$value.title}" alt="{$value.title}" /></a></div>
+    </div>
+    <a class="cezi f14">{$value.formate_title}</a>
+    
+    </volist>
+    
+     </div>
+     <php>$z++;</php>
+   </volist>
+      <div class="n1_fy cer_fyjl">{$pages}</div>
+    <div class="clear"></div>
+  </div>
+<script>
+baguetteBox.run('.baguetteBoxOne', {
+    animation: 'fadeIn',
+});
+</script>
+    
+    
+    
+    <else />
+    <h3>We're sorry, we could not find any matches about "<em>{$keyword}</em>" Please try another keywords or click our product categories.</h3>
+  </if>
+  <elseif condition="$modelid eq 31 " />
+  <if condition="$result">
+    <h3>FAQ 模型不支持搜索</h3>
+    <else />
+    <h3>抱歉，找不到与 "<em>{$keyword}</em>" 相符的信息</h3>
+  </if>
+</if>
+<div class="clear"></div>

@@ -1,0 +1,18 @@
+<php>
+$content = json_decode($zcmod['content'], true);
+$limit = $content['zcmsg']['attr']['argu']['limit'];
+if(!isset($catid)){
+	$modelid = $content['zcmsg']['modelid'];
+	$Category = M('Category')->where('modelid='.$modelid.' and parentid=0')->find();
+	$catid = $Category['catid'];
+}
+
+</php>
+<content action="lists" catid="$catid" where="1" num="$limit">
+<php>
+echo M()->getLastSql();
+var_dump($data);
+</php>
+</content>
+
+

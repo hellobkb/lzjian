@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>首页</title>
+		
+		<tc_include file="App:header" /> 
+		<link rel="stylesheet" type="text/css" href="__TMPL__/App/css/home.css" />
+	</head>
+
+	<body>
+		<header id="header" class="mui-bar mui-bar-nav">
+			<div class="reanod-beiyong">
+				<a href="#"><span></span></a>
+			</div>
+			<div class="mui-title">
+				<img src="__TMPL__/App/image/logo.png" />
+			</div>
+		</header>
+
+		<div id="content" class="mui-content">
+		<div >
+			<div class="reanod-lunbo">
+				<div id="slider" class="mui-slider">
+					<div class="mui-slider-group mui-slider-loop">
+						<div class="mui-slider-item mui-slider-item-duplicate">
+							<a href="{$banner[2][linkUrl]}">
+								<img src="{$banner[2][imgUrl]}">
+								<p class="mui-slider-title"></p>
+								<span>{$banner[2][title]}</span>
+							</a>
+						</div>
+						<foreach name="banner" item="b_v">
+							<div class="mui-slider-item ">
+								<a href="{$b_v.linkUrl}">
+									<img src="{$b_v.imgUrl}">
+									<p class="mui-slider-title"></p>
+									<span>{$b_v.title}</span>
+								</a>
+							</div>
+						</foreach>
+						<div class="mui-slider-item mui-slider-item-duplicate">
+							<a href="{$banner[0][linkUrl]}">
+								<img src="{$banner[0][imgUrl]}">
+								<p class="mui-slider-title"></p>
+								<span>{$banner[0][title]}</span>
+							</a>
+						</div>
+					</div>
+					<div class="mui-slider-indicator">
+						<div class="mui-indicator mui-active"></div>
+						<div class="mui-indicator"></div>
+						<div class="mui-indicator"></div>
+					</div>
+				</div>
+			</div>
+			<div class="reanod-content">
+				<div class="reanod-echarts">
+					<div class="reanod-echarts-head">
+						<span class="iconfont icon-xiaoxi"></span>
+						<span>询盘</span>
+						<a href="{:leuu('App/Mobile/xp_list',array('token'=>$token ) )}">更多</a>
+					</div>
+					<div class="reanod-table" id="guest">
+						<table>
+							<foreach name="xp" item="xp_v">
+								<tr>
+									<th>{$xp_v.sendDate}</th>
+									<th>{$xp_v.company}</th>
+									<th>{$xp_v.email}</th>
+								</tr>
+							</foreach>
+						</table>
+					</div>
+				</div>
+				<div class="reanod-echarts">
+					<div class="reanod-echarts-head">
+						<span class="iconfont icon-goutong"></span>
+						<span>沟通关注审批</span>
+						<a href="{:leuu('App/Mobile/approval_list',array('token'=>$token, 'tab'=>3 ))}">更多</a>
+					</div>
+					<div class="reanod-table" id="contact">
+						<table>
+							<foreach name="contact" item="c_v">
+								<tr>
+									<th>{$c_v.proposer}</th>
+									<th>{$c_v.applyDate}</th>
+									<th>{$c_v.company}</th>
+								</tr>
+							</foreach>
+						</table>
+					</div>
+				</div>
+				<div class="reanod-echarts">
+					<div class="reanod-echarts-head">
+						<span class="iconfont icon-zhangdan"></span>
+						<span>报价审批</span>
+						<a href="{:leuu('App/Mobile/approval_list',array('token'=>$token,'tab'=>1))}">更多</a>
+					</div>
+					<div class="reanod-table"  id="offer">
+						<table>
+							<foreach name="offer" item="o_v">
+								<tr>
+									<th>{$o_v.proposer}</th>
+									<th>{$o_v.applyDate}</th>
+									<th>{$o_v.company}</th>
+								</tr>
+							</foreach>
+						</table>
+					</div>
+				</div>
+				<div class="reanod-echarts">
+					<div class="reanod-echarts-head">
+						<span class="iconfont icon-jieduanxinxi"></span>
+						<span>阶段审批</span>
+						<a href="{:leuu('App/Mobile/approval_list',array('token'=>$token ,'tab'=>2))}">更多</a>
+					</div>
+					<div class="reanod-table" id="client">
+						<table>
+							<foreach name='client' item="cl_v">
+								<tr>
+									<th>{$cl_v.proposer}</th>
+									<th>{$cl_v.applyDate}</th>
+									<th>{$cl_v.company}</th>
+								</tr>
+							</foreach>
+						</table>
+					</div>
+				</div>
+
+				<div class="reanod-echarts">
+					<div class="reanod-echarts-head">
+						<span class="iconfont icon-peixun1"></span>
+						<span>热门培训课程</span>
+						<!--TODO-->
+						<a href="#" id="reanod_course">更多</a>
+					</div>
+					<div class="reanod-video">
+						<foreach name="video" item="v_v">
+							<div>
+								<a href='{:leuu("App/Mobile/video_show" ,array("token"=>$token))}' >
+									<span class='reanod-video-play'></span><img src='{$v_v.imgurl}' /><p>{$v_v.title}</p>
+				 				</a>
+				 			</div>
+						</foreach>
+					</div>
+				</div>
+
+				<div style="clear:both;height: 65px;"></div>
+			</div>
+			</div>
+
+			<tc_include file="App:footer" />
+			 
+			<div style="display: none;">
+				<li class="mui-table-view-cell">
+					<a id="reanod_changeWebsite">修改域名</a>
+				</li>
+				<li class="mui-table-view-cell">
+					<a id="reanod_clearCache">清理缓存</a>
+				</li>
+				<li class="mui-table-view-cell">
+					<a id="reanod_update">检测更新（测试）</a>
+				</li>
+			</div>
+		</div>
+		<script>
+			mui.init({});
+
+			//下拉刷新
+			function pulldownRefresh(){
+
+				setTimeout(function() {
+					mui_ready();
+					mui("#content").pullRefresh().endPulldownToRefresh();
+				},1500)
+			}
+
+			//手机端
+			mui.plusReady(function() {
+				 
+				mui_ready();
+			});
+			
+			//非手机端
+			if(!mui.os.plus){
+				mui.ready(mui_ready);
+			}
+				
+			/*mui ready执行方法*/
+			function mui_ready(){
+				 
+				var website = '{$website}';
+				 
+				localStorage.setItem('keyUrl' , website);
+				 
+				if(!website) return;
+				 mui("#slider").slider({interval: 3500});
+
+			};
+
+			document.getElementById('reanod_course').addEventListener('tap', function() {
+				launchApp();
+			});
+
+			//轮播图点击事件
+			bandList(mui('#slider'));
+
+			//列表点击事件
+			bandList(mui('.reanod-content'));
+
+			// 调用第三方程序
+			function launchApp() {
+				if(mui.os.plus) {
+					if(plus.os.name == "Android") {
+						plus.runtime.launchApplication({
+							pname: "com.consultant.reanod"
+						}, function(e) {
+							mui.toast("请下载“外贸培训”APP视听更多课程");
+						});
+					} else if(plus.os.name == "iOS") {
+						plus.runtime.launchApplication({
+							//iOS平台为要调用程序的URLScheme格式字符串。
+							//TODO
+							action: ""
+						}, function(e) {
+							mui.toast("请下载“外贸培训”APP视听更多课程");
+						});
+					}
+				} else {
+					mui.toast("请登录手机端操作")
+				}
+			}
+
+			(function(mui) {
+				//重写返回键
+				mui.back = function(event) {
+					if(!menuBack()) {
+						systemQuit();
+					}
+				};
+
+				//底部菜单返回
+				function menuBack() {
+					if($("#reanod_popover_menu").hasClass("mui-active")) {
+						$("#reanod_popover_menu").removeClass("mui-active");
+
+						mui('.mui-popover').popover('toggle');
+						return true;
+					}
+				}
+
+				var backButtonPress = 0;
+				//点击两次返回键退出
+				function systemQuit() {
+					backButtonPress++;
+					if(backButtonPress > 1) {
+						plus.runtime.quit();
+					} else {
+						mui.toast('再按一次退出应用');
+					}
+					setTimeout(function() {
+						backButtonPress = 0;
+					}, 2000);
+					return false;
+				}
+			})(mui);
+		</script>
+	</body>
+
+</html>

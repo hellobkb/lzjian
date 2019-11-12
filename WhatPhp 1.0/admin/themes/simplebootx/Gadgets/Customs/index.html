@@ -1,0 +1,24 @@
+<admintpl file="header" />
+</head>
+<body>
+    <div class="wrap js-check-wrap">
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="javascript:;">海关查询</a></li>
+        </ul>
+      <a href="http://www.i5a6.com/hscode/" target="_blank" class="btn primary-btn">点击查看</a>
+    </div>
+    <script src="__PUBLIC__/js/common.js"></script>
+    <script>
+        setCookie('refersh_time', 0);
+        function refersh_window() {
+            var refersh_time = getCookie('refersh_time');
+            if (refersh_time == 1) {
+                window.location.reload();
+            }
+        }
+        setInterval(function() {
+            refersh_window()
+        }, 2000);
+    </script>
+</body>
+</html>

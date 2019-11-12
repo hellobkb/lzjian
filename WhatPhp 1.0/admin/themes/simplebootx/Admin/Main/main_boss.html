@@ -1,0 +1,342 @@
+<admintpl file="header" />
+<style>
+.home_info li em {
+  float: left;
+  width: 120px;
+  font-style: normal;
+}
+li {
+  list-style: none;
+}
+</style>
+</head><body>
+<div class="wrap" style="margin-left:0; padding-left:0">
+
+	<admintpl file="main_lunbo" />
+   
+  <div class="lb">
+    <div class="lb_top">
+    	
+        <div class="lb_ttitle">本月销售简报</div>
+        
+        <div class="lb_tnr">
+        	<div class="lb_tnrj2">
+                <div class="lb_twz1 lb_tbg1"><span>{$monthxz}</span>个</div>
+                <div class="lb_twz2">月新增线索阶段客户</div>
+        	</div>
+        </div>
+        
+        <div class="lb_tnr">
+        	<div class="lb_tnrjl">
+                <div class="lb_twz1 lb_tbg2"><span>{$orderxz}</span>个</div>
+                <div class="lb_twz2">月新增成单客户</div>
+        	</div>
+        </div>
+        
+       <div class="lb_tnr">
+        	<div class="lb_tnrjl">
+                <div class="lb_twz1 lb_tbg4"><span>{$orderIncrease}</span>个</div>
+                <div class="lb_twz2">月新增订单</div>
+        	</div>
+        </div>
+        
+        <div class="lb_tnr" style="background:none">
+        	<div class="lb_tnrjl">
+                <div class="lb_twz1 lb_tbg4"><span>{$noOrder}</span>个</div>
+                <div class="lb_twz2">3个月未返单客户</div>
+        	</div>
+        </div>
+       
+        <div class="lb_tnr lb_tnrj3">
+        	<div class="lb_tnrj2">
+                <div class="lb_twz1 lb_tbg5"><span>{$orderShip}</span>个</div>
+                <div class="lb_twz2">出运提醒</div>
+        	</div>
+        </div>
+        
+         <div class="lb_tnr">
+        	<div class="lb_tnrjl">
+                <div class="lb_twz1 lb_tbg5"><span>{$nextContactNum}</span>个</div>
+                <div class="lb_twz2">今日沟通提醒</div>
+        	</div>
+        </div>
+        
+        <div class="lb_tnr">
+        	<div class="lb_tnrjl">
+                <div class="lb_twz1 lb_tbg5">{$contractMoney}</div>
+                <div class="lb_twz2">合同金额</div>
+        	</div>
+        </div>
+        
+        <div class="lb_tnr lb_tnrlast">
+        	<div class="lb_tnrjl">
+                <div class="lb_twz1 lb_tbg6">{$refundMoney}</div>
+                <div class="lb_twz2">实际回款</div>
+        	</div>
+        </div>
+        
+        <div class="clear"></div>
+    
+    </div>
+    
+    
+    <div class="lb_center">
+    	
+        <div class="lb_ctitle">本年度数据简报</div>
+        
+        
+        <div class="p2_b1">			
+		  
+        
+          <ul id="menu2" class="p2_menu">
+              <li onClick="setTab(2,0)" class="hovers">本财年目标总情况</li>
+              <li onClick="setTab(2,1)">各部门完成情况</li>
+              <li onClick="setTab(2,2)">各部门完成占比</li>
+          	<div class="clear"></div>
+          </ul>
+          <div class="clear"></div>
+          <div id="main2">
+              <ul class="block" >
+                  <div id="main11" style="width:1080px;height:400px;"></div>
+              </ul>
+              <ul>
+                  <div id="main21" style="width:1080px;height:400px;"></div>
+              </ul>
+              <ul>
+              	  <div id="main31" style="width:1080px;height:400px;"></div>
+              </ul>
+          </div>
+      </div>
+    </div>
+  </div>
+<!--  <div class="sy_f lb_bottom">
+  	<span>技术咨询电话： 15633081023 </span>
+    <span class="sy_f_span1">QQ: <a href="" title="">2839921604</a></span>
+  </div>-->
+
+</div>
+<script src="__PUBLIC__/js/common.js"></script> 
+<script src="__PUBLIC__/js/echarts.common.min.js"></script>
+<script>
+    //获取官方通知
+    
+  /*  $.get("{:U('Main/getVersion')}", {} ,function(str){
+    	 if(str.status ==1){
+    		 if(window.confirm(str.msg)){
+    			 window.open('http://www.xinguwen.com/thinkcmf_update.html');
+    		 } 
+    		
+    	 } 
+    },'json');*/
+ /*    $.getJSON("{:U('Main/getVersion')}",
+    function(data) {
+    	
+    	 
+    	
+      var tpl = '<li><em class="title"></em><span class="content"></span></li>';
+      var $thinkcmf_notices = $("#thinkcmf_notices");
+      $thinkcmf_notices.empty();
+      alert(data);
+      if (data.length > 0) {
+        $.each(data, function(i, n) {
+          var $tpl = $(tpl);
+          $(".title", $tpl).html(n.title);
+          $(".content", $tpl).html(n.content);
+          $thinkcmf_notices.append($tpl);
+        });
+      } else {
+        $thinkcmf_notices.append("<li>^_^,{:L('NO_NOTICE')}~~</li>");
+      }  
+
+    });
+    
+     */
+    
+	$(function(){
+		
+		//本财年目标总情况
+		var myChart1 = echarts.init(document.getElementById('main11'));
+		var option1 ={
+			    title : {
+			        text: '本财年目标总情况',
+			        
+			    },
+			    tooltip : {
+			        trigger: 'axis',
+			        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+			            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+			        }
+			    },
+			    legend: {
+			        data:['预测金额','成交金额','目标金额','业绩走势']
+			    },
+			    toolbox: {
+			        show : true,
+			        feature : {
+			            dataView : {show: true, readOnly: false},
+			            magicType : {show: true, type: ['line', 'bar']},
+			            restore : {show: true},
+			            saveAsImage : {}
+			        }
+			    },
+			    calculable : true,
+			    xAxis : [
+			        {
+			            type : 'category',
+			            data : {$yearList},
+			        }
+			    ],
+			    yAxis : [
+			         {
+            			type: 'value',
+            			axisLabel: {
+                            formatter: '{value} 美元'
+                        }
+        			},
+        			 
+			    ],
+			    series : [
+			        {
+			        	name:'预测金额',
+			        	type:'bar',
+			        	data:{$foreList}
+			            
+			          
+			        },
+			        {
+			        	name:'成交金额',
+			            type:'bar',
+			            data:{$currentList},
+			          
+			        },
+			        {
+			        	name:'目标金额',
+			            type:'bar',
+			            data:{$targetList},
+			        	
+			        },
+			        {
+			            name:'业绩走势',
+			            type:'line',
+			            data:{$currentList}
+			        }
+			         
+			    ]
+			};
+		
+		 myChart1.setOption(option1);
+		
+		
+		 //各部门完成情况
+		 var myChart2 = echarts.init(document.getElementById('main21'));
+		 
+		 var option2 = {
+				 title : {
+				        text: '各分公司完成情况',  
+				    },
+				    tooltip : {
+				        trigger: 'axis',
+				        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+				            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+				        }
+				    },
+				    legend: {
+				        data:['预测金额','成交金额','目标金额']
+				    },
+				    toolbox: {
+				        show : true,
+				        feature : {
+				            dataView : {show: true, readOnly: false},
+				            magicType : {show: true, type: ['line', 'bar']},
+				            restore : {show: true},
+				            saveAsImage : {}
+				        }
+				    },
+				    calculable : true,
+				    xAxis : [
+				        {
+				            type : 'category',
+				            data : {$company},
+				            
+				        }
+				    ],
+				    yAxis : [
+				        {
+				            type : 'value',
+				            axisLabel: {
+	                            formatter: '{value} 美元'
+	                        }
+				        }
+				    ],
+				    series : [
+				        {
+				        	name:'预测金额',
+				        	type:'bar',
+				        	data:{$fList}
+				            
+				          
+				        },
+				        {
+				        	name:'成交金额',
+				            type:'bar',
+				            data:{$cList},
+				          
+				        },
+				        {
+				        	name:'目标金额',
+				            type:'bar',
+				            data:{$tList},
+				        	
+				        }
+				    ]
+		 };
+		 
+		 myChart2.setOption(option2);
+		 
+		 myChart2.on('click', eConsole);
+		 function eConsole(param){
+			 window.location.href="{:U('Crm/Cdata/department')}&name=" + param.name;
+		 }
+		 
+		 
+		//各部门完成业绩占比
+			
+		var myChart3 = echarts.init(document.getElementById('main31'));
+		var option3 = {
+				 title : {
+		                text: '各分公司完成占比',
+		                x:'left'
+		            },
+		            tooltip : {
+		                trigger: 'item',
+		                formatter: "{a} <br/>{b} : {c} ({d}%)"
+		            },
+		            legend: {
+		                data: {$company2}
+		            },
+		            series : [
+		                {
+		                    name: '各分公司完成占比',
+		                    type: 'pie',
+		                    radius : '55%',
+		                    center: ['50%', '60%'],
+		                    data:{$cList2},
+		                    itemStyle: {
+		                        emphasis: {
+		                            shadowBlur: 10,
+		                            shadowOffsetX: 0,
+		                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+		                        }
+		                    }
+		                }
+		            ]
+		}
+			
+		myChart3.setOption(option3);
+		myChart3.on('click', eConsole);
+		 
+	});
+    
+  </script>
+</body>
+</html>

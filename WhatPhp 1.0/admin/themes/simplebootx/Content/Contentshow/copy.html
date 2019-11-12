@@ -1,0 +1,164 @@
+<admintpl file="header" />
+<style type="text/css">
+.pic-list li {
+	margin-bottom: 5px;
+}
+.error{
+	color: red;
+}
+/*
+===================
+颜色筛选
+===================
+*/
+.color_pick{
+	border:1px solid #ccc;
+	padding:2px 13px 2px 3px;
+	background:#fff url(__PUBLIC__/images/down.png) 40px center no-repeat;
+	display:inline-block;
+	cursor:pointer;
+	height:20px;
+	overflow:hidden;
+	vertical-align:middle;
+	position:relative;
+	line-height:normal;
+}
+.color_pick:hover{
+	background-color:#fffbde;
+}
+.color_pick.color_current{
+	border-color:#aaa #aaa #555;
+	background-color:#fffbde;
+}
+.color_pick em{
+	height:20px;
+	width:34px;
+	display:inline-block;
+	background:url(__PUBLIC__/images/transparent.png);
+}
+.color_pick.color_big{
+	background-image:none;
+	width:80px;
+	padding:3px;
+	height:60px;
+	text-align:center;
+	color:#333;
+}
+.color_pick.color_big em{
+	width:80px;
+	height:38px;
+	*margin-bottom:3px;
+	text-align:center;
+}
+/*字体颜色选择组合*/
+.color_pick_dom{
+	width:70px;
+	width:300px;
+}
+.color_pick_dom ul{
+	height:29px;
+	width:170px;
+	padding:3px 0 0 0;
+}
+.color_pick_dom li{
+	float:left;
+	margin-right:10px;
+	_margin-right:8px;
+	white-space:nowrap;
+}
+.color_pick_dom li input{
+	_margin:0 0 -1px -3px;
+	_padding:0;
+}
+.color_pick_dom li.none{
+	margin-right:0;
+}
+.color_pick_dom .color_pick{
+	background-position:151px center;
+}
+.color_pick_dom .color_pick em{
+	width:145px;
+}
+.color_pick_dom .case{
+	float:right;
+	width:100px;
+	border:1px solid #ccc;
+	background:#fff;
+	padding:10px 10px;
+}
+</style>
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a data-toggle="tab">复制</a></li>
+		</ul>
+		<form class="form-horizontal js-ajax-form" action="{:U('Contentshow/copy')}" method="post">
+			<div class="tabbable">
+		        <div class="tab-content">
+		          <div class="tab-pane active">
+		          <fieldset>
+							<div class="control-group">
+									<button type="button" class="btn btn-primary" onClick="copyadd();"> 添加</button>
+							</div>
+				  </fieldset>
+		          </div>
+		          <div class="tab-pane active" id="con">  		
+						<!-- <fieldset>
+							<div class="control-group">
+									分类:
+									<select name="info[parentid]" id="parentid">
+										<option value="0">≡ 请选择分类 ≡</option>
+										{$category}
+									</select>
+									标题:<input type="text" name="title" value=""></input>
+									seourl:<input type="text" name="seourl" value=""></input>
+							</div>
+						</fieldset> -->
+		          </div>
+		        
+		    </div>
+		     <div class="form-actions">
+		    	 <input type="hidden" id="id" name="id" value="{$get.id}">
+		    	 <input type="hidden" id="catid" name="catid" value="{$get.catid}">
+		    	 <input type="hidden" name="views" value="">
+		    	 <input type="hidden" name="yesterdayviews" value="{$get.catid}">
+		    	 <input type="hidden"  name="dayviews" value="0">
+		    	 <input type="hidden" name="weekviews" value="0">
+		    	 <input type="hidden" name="monthviews" value="0">
+		    	 <input type="hidden" name="viewsupdatetime" value="0">
+		    	 
+		     	<button class="btn btn-primary js-ajax-submit"type="submit">复制</button>
+		      	<a class="btn" href="{:U('Contentshow/classlist',array('catid'=>$get['catid']))}">{:L('BACK')}</a>
+		    </div>
+		</form>
+	</div>
+	
+	<script src="__PUBLIC__/js/commons.js"></script>
+	<script src="__PUBLIC__/js/content_addtop.js"></script>
+	<script src="__PUBLIC__/js/colorPicker/colorPicker.js"></script>
+<script type="text/javascript">
+function copyadd(){
+			var num = $("#con").find("fieldset").length;
+			var cat = "{$category}";
+			var str = "<fieldset>";
+			str += "<div class='control-group'>";
+			str +="分类:<select name='category"+num+"'><option value='0'>≡ 请选择分类 ≡</option>"+cat+"</select>";
+			str += '标题:<input required type="text" name="title'+num+'" value=""></input>';
+			str += 'seourl:<input type="text" name="seourl'+num+'" value=""></input>';
+			str += '<a onclick="removef(this)">移除</a>';
+			str +="</div>";
+			str +="</fieldset>";
+			 
+			$("#con").append(str);
+			
+} 
+function removef(obj){
+			var parent = $(obj).parents().parents();
+			parent[0].remove();
+}
+
+
+</script>
+</body>
+</html>

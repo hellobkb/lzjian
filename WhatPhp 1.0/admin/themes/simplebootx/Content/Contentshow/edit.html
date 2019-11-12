@@ -1,0 +1,434 @@
+<admintpl file="header" />
+<style type="text/css">
+.pic-list li {
+	margin-bottom: 5px;
+}
+.list-dot li a.close,.list-dot-othors li a.close{ background: url("{$config_siteurl}images/cross.png") no-repeat left 3px; display:block; width:16px; height:16px;position: absolute;outline:none;right:5px; bottom:5px}
+/*
+===================
+颜色筛选
+===================
+*/
+.color_pick{
+	border:1px solid #ccc;
+	padding:2px 13px 2px 3px;
+	background:#fff url(__PUBLIC__/images/down.png) 40px center no-repeat;
+	display:inline-block;
+	cursor:pointer;
+	height:20px;
+	overflow:hidden;
+	vertical-align:middle;
+	position:relative;
+	line-height:normal;
+}
+.color_pick:hover{
+	background-color:#fffbde;
+}
+.color_pick.color_current{
+	border-color:#aaa #aaa #555;
+	background-color:#fffbde;
+}
+.color_pick em{
+	height:20px;
+	width:34px;
+	display:inline-block;
+	background:url(__PUBLIC__/images/transparent.png);
+}
+.color_pick.color_big{
+	background-image:none;
+	width:80px;
+	padding:3px;
+	height:60px;
+	text-align:center;
+	color:#333;
+}
+.color_pick.color_big em{
+	width:80px;
+	height:38px;
+	*margin-bottom:3px;
+	text-align:center;
+}
+/*字体颜色选择组合*/
+.color_pick_dom{
+	width:70px;
+	width:300px;
+}
+.color_pick_dom ul{
+	height:29px;
+	width:170px;
+	padding:3px 0 0 0;
+}
+.color_pick_dom li{
+	float:left;
+	margin-right:10px;
+	_margin-right:8px;
+	white-space:nowrap;
+}
+.color_pick_dom li input{
+	_margin:0 0 -1px -3px;
+	_padding:0;
+}
+.color_pick_dom li.none{
+	margin-right:0;
+}
+.color_pick_dom .color_pick{
+	background-position:151px center;
+}
+.color_pick_dom .color_pick em{
+	width:145px;
+}
+.color_pick_dom .case{
+	float:right;
+	width:100px;
+	border:1px solid #ccc;
+	background:#fff;
+	padding:10px 10px;
+}
+
+input{width: 150px;}
+textarea{width: 48.9% !important;margin-right: 5px;}
+.nav-tabs{margin-top: 36px;}
+.fir-table th{text-align: right;padding-right: 10px !important;}
+.three_list.cc{margin: 0;}
+
+.picList li{padding: 1px;list-style-type: none;}
+.picList li input{margin-right: 4px;}
+
+.list-dot{margin-left: 0;}
+.list-dot li{padding:2px 1px;width: 18%;}
+.list-dot li span{font-size: 14px;}
+
+.row-fluid .span3{width: 98%;margin-left: 0;}
+.row-fluid .span3 .table{margin-top: 0;}
+.row-fluid .span3 h6{height: 0;margin: 0;padding: 0;}
+
+.table-bordered{border-collapse:collapse;border: none;}
+
+.table{width: 100%; text-align: center;margin-bottom: 0;}
+.table th,.table td{background: #dfe1e3;}
+.table th{text-align: right;}
+.table td div{text-align: left !important;}
+.table td img{margin-bottom: 5px;}
+.table td label{min-width: 85px;display: inline-block;*display: inline;*zoom: 1;}
+.table td a.btn{float: left;}
+.table td input.btn{width: auto !important;}
+.table .bk10{margin-top: 5px;}
+.onShow{float: left;line-height: 34px;margin-left: 5px;}
+
+.must_red{color:red;font-size: 16px;position:relative; top:4px;}
+.edui-default{/* float: left; */width: 100%;}
+.edui-default~.must_red{position:absolute; top:50%;right: 5px;margin-top: -10px;}
+
+.edui-default.edui-editor-bottomContainer{width: 100%;}
+.edui-default.edui-editor-bottomContainer td{width: 49%;background: #fff;padding-right: 0 !important;margin-right: 0 !important;}
+
+.wrap .form-actions{margin:0 !important;padding-left: 0 !important;padding-top: 5px;padding-bottom: 40px;width: 98%;background: #dfe1e3;}
+.wrap .form-actions a{float: none !important;}
+
+.tr-state th,.tr-state td{padding-top: 12px;padding-bottom: 10px;}
+
+</style>
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="#" target="_self">编辑</a></li>
+		</ul>
+		<form action="{:U('Contentshow/edit')}" method="post" class="form-horizontal js-ajax-forms" id="J_ajaxForms">
+			<div class="row-fluid">
+				<div class="span9">
+					<table class="table table-bordered fir-table">
+						<php>
+					if(is_array($forminfos['base'])) {
+					 foreach($forminfos['base'] as $field=>$info) {
+						 if($info['isomnipotent']) continue;
+						 if($info['formtype']=='omnipotent') {
+							foreach($forminfos['base'] as $_fm=>$_fm_value) {
+								if($_fm_value['isomnipotent']) {
+									$info['form'] = str_replace('{'.$_fm.'}',$_fm_value['form'],$info['form']);
+								}
+							}
+							foreach($forminfos['senior'] as $_fm=>$_fm_value) {
+								if($_fm_value['isomnipotent']) {
+									$info['form'] = str_replace('{'.$_fm.'}',$_fm_value['form'],$info['form']);
+								}
+							}
+						}
+					 </php>
+		            <tr>
+		              <th width="94">
+		                <php> echo $info['name'];</php>
+		               :</th>
+		              <td style="position: relative;">
+		              	<php> echo $info['form'];</php> 
+		              	<php> echo $info['tips'];</php>
+		              	<php> if($info['star']){ </php><span class="must_red">*</span><php> } </php>
+		              </td>
+		            </tr>
+		            <php>
+					} }
+					</php>
+		        </tbody>
+					</table>
+				</div>
+				<div class="span3">
+					<table class="table table-bordered fir-table">
+						<php>
+		if(is_array($forminfos['senior'])) {
+			 foreach($forminfos['senior'] as $field=>$info) {
+			 if(!in_array($field,array('allow_comment','template'))){
+				if($info['isomnipotent']) continue;
+				if($info['formtype']=='omnipotent') {
+					foreach($forminfos['base'] as $_fm=>$_fm_value) {
+						if($_fm_value['isomnipotent']) {
+							$info['form'] = str_replace('{'.$_fm.'}',$_fm_value['form'],$info['form']);
+						}
+					}
+					foreach($forminfos['senior'] as $_fm=>$_fm_value) {
+						if($_fm_value['isomnipotent']) {
+							$info['form'] = str_replace('{'.$_fm.'}',$_fm_value['form'],$info['form']);
+						}
+					}
+				}
+				
+				if(array_search($info,$forminfos['senior'])=='updatetime'){
+					if($data['isdelay']==0){
+						$info['form'] .= "
+						<label><input type='radio' name='info[isdelay]' value='0' checked><span>立即发布</span></label>
+						<label><input type='radio' name='info[isdelay]' value='1'><span>推迟</span></label>";
+					}else{
+						$info['form'] .= "
+						<label><input type='radio' name='info[isdelay]' value='0'><span>立即发布</span></label>
+						<label><input type='radio' name='info[isdelay]' value='1' checked><span>推迟</span></label>";
+					}
+				}
+
+		 </php>
+		         <tr>
+		          <th width="94">
+		          	<php> echo $info['name']</php>
+		          	:
+		          	<php> if($info['star']){ </php>
+		          		<font color="red">*</font>
+		          	<php>}</php>
+		          </th>
+		          <td><php> echo $info['form'];</php><php> echo $info['tips'];</php></td>
+		        </tr>
+		        <h6>
+
+		<php>
+			 }  }
+		}
+		</php>
+						<tr class="tr-state">
+							<th><b>状态 : </b></th>
+							<td>
+								<label><input type="radio" name="info[status]" value="99" <if condition=" $data['status']==99 "> checked</if>><span>审核通过</span></label>
+								<label><input type="radio" name="info[status]" value="1"  <if condition=" $data['status']==1 "> checked</if> ><span>待审核</span></label>
+							</td>
+						</tr>
+						
+						
+						<tr class="tr-state">
+							<td>
+							</td>
+							<td>
+								<div class="form-actions">
+									<input type="hidden" name="info[id]" value="{$id}">
+								    <input type="hidden" name="info[catid]" id="sdimgcatid" value="{$catid}">
+								    <input type="hidden" name="ajax" value="1" />
+					
+									<button class="btn btn-primary js-ajax-submit btn_submit J_ajax_submit_btn1 mright" type="submit">提交</button>
+									<a class="btn J_ajax_close_btn">关闭</a>
+								</div>
+							</td>
+						</tr>
+					</table>
+				</div>
+		</div>
+
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/commons.js"></script>
+	<script src="__PUBLIC__/js/content_addtop.js"></script>
+	<script src="__PUBLIC__/js/colorPicker/colorPicker.js"></script>
+	<script type="text/javascript">
+window.onload=function(){show_relation({$modelid},{$id});}
+$(function () {
+	var sign = "<php>echo I('get.sign')</php>";
+	$(".J_ajax_close_btn").on('click', function (e) {
+		if(sign){
+			parentDialog.close();
+			return false;
+		}
+	    e.preventDefault();
+	    Wind.use("artDialog", function () {
+	        art.dialog({
+	            id: "question",
+	            icon: "question",
+	            fixed: true,
+	            lock: true,
+	            background: "#CCCCCC",
+	            opacity: 0,
+	            content: "您确定需要关闭当前页面嘛？",
+	            ok:function(){
+					setCookie("refersh_time",1);
+					window.close();
+					return true;
+				}
+	        });
+	    });
+	});
+    Wind.use('validate', 'ajaxForm', 'artDialog', function () {
+		//javascript
+        {$formJavascript};
+        var form = $('form#J_ajaxForms');
+        //ie处理placeholder提交问题
+        if ($.browser.msie) {
+            form.find('[placeholder]').each(function () {
+                var input = $(this);
+                if (input.val() == input.attr('placeholder')) {
+                    input.val('');
+                }
+            });
+        }
+        //表单验证开始
+        form.validate({
+			//是否在获取焦点时验证
+			onfocusout:false,
+			//是否在敲击键盘时验证
+			onkeyup:false,
+			//当鼠标掉级时验证
+			onclick: false,
+            //验证错误
+            showErrors: function (errorMap, errorArr) {
+				//errorMap {'name':'错误信息'}
+				//errorArr [{'message':'错误信息',element:({})}]
+				try{
+					$(errorArr[0].element).focus();
+					art.dialog({
+						id:'error',
+						icon: 'error',
+						lock: true,
+						fixed: true,
+						background:"#CCCCCC",
+						opacity:0,
+						content: errorArr[0].message,
+						cancelVal: '确定',
+						cancel: function(){
+							$(errorArr[0].element).focus();
+						}
+					});
+				}catch(err){
+				}
+            },
+            //验证规则
+            rules: {$formValidateRules},
+            //验证未通过提示消息
+            //messages: {$formValidateMessages},
+            //给未通过验证的元素加效果,闪烁等
+            highlight: false,
+            //是否在获取焦点时验证
+            onfocusout: false,
+            //验证通过，提交表单
+            submitHandler: function (forms) {
+				var dialog = art.dialog({id: 'loading',fixed: true,lock: true,background: "#CCCCCC",opacity: 0,esc:false,title: false});
+                $(forms).ajaxSubmit({
+                    url: form.attr('action'), //按钮上是否自定义提交地址(多按钮情况)
+                    dataType: 'json',
+                    beforeSubmit: function (arr, $form, options) {
+                        
+                    },
+                    success: function (data, statusText, xhr, $form) {
+						dialog.close();
+						if(data.status){
+							setCookie("refersh_time",0);
+							//添加成功
+							Wind.use("artDialog", function () {
+							    art.dialog({
+							        id: "succeed",
+							        icon: "succeed",
+							        fixed: true,
+							        lock: true,
+							        background: "#CCCCCC",
+							        opacity: 0,
+							        content: data.info,
+							        button:[
+										{
+											name: '添加一篇新文章？',
+											callback:function(){
+												window.location.href = "{:U('Contentshow/add',array('catid'=>$catid))}";
+												return true;
+											},
+											focus: true
+										},{
+											name: '关闭当前页面',
+											callback:function(){
+												if(sign){
+													window.parent.location.reload();
+													parentDialog.close();
+													return true;
+												}
+												window.close();
+												return true;
+											}
+										}
+									]
+							    });
+							});
+						}else{
+							isalert(data.info);
+						}
+                    }
+                });
+            }
+        });
+    });
+});
+
+//显示相关文章
+function show_relation(modelid, id) {
+    $.getJSON("__ROOT__/index.php?g=Content&m=Contentshow&a=public_getjson_ids&modelid=" + modelid + "&id=" + id, function (json) {
+        var newrelation_ids = '';
+        if (json.data == null) {
+            //isalert('没有添加相关文章！');
+            return false;
+        }
+        $.each(json.data, function (i, n) {
+            newrelation_ids += "<li id='" + n.sid + "'>·<span>" + n.title + "</span><a href='javascript:;' class='close' onclick=\"remove_relation('" + n.sid + "'," + n.id + ")\"></a></li>";
+        });
+
+        $('#relation_text').html(newrelation_ids);
+    });
+}
+//移除相关文章
+function remove_relation(rel_id,sid, id) {
+    var relation_ids = $('#'+rel_id).val();
+
+    if (relation_ids != '') {
+        $('#' + sid).remove();
+        var r_arr = relation_ids.split('|');
+        var newrelation_ids = '';
+        $.each(r_arr, function (i, n) {
+        	var n_data = n.split(",");
+        	
+        	if(n_data[1] !=id){ //不删除
+        		if(i ==0 ) newrelation_ids += n ;
+        		else  newrelation_ids += "|" + n;
+        	}
+        });
+ 
+        $('#'+rel_id).val(newrelation_ids);
+    }
+}
+//随机seo TDK
+function auto_seo(catid,name){
+	
+}
+function GetSeourl(name){
+	
+}
+
+</script>
+</body>
+</html>

@@ -1,0 +1,164 @@
+<admintpl file="header" />
+</head>
+<body>
+	<style>
+		.table td input{width: auto;}
+    .fixed{
+      padding-top: 40px;
+    }
+    .fixed .fixed-top{
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding-left: 20px;
+      padding-bottom: 10px !important;
+      margin-top: auto;
+      background: #fff;
+    }
+    .table td{
+      padding-left: 10px !important;
+    }
+	</style>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="{:U('Category/index')}">栏目列表</a></li>
+			<li><a href="{:U('Category/add')}">添加栏目</a></li>
+			<li><a href="{:U('Category/singlepage')}">添加单页</a></li>
+			<li><a href="{:U('Category/wadd')}">添加外部链接</a></li>
+		</ul>
+		<form method="post" class="js-ajax-form js-check-wrap" action="{:U('Category/index')}" id="fixed_form">
+			<div class="table-actions fixed-top">
+				<button class="btn btn-primary btn-small js-ajax-submit" type="submit" data-action="{:U('Content/Category/p_delete')}" data-subcheck="true" data-msg="删除操作不可逆，并且只会删除空栏目">批量删除</button>
+				<button type="submit" class="btn btn-primary btn-small js-ajax-submit">{:L('SORT')}</button>
+			</div>
+			<table class="table table-hover table-bordered table-list" id="menus-table">
+				<thead>
+					<tr>
+						<th width="10">
+							<label><input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x"></label>
+						</th>
+						<th width="50">{:L('SORT')}</th>
+						<th width="50">栏目ID</th>
+						<th>栏目名称</th>
+						<th>栏目类型</th>
+						<th>所属模型</th>
+						<th>访问</th>
+						<th>域名绑定须知</th>
+						<th>是否在首页显示</th>
+						<th>管理操作</th>
+					</tr>
+				</thead>
+				<tbody id="sortable">
+					{$categorys}
+				</tbody>
+				<tfoot>
+					<tr>
+						<th width="10">
+							<label><input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x"></label>
+						</th>
+						<th width="50">{:L('SORT')}</th>
+						<th width="50">栏目ID</th>
+						<th>栏目名称</th>
+						<th>栏目类型</th>
+						<th>所属模型</th>
+						<th>访问</th>
+						<th>域名绑定须知</th>
+						<th>是否在首页显示</th>
+						<th>管理操作</th>
+					</tr>
+				</tfoot>
+			</table>
+			<div class="table-actions">
+				<button class="btn btn-primary btn-small js-ajax-submit" type="submit" data-action="{:U('Content/Category/p_delete')}" data-subcheck="true" data-msg="删除操作不可逆，并且只会删除空栏目">批量删除</button>
+				<button type="submit" class="btn btn-primary btn-small js-ajax-submit">{:L('SORT')}</button>
+			</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+	<script src="__PUBLIC__/js/content_addtop.js"></script>
+	<script>
+		$(function() {
+		  // 固定头部
+      var sform = $('#fixed_form'),
+        thead = sform.find('thead'),
+        thtop = thead.offset().top;
+
+      $(window).scroll(function() {
+        var sctop = $(this).scrollTop();
+        if(sctop > 60){
+          var ty = sctop - thtop + 40;
+          thead.css({'transform':'translateY('+ ty +'px)'});
+          sform.addClass('fixed');
+        } else{
+          thead.css({'transform':'translateY(0px)'});
+          sform.removeClass('fixed');
+        }
+      })
+    })
+
+
+	function changeismenu(id,obj){
+
+		$.get("{:U('Category/changeismenu')}", {id:id},function(str){
+
+			if(str.status ==1){
+
+				obj.innerHTML= str.msg;
+			}
+
+		},'json');
+
+
+	}
+	</script>
+	<script>
+		$(document).ready(function() {
+			Wind.css('treeTable');
+			Wind.use('treeTable', function() {
+				$("#menus-table").treeTable({
+					indent : 20
+				});
+			});
+		});
+
+		setInterval(function() {
+			var refersh_time = getCookie('refersh_time_admin_menu_index');
+			if (refersh_time == 1) {
+				reloadPage(window);
+			}
+		}, 2000);
+		setCookie('refersh_time_admin_menu_index', 0);
+		function checknode(obj) {
+		    var chk = $("input[type='checkbox']");
+		    var count = chk.length;
+		    var num = chk.index(obj);
+		    var level_top = level_bottom = chk.eq(num).attr('level');
+		    for (var i = num; i >= 0; i--) {
+		        var le = chk.eq(i).attr('level');
+		        if (eval(le) < eval(level_top)) {
+		            chk.eq(i).attr("checked", true);
+		            var level_top = level_top - 1;
+		        }
+		    }
+		    for (var j = num + 1; j < count; j++) {
+		        var le = chk.eq(j).attr('level');
+		        if (chk.eq(num).attr("checked") == "checked") {
+		            if (eval(le) > eval(level_bottom)){
+		            	chk.eq(j).attr("checked", true);
+		            }
+		            else if (eval(le) == eval(level_bottom)){
+		            	break;
+		            }
+		        } else {
+		            if (eval(le) > eval(level_bottom)){
+		            	chk.eq(j).attr("checked", false);
+		            }else if(eval(le) == eval(level_bottom)){
+		            	break;
+		            }
+		        }
+		    }
+		}
+	</script>
+</body>
+</html>

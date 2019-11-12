@@ -1,0 +1,169 @@
+<div class="logo"><a href="<php>$siteOption = sp_get_site_options(); echo $siteOption['site_host'];</php>"><img src="__TMPL__xinyu/img/logo.jpg" alt="Shanghai James Carton Machinery Co., Ltd" title="Shanghai James Carton Machinery Co., Ltd" /></a> </div>
+<div class="youce_f"> <a href="__ROOT__/index.php?g=Content&m=Pagedis&a=inquiry" class="inqui_tb">Inquiry list</a>
+ <form class="sousuo" method="post"  action="{:U('Search/Index/index')}"  >
+    <input type="text" class="fl  f12 zitia shufuk"value="Search product keywords..." name="q" onfocus="if(this.value=='Search product keywords...') {this.value='';}" onblur="if(this.value=='') {this.value='Search product keywords...';}" >
+    <input type="submit" class="fr sousuo2" value="" >
+    <div class="clear"> </div>
+  </form>
+  <div class="clear"></div>
+ 
+   
+  <ul class="ul-yiji ">
+    <li class="li-yiji fl"><a href="<php>$siteOption = sp_get_site_options(); echo $siteOption['site_host'];</php>" title="Home" id="home">Home</a></li>
+   <content action="category" catid="72" order="listorder asc ">
+        <foreach name="data" item="r">
+         <li  class="li-yiji fl"> <a href="{:zcurl($r['url'],$r['moveurl'])}" title="{$r.catname}" 
+        <if condition="in_array($catid,explode(',',$r['arrchildid']))">id="xuanzhong"</if>>{$r.catname}</a>
+        <content action="category" catid="$r['catid']"  order="listorder ASC" >
+          <if condition="$data">
+            <ul class="ul-erji">
+              <volist name="data" id="r">
+                <li  class="li-erji"><a href="{:zcurl($r['url'],$r['moveurl'])}" title="{$r.catname}">{$r.catname}</a>
+ </li>
+              </volist>
+            </ul>
+          </if>
+        </content>
+      </li>
+        </foreach>
+      </content>  
+  <content action="category" catid="0"  order="listorder ASC" >
+  <php>$data = zc_children_more($data);</php>
+    <volist name="data" id="r">
+      <li  class="li-yiji fl"> <a href="{:zcurl($r['url'],$r['moveurl'])}" title="{$r.catname}" 
+        <if condition="in_array($catid,explode(',',$r['arrchildid']))">id="xuanzhong"</if>>{$r.catname}</a>
+        <content action="category" catid="$r['catid']"  order="listorder ASC" >
+          <if condition="$data">
+            <ul class="ul-erji">
+              <volist name="data" id="r">
+                <li  class="li-erji"><a href="{:zcurl($r['url'],$r['moveurl'])}" title="{$r.catname}">{$r.catname}</a>
+                  <content action="category" catid="$r['catid']"  order="listorder ASC" >
+                    <if condition="count($data)">
+                      <ul class="ul-sanji">
+                        <volist name="data" id="r">
+                          <li  class="li-sanji"><a href="{:zcurl($r['url'],$r['moveurl'])}" title="{$r.catname}">{$r.catname}</a></li>
+                        </volist>
+                      </ul>
+                    </if>
+                  </content>
+                </li>
+              </volist>
+            </ul>
+          </if>
+        </content>
+      </li>
+    </volist>
+    </content>
+    <div class="clear"></div>
+  </ul>
+  <div id="settings"></div>
+  <ul id="opciones">
+    <li><a href="<php>$siteOption = sp_get_site_options(); echo $siteOption['site_host'];</php>" >Home</a></li>
+     <content action="category" catid="72" order="listorder asc ">
+        <foreach name="data" item="r">
+         <li> <a href="{:zcurl($r['url'],$r['moveurl'])}" title="{$r.catname}">{$r.catname}</a></li>
+        </foreach>
+      </content>  
+    <content action="category" catid="0" order="listorder asc ">
+      <foreach name="data" item="cat_value">
+        <li><a href="{$cat_value.url}" >{$cat_value.catname}</a></li>
+      </foreach>
+    </content>
+  </ul>
+  <script type=text/javascript>
+$(document).ready(function(){
+  $('#opciones').hide();
+			$('#settings').click(function(){
+				$('#opciones').slideToggle();
+				$(this).toggleClass("cerrar");
+    });
+  });
+</script> 
+</div>
+<div class="clear"></div>
+
+</div>
+</div>
+<php>
+$image = sp_get_cmf_settings_ads();
+$yangshi = $content['yangshi'];
+
+</php>
+
+
+<if condition="$yangshi eq 1">
+	 
+<style>
+img{ border:none; margin:0px; padding:0px;}
+.main_visual{width:100%; margin:0 auto; overflow:hidden;}
+.main_image {width:100%; height:484px;  overflow:hidden; margin:0px auto; position:relative;}
+.main_image ul {width:9999px; height:484px; overflow:hidden; position:absolute; top:0; left:0}
+.main_image li {float:left; width:100%; height:484px;}
+.main_image li span {display:block; width:100%; height:484px}
+.main_image li a {display:block; width:100%; height:484px}
+<foreach name="image" item="v" >
+.main_image li .img_{$key} {background: url("{$v['url']}") center top no-repeat; }
+</foreach>
+#btn_prev,#btn_next{z-index:11111;position:absolute;display:block;width:69px!important;height:60px!important;top:51%;margin-top:-40px;display:block;}
+#btn_prev{background:url("__TMPL__Public/images/lunbozuo.png") no-repeat left top;left:15%;}
+#btn_next{background:url("__TMPL__Public/images/lunboyou.png") no-repeat right top;right:15%;}
+</style>
+<script type="text/javascript" src="__TMPL__Public/js/jquery.touchSlider.js"></script>
+<script type="text/javascript" src="__TMPL__Public/js/lunbtonglan.js"></script>
+<div class="main_visual">
+  <div class="main_image">
+    <ul>
+<foreach name="image" item="v" >
+      <li><span class="__TMPL__xinyu/img_{$key}"><a href="{$v['href']}" title="{$v.alt}"></a></span></li>
+</foreach>
+    </ul>
+    <a href="javascript:;" id="btn_prev"></a>
+    <a href="javascript:;" id="btn_next"></a>
+     </div>
+</div>
+
+<else />
+
+<script type="text/javascript" src="__TMPL__xinyu/js/jquery.SuperSlide.js"></script>
+<div class="index_focus2"> <a href="javascript:;" class="index_focus_pre" ></a> <a href="javascript:;" class="index_focus_next" ></a>
+  <div class="index_focusn">
+    <div class="bd">
+      <ul>
+        <li> <a href="" class="pic" title=""> <img class="pic" src="__TMPL__xinyu/img/xtbanner1.jpg" alt="" title=""> </a> </li>
+        <li> <a href="" class="pic" title=""> <img class="pic" src="__TMPL__xinyu/img/xtbanner2.jpg" alt="" title=""> </a> </li>
+        <li> <a href="" class="pic" title=""> <img class="pic" src="__TMPL__xinyu/img/xtbanner3.jpg" alt="" title=""></a> </li>
+        <li> <a href="" class="pic" title=""> <img class="pic" src="__TMPL__xinyu/img/xtbanner4.jpg" alt="" title=""></a> </li>
+        <li> <a href="" class="pic" title=""> <img class="pic" src="__TMPL__xinyu/img/xtbanner5.jpg" alt="" title=""></a> </li>
+      </ul>
+    </div>
+      <div class="slide_nav"> <a href="javascript:"></a><a href="javascript:"></a><a href="javascript:"></a> <a href="javascript:;"></a><a href="javascript:;"></a></div>
+  </div>
+  <script type="text/javascript" src="__TMPL__xinyu/js/lunbo2.js"></script> 
+</div>
+
+<script type="text/javascript" src="__TMPL__xinyu/js/jquery.bxslider.js"></script>
+<div class="slider1">
+  <div class="slidexp"><a href=""><img src="__TMPL__xinyu/img/xtbanner1.jpg"></a></div>
+  <div class="slidexp"><a href=""><img src="__TMPL__xinyu/img/xtbanner2.jpg"></a></div>
+  <div class="slidexp"><a href=""><img src="__TMPL__xinyu/img/xtbanner3.jpg"></a></div>
+  <div class="slidexp"><a href=""><img src="__TMPL__xinyu/img/xtbanner4.jpg"></a></div>
+  <div class="slidexp"><a href=""><img src="__TMPL__xinyu/img/xtbanner5.jpg"></a></div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){
+  $('.slider1').bxSlider({
+mode: 'fade',
+auto: true,
+
+slideMargin: 10
+  });
+});
+</script>
+</if>
+<php>
+$category = S("Category");
+$father = zc_father($category,$catid);
+</php>
+
+<div class="zong f14 hui4d "><div class="mianbao_x"><a href="__ROOT__/" class="hui4d" id="home">Home</a><php>$str = "<span>/</span>"</php><span>/</span><navigate catid="$catid" space="$str" mmc="colcla" /></div></div>
+
